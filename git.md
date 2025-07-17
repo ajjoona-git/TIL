@@ -68,6 +68,15 @@ git은 파일만을 추적한다. 디렉토리의 생성/삭제는 관심없고,
 >
 >※ 리베이스는 커밋 로그를 깔끔하게 만들 수 있지만, 협업 중에는 충돌 해결이 필요하므로 주의해서 사용해야 해요.
 
+GitHub 원격 저장소에서 브랜치 이름을 `main`에서 `master`로 변경했을 경우, 로컬 저장소의 터미널에 다음을 입력한다.
+```bash
+git fetch origin // 원격 브랜치 목록을 갱신
+git branch -m main master // 로컬 브랜치 이름을 master로 변경
+git branch --set-upstream-to=origin/master master // 로컬 master 브랜치가 GitHub의 master를 추적하도록 설정
+git symbolic-ref refs/remotes/origin/HEAD refs/remotes/origin/master // 기본 push/pull 브랜치를 master로 설정
+```
+
+
 <br><br>
 
 # 수업 필기
@@ -153,7 +162,7 @@ working directory에서 **변경된 파일 중**, 다음 버전에 포함할 파
     - 불필요한 commit을 생성하지 않고 직전 commit을 수정할 수 있다.
 
     - 버전 관리 측면에서 사소한 실수(앗, 빠진 파일 넣었음, 이전commit에서 오타 살짝 고침)는 유효한 commit으로 보기 어려워서 생긴 기능 
-    
+
     >### Vim 에디터
     >1. 수정 모드: 내용을 작성하는 모드
     >2. 명령 모드: 쓰기, 삭제, 나가기, …
