@@ -68,14 +68,117 @@ git은 파일만을 추적한다. 디렉토리의 생성/삭제는 관심없고,
 >
 >※ 리베이스는 커밋 로그를 깔끔하게 만들 수 있지만, 협업 중에는 충돌 해결이 필요하므로 주의해서 사용해야 해요.
 
-GitHub 원격 저장소에서 브랜치 이름을 `main`에서 `master`로 변경했을 경우, 로컬 저장소의 터미널에 다음을 입력한다.
+<br>
+
+### *Q3. GitHub 원격 저장소에서 브랜치 이름을 `main`에서 `master`로 변경했을 경우*
+
+### A3. 로컬 저장소의 터미널에 다음을 입력한다.
 ```bash
-git fetch origin // 원격 브랜치 목록을 갱신
-git branch -m main master // 로컬 브랜치 이름을 master로 변경
-git branch --set-upstream-to=origin/master master // 로컬 master 브랜치가 GitHub의 master를 추적하도록 설정
-git symbolic-ref refs/remotes/origin/HEAD refs/remotes/origin/master // 기본 push/pull 브랜치를 master로 설정
+git branch -m main master #브랜치 이름을 main → master로 바꿈
+git fetch origin #원격 저장소의 최신 정보(특히 브랜치)를 받아옴
+git branch -u origin/master master #로컬 master 브랜치가 원격 origin/master를 따라가게 설정
+git remote set-head origin -a #로컬 Git이 인식하는 원격 저장소의 기본 브랜치 정보를 갱신함
 ```
 
+<br>
+
+### *Q4. commit 1,2,3까지 있을 때 commit 1로 reset한 경우. commit 4를 만들고 난 후에 commit 3을 복구할 수 있을까?*
+
+### A4. 복구할 수 있다. 그러나 commit 4는 사라진다. commit 1-2-3과 commit 1-4는 각각 다른 세계관에 있기 때문에 공존할 수 없다!
+*(아래는 terminal 입력 내용)*
+```bash
+# commit 1,2,3 이 있는 상황
+SSAFY@2□□PC049 MINGW64 ~/Downloads/revert-reset-practice/reset-revert-practice/reset/soft (master)
+$ git log --oneline
+d7c8501 (HEAD -> master) third
+91cbd74 second
+f7b3a3d first
+
+# commit 1로 돌아감. commit 2,3은 삭제됨.
+SSAFY@2□□PC049 MINGW64 ~/Downloads/revert-reset-practice/reset-revert-practice/reset/hard (master)
+$ git reset --hard f7b3
+HEAD is now at f7b3a3d first
+
+# 4.txt 생성
+SSAFY@2□□PC049 MINGW64 ~/Downloads/revert-reset-practice/reset-revert-practice/reset/hard (master)
+$ touch 4.txt
+
+# 변경사항 staging area에 추가
+SSAFY@2□□PC049 MINGW64 ~/Downloads/revert-reset-practice/reset-revert-practice/reset/hard (master)
+$ git add .
+
+# commit 4 생성
+SSAFY@2□□PC049 MINGW64 ~/Downloads/revert-reset-practice/reset-revert-practice/reset/hard (master)
+$ git commit -m 'four'
+[master 66037a7] four
+ 2 files changed, 0 insertions(+), 0 deletions(-)
+ create mode 100644 4.txt
+ create mode 100644 untracked.txt
+
+# commit history 확인 -> commit 1,4
+SSAFY@2□□PC049 MINGW64 ~/Downloads/revert-reset-practice/reset-revert-practice/reset/hard (master)
+$ git log
+commit 66037a76c923b673d523054d4a2a2608d1601177 (HEAD -> master)
+Author: ajjoona <ajjoona@gmail.com>
+Date:   Fri Jul 18 10:37:07 2025 +0900
+
+    four
+
+commit f7b3a3d879dbfcab4ae90f1c3c7050ef0cd29913
+Author: eduharryjjun <eduharryjjun@gmail.com>
+Date:   Thu Oct 12 21:23:08 2023 +0900
+
+    first
+
+# commit 3 복구
+SSAFY@2□□PC049 MINGW64 ~/Downloads/revert-reset-practice/reset-revert-practice/reset/hard (master)
+$ git reset --hard d7c8
+HEAD is now at d7c8501 third
+
+# commit history 확인 -> commit 1,2,3 / commit 4 없어짐
+SSAFY@2□□PC049 MINGW64 ~/Downloads/revert-reset-practice/reset-revert-practice/reset/hard (master)
+$ git log
+commit d7c85015ea5776d87ee6b494f869644d065af6ee (HEAD -> master)
+Author: eduharryjjun <eduharryjjun@gmail.com>
+Date:   Thu Oct 12 21:24:20 2023 +0900
+
+    third
+
+commit 91cbd74ec969ce40577658673789755440b7bd18
+Author: eduharryjjun <eduharryjjun@gmail.com>
+Date:   Thu Oct 12 21:24:04 2023 +0900
+
+    second
+
+commit f7b3a3d879dbfcab4ae90f1c3c7050ef0cd29913
+Author: eduharryjjun <eduharryjjun@gmail.com>
+Date:   Thu Oct 12 21:23:08 2023 +0900
+
+    first
+
+# commit 이력 확인
+SSAFY@2□□PC049 MINGW64 ~/Downloads/revert-reset-practice/reset-revert-practice/reset/hard (master)
+$ git reflog
+d7c8501 (HEAD -> master) HEAD@{0}: reset: moving to d7c8
+66037a7 HEAD@{1}: commit: four
+f7b3a3d HEAD@{2}: reset: moving to f7b3
+d7c8501 (HEAD -> master) HEAD@{3}: reset: moving to d7c8
+f7b3a3d HEAD@{4}: reset: moving to f7b3
+d7c8501 (HEAD -> master) HEAD@{5}: commit: third
+91cbd74 HEAD@{6}: commit: second
+f7b3a3d HEAD@{7}: commit (initial): first
+
+# 다시 commit 4를 복구
+SSAFY@2□□PC049 MINGW64 ~/Downloads/revert-reset-practice/reset-revert-practice/reset/hard (master)
+$ git reset --hard 66037
+HEAD is now at 66037a7 four
+
+# commit history 확인 -> commit 1,4 / commit 1,2,3 없어짐
+SSAFY@2□□PC049 MINGW64 ~/Downloads/revert-reset-practice/reset-revert-practice/reset/hard (master)
+$ git log --oneline
+66037a7 (HEAD -> master) four
+f7b3a3d first
+```
 
 <br><br>
 
@@ -270,3 +373,36 @@ git에서 특정 파일이나 디렉토리를 추적하지 않도록 설정하�
     - README.md 파일 생성됨
 3. 개인, 팀 프로젝트 코드를 공유
 4. 오픈 소스 프로젝트에 기여
+
+## git 수정하기
+### Git revert
+
+`git revert <commit id>` 특정 commit을 없었던 일로 만드는 작업 = “재설정”
+
+- 기본적으로 commit은 지우지 않는다.
+- 대신 프로젝트 기록에서 commit을 없었던 일로 처리하고 그 결과를 새로운 commit으로 추가한다. 기록에서 commit이 사라지지는 않는다.
+- commit은 유기적으로 연결되어 있고 commit history가 변하면 꼬이기 때문.
+- `<commit id>` 는 commit의 hash값 (4자 이상 작성)
+- 변경사항을 쌓아 올리는 순방향 실행 취소 작업. 과거로 돌아가는 대신 새로운 미래를 쌓는다.
+- git에서 기록이 손실되는 것을 방지하며 기록의 무결성과 협업의 신뢰성을 높인다.
+
+
+### Git reset
+
+`git reset [option] <commit id>` 특정 commit으로 되돌아가는 작업 = “되돌리기”
+
+- 현업에서는 사용하지 않는다. 개인적인 사용에서는 간혹 쓰임.
+- 특정 commit으로 되돌아 갔을 때, 되돌아간 commit 이후의 commit은 기록에서 모두 삭제된다.
+- 과거로 돌아가 다시 시작한다.
+- `[option]` 삭제되는 commit들의 **기록을 어떤 영역에 남겨둘 것인지**를 조정
+    - `--soft` staging area에 남김
+    - `--mixed(default)` working directory에 남김
+    - `--hard` 삭제된 commit의 기록을 남기지 않음
+- 단, 한번도 등록되지 않은 파일은 영향을 받지 않는다. (untracked.txt)
+
+`git reflog` HEAD가 이전에 가리켰던 모든 commit을 보여줌
+
+### branch
+
+- branch는 각각의 독립된 작업 영역이라고 볼 수 있다.
+- master 에는 사용자에게 서비스할 수 있는 완성본만 올린다.
