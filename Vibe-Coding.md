@@ -6,9 +6,11 @@
 <table>
   <tr>
     <td>
-          <img src="https://www.notion.so/image/attachment%3Abc30e46f-6513-4de3-8be7-aa5306a30e14%3Aimage.png?table=block&id=23411cc2-d5a3-80d7-9b85-f390266384ad&spaceId=1c43b02e-2c0c-4b19-b134-27ace14558ef&width=1540&userId=d78f1155-50ff-446d-8dd6-8f62d7cd6455&cache=v2" width="400"/>
+      <img src="./images/Vibe-Coding_1.png" width="500"/>
     </td>
-    <td><img src="https://www.notion.so/image/attachment%3A90518be5-f7c9-46f0-a833-73322dd747ab%3Aimage.png?table=block&id=23411cc2-d5a3-8023-906d-fb1a4176d98d&spaceId=1c43b02e-2c0c-4b19-b134-27ace14558ef&width=1540&userId=d78f1155-50ff-446d-8dd6-8f62d7cd6455&cache=v2" width="400"/></td>
+    <td>
+      <img src="./images/Vibe-Coding_2.png" width="500"/>
+    </td>
   </tr>
   <tr>
     <td align="center">다크 모드 / 초기 화면</td>
