@@ -1,5 +1,5 @@
 
-# 스스로 학습
+# 추가 학습
 
 Working Directory -> Staging Area -> Repository
 - Working Directory: 현재 작업 공간
@@ -182,7 +182,7 @@ f7b3a3d first
 
 <br><br>
 
-# 수업 필기
+# 학습 내용
 ## git | 분산 버전 관리 시스템
 ### 버전 관리
 
