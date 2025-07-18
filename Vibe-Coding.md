@@ -2,6 +2,8 @@
 
 ## Copilot을 이용해서 챗봇 만들기
 
+[![GitHub Repository](https://img.shields.io/badge/GitHub-Repository-blue?logo=github)](https://github.com/ajjoona-git/Vibe-Chatbot)
+
 ### 실행 화면
 <table>
   <tr>
