@@ -402,6 +402,28 @@ git에서 특정 파일이나 디렉토리를 추적하지 않도록 설정하�
 
 `git reflog` HEAD가 이전에 가리켰던 모든 commit을 보여줌
 
+### Git restore
+
+`git restore` modified 상태의 파일 되돌리기
+
+- working directory 에서 파일을 수정한 뒤, 파일의 수정 사항을 취소하고, 원래 모습대로 되돌리는 작업
+- 파일을 수정하고 저장(`ctrl+S`)하면 → modified 상태
+- `git restore` 하면 수정하기 전 상태로 돌아간다.
+- 원래 파일로 “덮어쓰는” 원리이기 때문에 수정한 내용은 전부 사라진다.
+- 수정 취소 후에는 해당 내용을 **복구할 수 없다**.
+
+### Unstage 하기
+
+`git rm --cached` staging area에서 working directory로 되돌리기
+
+- git 저장소에 commit이 없는 경우
+- to unstage and remove paths only from the staging area
+
+`git restore --staged` 
+
+- git 저장소에 commit이 존재하는 경우
+- the contents are restored from HEAD
+
 ### branch
 
 - branch는 각각의 독립된 작업 영역이라고 볼 수 있다.
