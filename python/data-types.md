@@ -55,6 +55,20 @@ print(a[2:2])  # "" / start == stop인 경우 빈 문자열 반환
 | `line_1 = line_twinkle + ' ' + line_star + ' ' + line_shine` <br>`line_2 = line_east + line_from + ' ' + line_west + line_from`<br>`print(line_1, line_2, line_1, sep='\n')`| `print(f"{star} {little_star} {shine}")`<br>`print(f"{east}{where} {west}{where}")`<br>`print(f"{star} {little_star} {shine}")` |
 | `+` 연산자 이용한 문자열 결합 <br> `line_1`, `line_2` 활용 → 재사용 편리 | f-string 사용 → 가독성 좋음 |
 
+### 포맷 지정자 [개인 저축 목표 보고서]
+
+[![python_ps_1_6](https://img.shields.io/badge/GitHub-Repo-blue?logo=github)](https://github.com/ajjoona-git/python_ps_1_6)
+
+- 포맷 지정자: f-string 내부에서 {변수:포맷} 형태로 `:` 다음에 오는 문자열로, 출력 형식을 지정한다.
+  - `{years}년 후 예상 금액: {final_amount:,.2f}원`
+
+| 포맷 지정자 | 의미 | 예시 결과 |
+| --- | --- | --- |
+| `:,` | 천 단위 쉼표 구분 | `1,234,567` |
+| `.2f` | 소수점 둘째 자리까지 실수 표시 | `1,234.57` |
+| `:,.2f` | 천 단위 쉼표 + 소수점 2자리 | `1,234,567.89` |
+| `:,.0f` | 천 단위 쉼표 + 소수점 없음 | `1,234,568` |
+
 
 <br><br>
 
