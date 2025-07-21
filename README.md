@@ -6,3 +6,6 @@
 ## Contents
 - [git](git.md)
 - [Vibe Coding](Vibe-Coding.md)
+  
+  ### Python
+  - [Data Types](python/data-types.md)
