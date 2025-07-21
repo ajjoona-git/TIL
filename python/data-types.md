@@ -1,5 +1,18 @@
 # 스스로 학습
 
+## 용어 정리
+
+| 개념 | 설명 | 예시 |
+| --- | --- | --- |
+| 표현식 expression | 값을 만들어내는 코드 | 3+4, ‘hello’, 2*a |
+| 값 value | 표현식이 만든 결과물 | 3, ‘hello’, True |
+| 문장 statement | 동작을 지시하는 코드 한 줄 | print(”Hello”), a = 3 |
+| 변수 variable | 값을 저장하는 이름. 
+메모리 주소를 참조한다. | age = 25 |
+| 할당 assignment | 변수에 값을 저장하는 행위 | a = 10 |
+| 데이터 타입 data type | 값의 종류(숫자형, 시퀀스형) | int, float, str |
+| 산술 연산자 | 수학적 계산에 사용되는 기호 | +, -, *, /, //, %, ** |
+
 ## Slicing 슬라이싱
 
 ### Slicing Cases
