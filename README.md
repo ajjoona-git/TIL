@@ -8,4 +8,5 @@
 - [Vibe Coding](Vibe-Coding.md)
   
   ### Python
-  - [Data Types](python/data-types.md)
+  - [Data Types_1](python/data-types_1.md)
+  - [Data Types_2](python/data-types_2.md)
