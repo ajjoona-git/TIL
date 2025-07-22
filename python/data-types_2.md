@@ -135,6 +135,22 @@ result = (name == 'Alice') or age
 print(result)  # 25
 ```
 
+### 퀴즈
+문제. 기본 사용자 이름을 설정하기 위해 가장 적절한 코드는 무엇일까요?
+
+A. `final_name = user_name and "Guest"`
+
+B. `final_name = user_name or "Guest"`
+
+C. `final_name = "Guest" or user_name`
+
+D. `final_name = "Guest" and user_name`
+
+> 정답: B!
+> 
+>  `user_name`이 비어있으면(Falsy) "Guest"를, 비어있지 않으면(Truthy) `user_name`을 반환하여 의도에 맞게 동작합니다.
+
+
 ## 실습
 
 ### [2985. 리스트 활용하기_Lv1]
