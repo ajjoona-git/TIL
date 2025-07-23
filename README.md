@@ -10,3 +10,5 @@
   ### Python
   - [Data Types_1](python/data-types_1.md)
   - [Data Types_2](python/data-types_2.md)
+  - [Function_1](python/function_1.md)
+  - (Reference) [Lazy Evaluation](python/lazy_evaluation/md)
