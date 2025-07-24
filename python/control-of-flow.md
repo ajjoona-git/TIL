@@ -27,6 +27,8 @@ missing_book = [x for x in rental_book if x not in list_of_book]
 
 ### **[형변환] [1689. 도서관 사용자 관리 서비스 - 데이터 처리_Lv3]**
 
+1. 내가 작성한 코드
+
 ```python
 import requests
 from pprint import pprint as print
@@ -61,11 +63,114 @@ for number in range(1, 11):
 
 print(dummy_data)
 ```
-** `lat = float(parsed_data['address']['geo']['lat'])`에서 `int()`로 하면 에러 발생하는 이유?**
+** `lat = float(lat)`에서 `int()`로 하면 에러 발생하는 이유?**
 
-`parsed_data['address']['geo']['lat']`에서 가져오는 lat 값은 API 응답에서 **문자열 형태의 실수**로 제공되기 때문
+`parsed_data['address']['geo']['lat']`에서 가져오는 lat 값은 API 응답에서 **문자열 형태의 실수**로 제공되기 때문이다.
 
 `int()` 함수는 기본적으로 정수 형태의 문자열 (예: '123')이나 실수형 숫자 (예: 37.3159)를 정수로 변환할 때 사용된다. 하지만 **`int()` 함수는 소수점을 포함하는 문자열 (예: '37.3159')을 직접 정수로 변환하려고 하면 에러**를 발생시킵니다. 왜냐하면 문자열 안에 점(.)이 있어서 이를 온전한 정수 형태의 문자열로 인식하지 못하기 때문이다.
+
+2. 개선한 코드
+   1. 위도, 경도 제한 조건 내부에 딕셔너리 생성을 배치하여 불필요한 데이터 생성을 방지했다.
+    
+    - 기존: company, name 을 갖는 딕셔너리를 생성 → 조건 통과하면 딕셔너리에 lat, lng 추가 → dummy_data 리스트에 추가
+       
+    - 개선: 조건을 통과하면 → name, lat, lng, company 를 갖는 딕셔너리 생성 → dummy_data 리스트에 추가
+
+```python
+# 1. API로부터 데이터를 수집하고 기본 조건에 따라 필터링하는 단계
+
+# 사용자 정보를 저장할 빈 리스트를 생성합니다.
+dummy_data = []
+# 1부터 10까지의 숫자를 반복하면서 10명의 사용자 정보를 요청합니다.
+for i in range(1, 11):
+    # 각 사용자의 정보를 저장할 빈 딕셔너리를 초기화합니다.
+    user_info = {}
+
+    # f-string을 사용하여 요청할 API 주소를 동적으로 만듭니다. i 값이 1, 2, ..., 10으로 변합니다.
+    API_URL = f'https://jsonplaceholder.typicode.com/users/{i}'
+
+    # requests.get()으로 API에 GET 요청을 보내고,
+    # .json() 메서드로 응답받은 JSON 데이터를 파이썬 딕셔너리로 변환합니다.
+    response = requests.get(API_URL).json()
+
+    # 사용자의 위치 정보(위도, 경도)가 특정 범위 안에 있는지 확인하는 조건문입니다.
+    # float()으로 문자열 형태의 숫자 데이터를 실수로 변환하여 비교합니다.
+    if (
+        -80 < float(response['address']['geo']['lat']) < 80
+        and -80 < float(response['address']['geo']['lng']) < 80
+    ):
+        # 조건에 맞는 사용자의 정보 중, 필요한 데이터(이름, 위도, 경도, 회사명)만 골라서
+        # 새로운 user_info 딕셔너리를 만듭니다.
+        user_info = {
+            'name': response['name'],
+            'lat': response['address']['geo']['lat'],
+            'lng': response['address']['geo']['lng'],
+            'company': response['company']['name'],
+        }
+        # 완성된 사용자 정보를 dummy_data 리스트에 추가합니다.
+        dummy_data.append(user_info)
+
+```
+
+### [1690. 도서관 사용자 관리 서비스 - 블랙리스트 관리_Lv4]
+
+1. 내가 작성한 코드
+
+    - 같은 회사에 여러 명의 사용자가 있을 경우, 마지막으로 추가된 사용자만 남고 나머지는 모두 유실된다.
+
+```python
+def create_user(user_list):
+    """
+    주어진 사용자 리스트에서 블랙리스트에 없는 사용자들만 필터링하여 새로운 딕셔너리를 생성합니다.
+    회사를 키(key)로, 해당 회사 소속 사용자들의 이름 리스트를 값(value)으로 가집니다.
+
+    Args:
+        user_list (list): 여러 사용자 정보를 담고 있는 딕셔너리들의 리스트.
+                          각 딕셔너리는 'company'와 'name' 키를 포함해야 합니다.
+
+    Returns:
+        dict: 필터링된 사용자 정보를 담은 딕셔너리.
+              예: {'회사명': ['사용자1 이름', '사용자2 이름']}
+    """
+    censored_user_list = {}
+    for user in user_list:
+        is_permitted = censorship(user)
+        if is_permitted:
+            censored_user_list[user['company']] = [user['name']]
+    return censored_user_list
+
+```
+
+1. 수정한 코드
+
+    - 같은 회사에 여러 사용자가 있을 경우를 구분하여 append 구문을 추가해서 보완했다.
+
+```python
+def create_user(user_list):
+    """
+    주어진 사용자 리스트에서 블랙리스트에 없는 사용자들만 필터링하여 새로운 딕셔너리를 생성합니다.
+    회사를 키(key)로, 해당 회사 소속 사용자들의 이름 리스트를 값(value)으로 가집니다.
+
+    Args:
+        user_list (list): 여러 사용자 정보를 담고 있는 딕셔너리들의 리스트.
+                          각 딕셔너리는 'company'와 'name' 키를 포함해야 합니다.
+
+    Returns:
+        dict: 필터링된 사용자 정보를 담은 딕셔너리.
+              예: {'회사명': ['사용자1 이름', '사용자2 이름']}
+    """
+    censored_user_list = {}
+    for user in user_list:
+        is_permitted = censorship(user)
+        if is_permitted:
+            # 블랙리스트에 없으면 censored_user_list에 추가
+            # 같은 회사에 여러 사용자가 있을 경우 이름을 리스트에 추가
+            if user['company'] not in censored_user_list:
+                censored_user_list[user['company']] = [user['name']]
+            else:
+                censored_user_list[user['company']].append(user['name'])
+    return censored_user_list
+```
 
 
 ### **[1691. 도서관 사용자 관리 서비스 - 데이터 유효성 검사_Lv5]**
@@ -92,6 +197,8 @@ print(dummy_data)
 
 
 - 오류 해결 내역
+
+1. 오류 발생 코드
 
 **validation_result 의 가능한 값은 `True, 'blocked', (False, [user_list])` 모두 자료형이 다르다.**
 
@@ -150,15 +257,15 @@ def is_validation(user_data):
 
 ```
 
-**→ 수정**
+2. 오류 수정한 코드
 
-1. 조기 반환 로직 삭제:
-    
-   `def is_validation(user_data):` 내부 `else:` 문이 website 검사 부분에 물려있었다. 이 구문 때문에 조기 반환되는 경우 에러가 발생했다. 자료형이 여러 가지라서 에러가 발생했다기보다는, website 제외한 부분에서 값이 이상할 경우에 `False`가 반환되기 때문에 이 경우에 에러가 발생한 것.
+- 조기 반환 로직 삭제:
+       
+    `def is_validation(user_data):` 내부 `else:` 문이 website 검사 부분에 물려있었다. 이 구문 때문에 조기 반환되는 경우 에러가 발생했다. 자료형이 여러 가지라서 에러가 발생했다기보다는, website 제외한 부분에서 값이 이상할 경우에 `False`가 반환되기 때문에 이 경우에 에러가 발생한 것.
 
-2. 코드 간결화: 
-   
-   `def is_validation(user_data):` 에서 불필요한 상태 변수인 `is_valid`를 삭제했다. 대신 모든 검사를 마친 후, 최종적으로 `invalid_list` 가 비어있는지에 따라 유효성을 판단하는 것으로 수정했다.
+- 코드 간결화: 
+      
+    `def is_validation(user_data):` 에서 불필요한 상태 변수인 `is_valid`를 삭제했다. 대신 모든 검사를 마친 후, 최종적으로 `invalid_list` 가 비어있는지에 따라 유효성을 판단하는 것으로 수정했다.
 
 ```python
 def create_user(user_data_list):
@@ -214,6 +321,91 @@ def is_validation(user_data):
         return False, invalid_li
 ```
 
+3. 개선한 코드
+
+-  `def create_user(user_data):`에서 중복되는 `user_list.append(data)` 명령을 마지막에 배치
+
+-  `def is_validation(data):`의 반환값을 `'blocked', (False, ['오류필드1', '오류필드2']), (True, [])`로 변경: 
+
+    True인 경우에도 빈 리스트를 같이 반환하도록 해서 자료형을 통일함. 그래서 True, False 두 경우 모두 마지막에 플래그와 리스트를 반환하도록 함.
+
+```python
+def create_user(user_data):
+    """
+    전체 사용자 데이터(user_data)를 받아, 각 사용자를 검증하고 정제하는 메인 함수입니다.
+    """
+    # 정제된 사용자 목록을 저장할 빈 리스트를 생성합니다.
+    user_list = []
+    # 잘못된 데이터를 가진 사용자의 수를 세기 위한 변수입니다.
+    count = 0
+
+    # 전체 사용자 목록을 한 명씩 순회합니다.
+    for data in user_data:
+        # is_validation 함수를 호출하여 현재 사용자의 데이터가 유효한지 검사합니다.
+        result = is_validation(data)
+
+        # is_validation의 반환값이 'blocked'인 경우 (블랙리스트 회사 소속)
+        if result == 'blocked':
+            # 잘못된 사용자 수를 1 증가시키고,
+            count += 1
+            # 현재 사용자를 리스트에 추가하지 않고 다음 사용자로 넘어갑니다.
+            continue
+
+        # is_validation의 반환값(튜플)의 첫 번째 요소가 False인 경우 (데이터에 오류가 있음)
+        elif result[0] == False:
+            # 잘못된 사용자 수를 1 증가시키고,
+            count += 1
+            # 반환된 튜플의 두 번째 요소(오류가 발생한 필드 이름 리스트)를 순회합니다.
+            for wrong_data in result[1]:
+                # 원본 데이터(data)에서 오류가 발생한 필드의 값을 None으로 변경합니다.
+                data[wrong_data] = None
+
+        # (유효하거나, 오류가 수정된) 사용자 정보를 최종 리스트에 추가합니다.
+        user_list.append(data)
+
+    print(f'잘못된 데이터로 구성된 유저의 수는 {count} 입니다.')
+    # 최종적으로 정제된 사용자 리스트를 반환합니다.
+    return user_list
+
+def is_validation(data):
+    """
+    한 명의 사용자 데이터(data)를 받아, 여러 규칙에 따라 유효성을 검사하는 헬퍼 함수입니다.
+    - 블랙리스트 회사인 경우: 'blocked' 문자열을 반환합니다.
+    - 데이터에 오류가 있는 경우: (False, ['오류필드1', '오류필드2']) 튜플을 반환합니다.
+    - 데이터가 유효한 경우: (True, []) 튜플을 반환합니다.
+    """
+    # 최우선으로 회사가 블랙리스트에 있는지 확인합니다.
+    if data['company'] in black_list:
+        return 'blocked'
+
+    # 검사의 전체 통과 여부를 저장할 플래그 변수(check)와
+    # 어떤 필드에서 오류가 났는지 저장할 리스트(check_list)를 초기화합니다.
+    check = True
+    check_list = []
+
+    # 혈액형이 미리 정의된 blood_types 리스트에 없는 경우
+    if data['blood_group'] not in blood_types:
+        check = False  # 전체 결과를 False로 변경
+        check_list.append('blood_group')  # 오류 필드 목록에 'blood_group' 추가
+
+    # 이메일에 '@' 문자가 포함되어 있지 않은 경우
+    if '@' not in data['mail']:
+        check = False
+        check_list.append('mail')
+
+    # 이름의 길이가 2글자 미만이거나 30글자 초과인 경우
+    if 2 > len(data['name']) or 30 < len(data['name']):
+        check = False
+        check_list.append('name')
+
+    # 웹사이트 목록의 개수가 1개 미만(0개)인 경우
+    if len(data['website']) <= 0:
+        check = False
+        check_list.append('website')
+
+    # 최종 검사 결과(True/False)와 오류 필드 목록을 튜플 형태로 반환합니다.
+    return check, check_list
+```
 
 
 <br><br>
