@@ -15,3 +15,7 @@
   - [Modules](python/modules.md)
   - [Control of Flow](python/control-of-flow.md)
   - (Reference) [Lazy Evaluation](python/lazy-evaluation.md)
+
+
+  ### 관통 프로젝트
+  - [1회차 도전 과제](project-01/01.md)
