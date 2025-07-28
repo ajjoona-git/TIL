@@ -14,4 +14,5 @@
   - [Function: map, zip, enumerate](python/function_2.md)
   - [Modules](python/modules.md)
   - [Control of Flow](python/control-of-flow.md)
+  - [Data Structure_1: Str, List](python/data-structure_1.md)
   - (Reference) [Lazy Evaluation](python/lazy-evaluation.md)
