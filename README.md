@@ -11,13 +11,12 @@
   ### Python
 
   - [Data Types_1](python/data-types_1.md)
-  
   - [Data Types_2](python/data-types_2.md)
   - [Functions](python/function_1.md)
   - [Function: map, zip, enumerate](python/function_2.md)
   - [Modules](python/modules.md)
   - [Control of Flow](python/control-of-flow.md)
-  - [Data Structure_1: Str, List](python/data-structure_1.md)
+  - [Data Structure: Str, List](python/data-structure_1.md)
   - (Reference) [Lazy Evaluation](python/lazy-evaluation.md)
 
 
