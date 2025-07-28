@@ -301,6 +301,45 @@ print(result)  # [2, 4, 6, 8, 10, 20, 32]
     - **역순으로 순회**: `for i in range(len(my_list) - 1, -1, -1)` (제가 위에 수정한 코드에서 사용한 방식)
     - **새로운 리스트에 조건에 맞는 요소만 추가**: 가장 깔끔하고 파이써닉한 방법.
 
+- while로 풀기
+```python
+def even_elements(lst):
+    '''주어진 리스트에서 홀수를 모두 제거하고, 짝수만을 남긴 리스트를 반환하는 함수
+    단, extend와 pop을 활용하여 구현해야 한다.
+    '''
+    # 짝수만 담을 빈 리스트 생성
+    result = []
+    # while
+    # 원본 리스트가 빌 때까지 반복
+    while len(lst) > 0:
+        # 리스트의 첫 번째 요소를 제거하면서 따로 담기
+        element = lst.pop(0)
+        # 제거한 요소(element)가 짝수인지 확인
+        if element % 2 == 0:
+            # 짝수면 새로운 리스트에 추가
+            result.extend([element])
+    return result
+```
+
+- 새로운 리스트 생성하지 않고 for문으로 풀기
+```python
+def even_elements(lst):
+    '''주어진 리스트에서 홀수를 모두 제거하고, 짝수만을 남긴 리스트를 반환하는 함수
+    단, extend와 pop을 활용하여 구현해야 한다.
+    '''
+    
+    # 리스트의 길이만큼 반복
+    for _ in range(len(lst)):
+        # 리스트의 첫번째 요소를 꺼냄
+        num = lst.pop(0)
+        # 꺼낸 요소가 짝수인지 확인
+        if num % 2 == 0:
+            # 짝수면 리스트의 맨 뒤에 다시 추가
+            lst.extend([num])
+    # 홀수는 버려지고 짝수만 남은 리스트가 남게 됨
+    return lst
+```
+
 
 <br><br>
 
