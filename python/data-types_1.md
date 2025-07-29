@@ -307,8 +307,8 @@ my_str[::-1]  # olleh
 | 종류 | 접두사 | 표현 범위 |
 | --- | --- | --- |
 | 2진수 binary | 0b | 0과 1 |
-| 8진수 octal | 0o | 0~7 |
-| 16진수 hexadecimal | 0x | 0~9, a~f |
+| 8진수 octal | 0o | 0 ~ 7 |
+| 16진수 hexadecimal | 0x | 0 ~ 9, a ~ f |
 
 ### 부동소수점(반올림) 오차
 
