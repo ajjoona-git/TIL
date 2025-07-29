@@ -11,7 +11,25 @@
 - 슬라이싱: `new_list = old_list[:]` (리스트에만 해당)
 - `list()`, `dict()`, `set()` 생성자: `new_list = list(old_list)`
 
-![얕은 복사](../images/data-dypes_2_3.png)
+```python
+# 얕은 복사
+arr1 = [1, 2, ['a', 'b']]
+arr2 = arr1[:]  # 슬라이싱을 이용한 얕은 복사
+print(arr1 == arr2)  # True, 값 비교
+print(arr1 is arr2)  # False, 객체 비교
+
+# 리스트에 값 추가
+arr1.append(0)
+# 리스트 내부 리스트에 값 추가
+arr1[2].append('c')
+
+print(arr1)  # [1, 2, ['a', 'b', 'c'], 0]
+print(arr2)  # [1, 2, ['a', 'b', 'c']]
+
+print(arr1 == arr2)  # False, 값 비교
+print(arr1 is arr2)  # False, 객체 비교
+```
+![얕은 복사](../images\data-types_2_3.png)
 
 ### 단순 참조
 
