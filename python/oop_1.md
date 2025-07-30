@@ -14,9 +14,9 @@
 | 데코레이터 | 상속 |
 | --- | --- |
 | 원본 코드는 그대로 두고 | 자식 클래스 내부에 원본 코드가 포함, 변경될 수 있음 |
-| 그 주변에 추가적인 기능을 덧붙이는 것 | 부모 클래스의 모든 것을 물려받아 새로운 자식 클래스 안에서 변경/추가 |
+| 그 주변에 추가적인 기능을 덧붙이는 것 | 부모 클래스의 모든 것을 물려받아 새로운 자식 클래스 안에서 변경(오버라이드)/추가 |
 | 함수를 인자로 받아서 새로운 함수를 반환하는 고차 함수(higher-order function) | "is-a" 관계 (예: `Dog` is a `Animal`) |
-| 주로 **함수**의 기능 확장/수정 (클래스에도 적용 가능) | 주로 **클래스**의 기능 확장/재정의 |
+| 주로 **함수**의 기능을 수평적으로 확장/수정 (클래스에도 적용 가능) | 주로 **클래스**의 기능을 수직적으로 확장/재정의 |
 
 **언제 무엇을 사용할까?**
 
@@ -28,6 +28,106 @@
     - 함수(또는 메서드)의 **기존 로직을 변경하지 않고**, 실행 전후에 **부가적인 기능(로깅, 인증, 시간 측정, 캐싱 등)을 유연하게 추가/제거**하고 싶을 때.
     - 동일한 부가 기능을 여러 함수에 반복적으로 적용해야 할 때.
     - 클래스 계층 구조를 복잡하게 만들지 않고 기능을 확장하고 싶을 때.
+
+```python
+## 상속의 예시
+class Animal:
+    def speak(self):
+        return "동물이 소리를 냅니다."
+
+class Dog(Animal): # Animal을 상속받아 Dog 클래스 생성
+    def speak(self): # 부모의 메서드를 재정의 (오버라이드)
+        return "멍멍!"
+
+class SmartDog(Dog): # Dog의 기능을 물려받아 추가 확장
+    def learn_trick(self):
+        return "재주를 부립니다!"
+
+# 사용
+dog = Dog()
+print(dog.speak()) # 멍멍!
+
+smart_dog = SmartDog()
+print(smart_dog.speak()) # 멍멍!
+print(smart_dog.learn_trick()) # 재주를 부립니다!
+```
+
+```python
+## 데코레이터 예시
+# 데코레이터 정의
+def my_decorator(func):
+	def wrapper():
+		# 함수 실행 전에 수행할 작업
+		print("함수 실행 전")
+		# 원본 함수 호출
+		result = func()
+		# 함수 실행 후에 수행할 작업
+		return result
+	return wrapper
+
+# 데코레이터 사용
+@my_decorator
+def my_function():
+	print("원본 함수 실행")
+	
+my_function()
+"""
+함수 실행 전
+원본 함수 실행
+함수 실행 후
+"""
+```
+
+
+## [클래스]
+
+### 입출금이 가능한 은행 계좌 클래스 만들기
+
+```python
+# 입출금이 가능한 은행 계좌 클래스 만들기
+class BankAccount:
+		# 클래스 변수
+    interest_rate = 0.02  # 이자율
+		# 생성자 메서드
+    def __init__(self, owner, balance=0):
+        self.owner = owner  # 소유주
+        self.balance = balance  # 잔액
+        
+		# 입금
+    def deposit(self, amount):
+        self.balance += amount
+    # 출금
+    def withdraw(self, amount):
+        if self.balance >= amount:
+            self.balance -= amount
+        else:
+            print('잔액이 부족합니다.')
+            
+    # 클래스 메서드
+    # 이자율 변경
+    @classmethod
+    def set_interest_rate(cls, rate):
+        cls.interest_rate = rate
+        
+		# 스태틱 메서드
+		# 잔액이 양수인지 확인
+    @staticmethod
+    def is_positive(amount):
+        return amount > 0
+
+# 인스턴스 생성
+alice_acc = BankAccount('Alice', 1000)
+
+alice_acc.deposit(500)
+alice_acc.withdraw(200)
+print(alice_acc.balance)  # 1300
+
+BankAccount.set_interest_rate(0.03)
+print(BankAccount.interest_rate)  # 0.03
+
+print(BankAccount.is_positive(alice_acc.balance))  # True
+```
+
 
 <br><br>
 

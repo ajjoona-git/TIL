@@ -189,6 +189,32 @@ D. `final_name = "Guest" and user_name`
 >  `user_name`이 비어있으면(Falsy) "Guest"를, 비어있지 않으면(Truthy) `user_name`을 반환하여 의도에 맞게 동작합니다.
 
 
+### 논리 연산자의 우선순위
+**not → and → or**
+
+```python
+x = 2
+y = 5
+z = 2
+result = x == z or x > y and not z 
+print(result)  # True
+```
+
+1. **`not z` 평가 (가장 높은 우선순위: `not`)**
+    - `z`는 `2`입니다. 파이썬에서 `0`이 아닌 모든 숫자는 불리언(Boolean) 값으로 변환될 때 `True`로 간주됩니다.
+    - 따라서 `not z`는 `not True`가 되고, 결과는 `False`
+    - 현재 식: `x == z or x > y and False`
+2. **`x > y and False` 평가 (`and`는 `or`보다 우선순위가 높음)**
+    - 먼저 `x > y`를 평가합니다: `2 > 5`는 `False`입니다.
+    - 이제 `False and False`를 평가합니다. `and` 연산자는 왼쪽 피연산자가 `False`이면 오른쪽 피연산자를 평가하지 않고 바로 `False`를 반환합니다.
+    - 따라서 `x > y and not z` (즉, `False and False`)의 결과는 `False`
+    - 현재 식: `x == z or False`
+3. **`x == z or False` 평가 (`or` 연산)**
+    - 먼저 `x == z`를 평가합니다: `2 == 2`는 `True`입니다.
+    - 이제 `True or False`를 평가합니다. `or` 연산자는 왼쪽 피연산자가 `True`이면 오른쪽 피연산자를 평가하지 않고 바로 `True`를 반환합니다.
+    - 따라서 `x == z or x > y and not z` 전체의 최종 결과는 `True`
+
+
 ## 실습
 
 ### [2985. 리스트 활용하기_Lv1]
