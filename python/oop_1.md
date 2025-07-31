@@ -128,6 +128,82 @@ print(BankAccount.interest_rate)  # 0.03
 print(BankAccount.is_positive(alice_acc.balance))  # True
 ```
 
+## [메서드 오버라이딩]
+
+### 메서드 오버라이딩 주의사항
+
+- 파라미터 구조, 시그니처(Signature)를 동일하게 유지할 것.
+
+→ 객체 지향 프로그래밍의 핵심 개념인 `다형성(Polymorphism)`을 위반하여 예기치 않은 오류를 유발합니다.
+
+> 다형성(Polymorphism)
+> 
+> - 서로 다른 클래스의 객체가 **동일한 메서드 호출에 대해 각자의 방식대로 다르게 응답**하는 능력
+> - 마치 우리가 여러 동물에게 "울어봐"라고 똑같이 명령했을 때, 개는 "멍멍", 고양이는 "야옹"처럼 **각자 다른 방식으로 행동**하는 것과 같음
+
+```python
+# 잘못된 오버라이딩 예시
+class Animal:
+    def eat(self):
+        print('Animal이 먹는 중')
+
+class Dog(Animal):
+    def eat(self, food): # 시그니처가 다름!
+        print(f'Dog가 {food}를 먹는 중')
+
+# 동물들에게 밥을 주는 함수 (다형성 활용)
+def feed_animal(animal):
+    animal.eat() # 여기서 TypeError 발생 (food 인자 누락)
+
+# 객체 생성
+dog = Dog()
+feed_animal(dog)  # TypeError: Dog.eat() missing 1 required positional argument: 'food'
+"""
+feed_animal 함수가 dog.eat()을 호출할 때 food 인자를 넘겨주지 않아서 생기는 
+런타임(runtime) 오류입니다. 즉, 코드가 실행되다가 문제가 발생한 거죠.
+"""
+```
+
+**데코레이터를 활용해서 메서드로 만들면 안 될까요?**
+
+- `feed_animal` 함수의 주된 목적은 **입력받은 `animal` 객체의 `eat()` 메서드를 호출하는 것**입니다. `feed_animal`은 그 자체가 핵심 로직을 수행하는 함수이지, 다른 함수의 실행을 '꾸미는' 역할을 하는 것이 아닙니다.
+- 데코레이터는 **기존 함수의 동작을 수정하거나 부가 기능을 추가**할 때 유용합니다 (예: 로깅, 시간 측정, 권한 검사 등).
+
+### 추상 클래스(ABCs)를 활용한 시그니처 강제
+
+- `abc` 모듈 (추상 클래스)를 사용하는 이유: '설계' 단계에서의 강제
+- `abc` 모듈을 사용하면 명시적으로 추상 메서드(Abstract Method)를 정의하여, 해당 추상 메서드를 상속받는 모든 자식 클래스들이 반드시 그 메서드를 구현하도록 강제할 수 있다.
+    - 파이썬의 덕 타이핑(Duck Typing): 특정 클래스가 어떤 메서드를 반드시 가져야 한다고 직접적으로 강제하지 않는다.
+
+```python
+# 추상 클래스(ABC)를 사용한 시그니처 강제
+from abc import ABC, abstractmethod
+
+class Animal(ABC):
+    @abstractmethod
+    def eat(self): # 추상 메서드로 정의 (매개변수 없음)
+        pass
+
+class Dog(Animal):
+    def eat(self, food): # 시그니처가 다름!
+        print(f'Dog가 {food}를 먹는 중')
+
+# 여기서 바로 TypeError 발생!
+# Dog 클래스 정의만으로도 문제가 있다는 것을 알려줌.
+# 즉, 객체 생성 시점에 'TypeError: Can't instantiate abstract class Dog with abstract method eat' 발생.
+dog = Dog() # <--- 여기서 에러가 발생하여, feed_animal(dog)까지 가지도 않습니다.
+feed_animal(dog)
+```
+
+- '실행 전'에 오류 발견 (설계 오류 방지): abc 모듈의 추상 클래스를 사용하면, Dog 클래스가 Animal의 eat() 메서드를 잘못 구현한 시점에서 바로 오류를 감지할 수 있습니다.
+
+| 특징 | 일반적인 TypeError (추상 클래스X) | abc 모듈을 사용한 추상 클래스 |
+| --- | --- | --- |
+| 발견 시점 | 런타임 시점 (코드가 실행되다가 문제 발생) | 객체 인스턴스화 시점 (코드 실행 전 또는 객체 생성 시점) |
+| 목적 | 코드 실행 중 발생한 오류 알림 | 설계 단계에서 규칙 강제 및 오류 방지, 명확한 인터페이스 제공 |
+| 강제 강도 | 느슨함 (실행해보지 않으면 모름) | 강력함 (규칙 위반 시 객체 생성 자체를 막음) |
+| 코드 품질 | 오류 발생 가능성이 높고 디버깅 어려울 수 있음 | 더 안정적이고 예측 가능한 코드, 협업에 유리 |
+
 
 <br><br>
 
@@ -317,6 +393,188 @@ class Person:
 
 주의: 클래스와 인스턴스 모두 모든 메서드를 호출할 수 있음(기능적으로 가능). 하지만 **클래스는 클래스 메소드와 스태틱 메서드만 사용하고, 인스턴스는 인스턴스 메서드만 사용할 것.**
 
+
+## 상속
+
+한 클래스(부모)의 속성과 메서드를 다른 클래스(자식)가 물려받는 것
+
+- 자식 클래스를 정의할 때 반드시 상속하려는 부모 클래스 이름을 함께 선언해야 한다.
+- 상속을 통해 기존 클래스의 속성과 메서드를 **재사용**할 수 있다.
+- 기존 클래스를 수정하지 않고도 **기능을 확장**할 수 있다.
+- 클래스들 간의 **계층 구조**를 형성할 수 있다.
+- 수정이 필요한 범위를 최소화할 수 있다.
+
+### 클래스 상속
+
+중복되는 속성을 부모 클래스에서 한 번만 정의하고, 필요한 클래스들은 자식 클래스에 구현한다.
+
+```python
+# 상속을 사용한 계층구조 변경
+class Person:
+    def __init__(self, name, age):
+        self.name = name
+        self.age = age
+
+    def talk(self):  # 메서드 재사용
+        print(f'반갑습니다. {self.name}입니다.')
+
+# Person의 자식 클래스
+class Professor(Person):
+    def __init__(self, name, age, department):
+        self.name = name
+        self.age = age
+        self.department = department
+
+# Person의 자식 클래스
+class Student(Person):
+    def __init__(self, name, age, gpa):
+        self.name = name
+        self.age = age
+        self.gpa = gpa
+
+# 부모 Person 클래스의 talk 메서드를 활용
+p1 = Professor('김교수', 50, '컴퓨터공학과')
+p1.talk()
+
+# 부모 Person 클래스의 talk 메서드를 활용
+s1 = Student('김학생', 20, 3.5)
+s1.talk()
+```
+
+### 메서드 오버라이딩 (Overriding)
+
+부모 클래스의 메서드를 같은 이름, 같은 파라미터 구조로 재정의하는 것 (덮어쓰기)
+
+- 자식 클래스의 인스턴스에서는 오버라이드된 (자식 클래스의) 메서드가 호출된다.
+
+```python
+class Animal:
+    def eat(self):
+        print('Animal이 먹는 중')
+
+class Dog(Animal):
+    # 오버라이딩 (부모 클래스 Animal의 eat 메서드를 재정의)
+    def eat(self):
+        print('Dog가 먹는 중')
+
+# 자식 클래스의 인스턴스
+my_dog = Dog()
+my_dog.eat()  # Dog가 먹는 중
+
+# 부모 클래스의 인스턴스
+my_animal = Animal()
+my_animal.eat()  # Animal이 먹는 중
+```
+
+### [참고] 오버로딩 (Overloading)
+
+하나의 클래스 안에서 동일한 이름, 다른 파라미터를 가진 여러 메서드를 정의하는 것
+
+- 파이썬은 지원하지 않는다.
+- 파이썬에서는 메서드 이름이 같으면 앞선 정의를 덮어쓰기 때문에, **마지막으로 선언한 메서드만 인식**한다.
+
+## 다중 상속
+
+- 중복된 속성이나 메서드가 있는 경우 **상속 순서에 의해 결정**된다.
+
+### 다이아몬드 문제
+
+두 클래스 B와 C가 A에서 상속되고 클래스 D가 B와 C 모두에서 상속될 때 발생하는 모호함
+
+- D는 B의 메서드 중 어떤 버전을 상속하는가? 아니면 C의 메서드 버전을 상속하는가?
+
+### MRO 알고리즘
+
+파이썬이 메서드를 찾는 순서에 대한 규칙
+
+- 기본적으로 왼쪽 → 오른쪽, 계층 구조에서 **중복되는 클래스는 한 번만 확인**
+- `mro()`, `__mro__` 메서드 통해서 MRO 순서 확인 가능
+- 예측 가능하게 유지되어 코드의 재사용성과 유지보수성이 향상된다.
+
+```python
+## 상속받는 순서에 따라 달라지는 MRO 순서
+# MRO : D -> B -> C -> A -> object
+class D(B, C):
+    def __init__(self):
+        super().__init__()
+        print('D Constructor')
+
+# [<class '__main__.D'>, <class '__main__.B'>, <class '__main__.C'>, <class '__main__.A'>, <class 'object'>]
+print(D.mro())
+
+# MRO : D -> C -> B -> A -> object
+class D(C, B):
+    def __init__(self):
+        super().__init__()
+        print('D Constructor')
+
+# [<class '__main__.D'>, <class '__main__.C'>, <class '__main__.B'>, <class '__main__.A'>, <class 'object'>]
+print(D.__mro__)
+```
+
+![diamond problem](../images/oop_1_1.png)
+
+### super()
+
+**MRO에 따라** 현재 클래스의 부모(상위) 클래스의 메서드나 속성에 접근할 수 있게 해주는 내장 함수
+
+- 단일 상속에서, 클래스 이름이 바뀌거나 부모 클래스가 교체되어도 코드 수정이 용이하다.
+- MRO 순서를 기반으로 **“현재 클래스의 다음 순서” 클래스(또는 메서드)**를 가리킨다.
+- **시작점이 누구냐에 따라 MRO 순서가 달라지고, 이에 따라 super()가 가리키는 클래스도 달라진다.**
+
+```python
+# 다중 상속
+class ParentA:
+    def __init__(self):
+		    # ParentA의 super()는 아직 모른다.
+		    # child 인스턴스가 생성되는 순간, Child 클래스의 MRO가 결정된다.
+        # super().__init__()
+        self.value_a = 'ParentA'
+
+    def show_value(self):
+        print(f'Value from ParentA: {self.value_a}')
+
+class ParentB:
+    def __init__(self):
+        self.value_b = 'ParentB'
+
+    def show_value(self):
+        print(f'Value from ParentB: {self.value_b}')
+
+class Child(ParentA, ParentB):
+    def __init__(self):
+        super().__init__()  # ParentA 클래스의 __init__ 메서드 호출
+        self.value_c = 'Child'
+
+    def show_value(self):
+        super().show_value()  # ParentA 클래스의 show_value 메서드 호출
+        print(f'Value from Child: {self.value_c}')
+
+child = Child()
+child.show_value()
+"""
+Value from ParentA: ParentA
+Value from Child: Child
+"""
+
+print(child.value_c)  # Child
+print(child.value_a)  # ParentA
+print(
+    child.value_b
+)  # AttributeError: 'Child' object has no attribute 'value_b'
+
+"""
+<Child 클래스의 MRO>
+Child -> ParentA -> ParentB
+
+super()는 단순히 “직계 부모 클래스를 가리킨다”가 아니라, 
+MRO 순서를 기반으로 “현재 클래스의 다음 순서” 클래스(또는 메서드)를 가리킴
+
+따라서 ParentA에서 super()를 부르면 MRO상 다음 클래스인 ParentB.__init__()가 호출됨
+"""
+```
+
+
 ## 참고
 
 ### 클래스와 인스턴스 간의 이름 공간
@@ -354,3 +612,10 @@ print(c1)  # 원의 반지름: 10
 ### 데코레이터 (Decorator)
 
 다른 함수의 코드를 유지한 채로 수정하거나 확장하기 위해 사용되는 함수
+
+
+### 클래스의 의미와 활용
+
+- 프로그램 규모가 커지면 서로 관련 있는 정보와 기능을 따로따로 관리하기가 어려워진다.
+- 클래스를 활용하면 데이터와 기능을 한 덩어리로 묶어 구조를 명확히 할 수 있다.
+- 오류를 찾거나 기능을 개선하는 데에 유리하다.
