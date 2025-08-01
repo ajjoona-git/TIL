@@ -205,6 +205,148 @@ feed_animal(dog)
 | 코드 품질 | 오류 발생 가능성이 높고 디버깅 어려울 수 있음 | 더 안정적이고 예측 가능한 코드, 협업에 유리 |
 
 
+## [다중 상속]
+
+### [3006. 다중 상속의 이해_Lv3]
+
+```python
+class BaseModel:
+    PK = 1
+    TYPE = 'Basic Model'
+
+    def __init__(self, data_type, title, content, created_at, updated_at):
+        self.PK = BaseModel.PK
+        self.data_type = data_type 
+        self.title = title 
+        self.content = content 
+        self.created_at = created_at 
+        self.updated_at = updated_at
+        BaseModel.PK += 1
+    def save(self):
+        print('데이터를 저장합니다.')
+
+class Novel(BaseModel):
+    def __init__(self, data_type, title, content, created_at, updated_at, author):
+        super().__init__(data_type, title, content, created_at, updated_at)
+        self.author = author
+    
+class Other(BaseModel):
+    TYPE = 'Other Model'
+
+    def save(self):
+        print('데이터를 다른 장소에 저장합니다.')    
+
+class ExtendedModel(Novel, Other):
+    '''
+    ExtendedModel은 Novel과 Other 클래스를 다중 상속 받는다.
+    - 새로운 속성 extended_type을 가진다.
+    - display_info 메서드: 클래스 변수 PK와 클래스 변수 TYPE, 그리고 인스턴스 변수 extended_type을 출력한다.
+    - save 메서드: 호출시 "데이터를 확장해서 저장합니다."를 출력하도록 수정한다.
+    '''
+    def __init__(self, data_type, title, content, created_at, updated_at, author, extended_type):
+        super().__init__(data_type, title, content, created_at, updated_at, author)
+        self.extended_type = extended_type
+
+    def display_info(self):
+        print(f'PK: {self.PK}, TYPE: {self.TYPE}, Extended Type: {self.extended_type}')
+
+    def save(self):
+        print('데이터를 확장해서 저장합니다.')
+
+extended_instance1 = ExtendedModel('data type', 'title', 'content', 'created_at', 'updated_at', 'author', 'Extended Type')
+extended_instance1.display_info()  # MRO 상 가장 먼저 발견되는 ExtendedModel의 display_info 메서드 실행
+extended_instance1.save()
+extended_instance2 = ExtendedModel('data type', 'title', 'content', 'created_at', 'updated_at', 'author', 'Extended Type')
+extended_instance2.display_info()
+
+'''출력 결과:
+PK: 1, TYPE: Other Model, Extended Type: Extended Type
+데이터를 확장해서 저장합니다.
+PK: 2, TYPE: Other Model, Extended Type: Extended Type
+'''
+```
+
+- `self.PK`는 인스턴스 생성 시 설정된다.
+
+
+### 다중상속에서 자식(말단) 클래스의 인스턴스 생성 시 작동 순서
+
+- ExtendedModel 클래스의 MRO
+
+```python
+# [<class '__main__.ExtendedModel'>, <class '__main__.Novel'>, <class '__main__.Other'>, <class '__main__.BaseModel'>, <class 'object'>]
+print(ExtendedModel.mro())
+```
+
+ExtendedModel 클래스의 인스턴스 extended_instance 를 생성하면 MRO에 따라서,
+
+1. `ExtendedMode.__init__()` 실행
+
+2. ExtendedMode의 super()를 호출: `Novel.__init__()` 실행
+
+3. Novel의 super()를 호출: `Other.__init__()` 실행
+
+**4-1. 생성자가 없는 경우 (현재 코드):** `BaseModel.__init__()` 실행
+
+Other의 생성자 메서드는 정의되어 있지 않다. 이 경우 파이썬은 MRO를 따라 `Other`의 다음 클래스인 `BaseModel`에서 `__init__`를 찾아 호출한다.
+
+4-2. Other의 super()를 호출: `BaseModel.__init__()` 실행
+
+```python
+def __init__(self, data_type, title, content, created_at, updated_at):
+    super().__init__(data_type, title, content, created_at, updated_at)
+```
+
+~~4-3. pass: MRO의 다음 클래스가 실행되지 않는다.~~
+
+```python
+def __init__(self, data_type, title, content, created_at, updated_at):
+    pass
+```
+
+5. `BaseModel.__init__() `실행
+    - `self.PK = BaseModel.PK` : extended_instance의 self.PK = 1
+    - `BaseModel.PK += 1` : 클래스 변수 `BaseModel.PK` = 2
+
+6. `Novel.__init__()` 실행 재개
+
+7. `ExtendedModel.__init__()` 실행 재개
+
+### [정리] 다중상속에서 생성자 메서드
+
+- 생성자가 없는 경우: 부모의 메서드를 자동으로 상속받는다.
+
+- `super().__init__()`을 호출하는 경우: 본인 클래스에 정의된 **init** 메서드를 먼저 실행하고, 메서드 안의 super().__init__(…) 호출을 통해 부모의 생성자를 호출한다. 부모의 메서드를 호출하는 역할을 명시적으로 작성해준 것.
+
+명시적으로 `super()`를 호출하면 MRO에 따라 다음 부모 클래스의 생성자를 체인처럼 계속 호출하게 되어, 모든 부모 클래스의 초기화 로직이 순서대로 실행됩니다. 반면 생성자가 없는 클래스는 MRO의 흐름을 단순히 통과시키는 역할을 합니다.
+
+### 클래스 메서드를 활용하여 클래스 변수 수정
+
+```python
+class BaseModel:
+    PK = 1
+    TYPE = 'Basic Model'
+
+    @classmethod
+    def get_next_pk(cls):
+        current_pk = cls.PK
+        cls.PK += 1
+        return current_pk
+
+    def __init__(self, data_type, title, content, created_at, updated_at):
+        self.PK = BaseModel.get_next_pk()  # 클래스 메서드를 통해 PK를 가져오고 1 증가시킴
+        self.data_type = data_type 
+        self.title = title 
+        self.content = content 
+        self.created_at = created_at 
+        self.updated_at = updated_at
+
+    def save(self):
+        print('데이터를 저장합니다.')
+```
+
+
+
 <br><br>
 
 # 수업 필기
