@@ -28,6 +28,7 @@
 
 ### 알고리즘
 * [Bubble Sort](algorithm/bubble-sort.md)
+* [Counting Sort](algorithm/counting-sort.md)
 
 ### 관통 프로젝트
 * [1회차 도전 과제](project-01/01.md)
