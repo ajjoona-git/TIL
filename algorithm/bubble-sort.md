@@ -1,6 +1,8 @@
 # 코드 리뷰
 
-## 내 코드
+## Gravity
+
+### 처음 작성한 코드
 
 ```python
 # Gravity
@@ -36,15 +38,46 @@ for test_case in range(1, T+1):
     print(f'#{test_case} {max_drop}')
 ```
 
-## 코드리뷰 피드백
+### 코드리뷰 피드백
 
-낙차를 저장한 리스트를 생성한 후, 리스트의 최대값을 구함 ⇒ 최대값만 필요한거니까 리스트 만들 필요 없이, 낙차를 구한 후 바로 최대값과 비교해서 갱신해도 될 듯
+낙차를 저장한 리스트를 생성한 후, 리스트의 최대값을 구함 
 
-## TIL
+⇒ 최대값만 필요한거니까 리스트 만들 필요 없이, 낙차를 구한 후 바로 최대값과 비교해서 갱신해도 될 듯!
 
-문제에서 요구하는 사항에 맞춘 코드 작성이 필요할 듯.
+### 수정한 코드
 
-출력 값에 불필요한 과정이라면 생략하기.
+```python
+# Gravity_ver2
+
+T = int(input())  # 테스트 케이스의 수
+
+for test_case in range(1, T+1):
+    N = int(input())  # 방의 가로길이
+    boxes = list(map(int, input().split()))  # 상자의 개수
+
+    max_drop = 0  # 최대 낙차량
+
+    # boxes를 순회하면서
+    for i in range(N):
+        count = 0
+        # 오른쪽 상자의 개수 중 현재 개수보다 작은 열의 길이를 센다.
+        for j in range(i+1, N):
+            if boxes[j] < boxes[i]:
+                count += 1
+        # 현재 낙차량이 최대값보다 크다면
+        if count > max_drop:
+            # 최대 낙차량을 갱신한다.
+            max_drop = count
+
+    # 결과를 출력한다.
+    print(f'#{test_case} {max_drop}')
+```
+
+### 느낀점
+
+- 문제에서 요구하는 사항에 맞춘 코드 작성이 필요할 듯.
+
+- 출력 값에 불필요한 과정이라면 생략하기!
 
 <br><br>
 
