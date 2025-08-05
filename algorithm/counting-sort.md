@@ -84,6 +84,11 @@ for test_case in range(1, T+1):
     print(f"#{test_case} {max - min}")
 ```
 
+## 코드리뷰 피드백
+
+변수명에 `min`, `max`, `sum` 쓰지 마!!!
+
+
 ## 6485. 삼성시의 버스 노선
 ### 접근 방법
 
