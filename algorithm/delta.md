@@ -95,7 +95,7 @@ for test_case in range(1, T+1):
 
 ### 코드리뷰 피드백
 
-`for _ in range(N):` 안에 `else: break` 탈출 조건 추가하면 좋을 듯
+1. `for _ in range(N):` 안에 `else: break` 탈출 조건 추가하면 좋을 듯
 
 ```python
 # 수정한 코드
@@ -112,6 +112,17 @@ for test_case in range(1, T+1):
 		                break
 ...		                
 ```
+
+2. 1차원 배열의 경우 리스트의 요소를 다중인자를 받아 언패킹하는 방법으로 간단하게 표기 가능
+```python
+# 결과 출력
+    print(f'#{test_case}')
+    for row in snail:
+        # row 리스트의 각 정수 요소를 문자열로 변환 후 공백으로 연결
+        print(*row)
+```
+
+
 
 ### 다른 풀이 (테두리부터 채워나가는 레이어, '벽' 만나면 회전)
 ```python
