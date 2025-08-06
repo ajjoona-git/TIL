@@ -57,6 +57,8 @@
 
 * [버블 정렬](algorithm/bubble-sort.md)
 * [카운팅 정렬](algorithm/counting-sort.md)
+* [2차원 배열](algorithm/2d-array.md)
+* [델타 이동](algorithm/delta.md)
 
 ### **🚀 관통 프로젝트**
 실제 프로젝트를 통해 학습하고 적용한 내용들을 기록합니다.
