@@ -1,3 +1,80 @@
+# 코드 리뷰
+
+## [4843. 특별한 정렬]
+
+## 내 코드
+
+<aside>
+💡
+
+짝수 번째는 내림차순, 홀수 번째는 오름차순으로 선택 정렬 (10번만 정렬 진행)
+
+</aside>
+
+```python
+# 4843: 특별한 정렬
+
+# 선택정렬로
+
+# import sys
+# sys.stdin = open("sample_input (1).txt")
+
+T = int(input())
+
+for tc in range(1, T + 1):
+    N = int(input())
+    arr = list(map(int, input().split()))
+
+    # 확정할 위치의 인덱스를 지정: 10개까지 출력
+    for i in range(10):
+        # 짝수번째는 내림차순
+        if i % 2 == 0:
+            # 가장 큰 값을 골라서 i번째에 할당한다.
+            max_idx = i
+            for j in range(i + 1, N):
+                if arr[max_idx] < arr[j]:
+                    max_idx = j
+            arr[i], arr[max_idx] = arr[max_idx], arr[i]
+        
+        # 홀수번째는 오름차순
+        else:
+            # 가장 작은 값을 골라서 i번째에 할당한다.
+            min_idx = i
+            for j in range(i + 1, N):
+                if arr[min_idx] > arr[j]:
+                    min_idx = j
+            arr[i], arr[min_idx] = arr[min_idx], arr[i]
+
+    print(f"#{tc}", end=" ")
+    print(*arr[:10])
+```
+
+### 다른 풀이
+1. 오름차순 정렬 후 인덱스가 0~4, -1~-5인 값을 받아와 새로운 배열로 만들기
+
+```python
+new_arr = [] # 인덱스를 활용해서 for문으로 문제에 순서에 맞게 넣기
+# 10 1 , 9 2, 8 3 .. 이런식으로 넣음 
+for i in range(1, 6):
+    new_arr.append(arr[-i]) # 큰수 
+    new_arr.append(arr[i-1]) # 작은수 
+print(f'#{tc}', *new_arr)
+```
+
+### 리스트 출력하는 방법
+
+```python
+#1. 다중 할당
+print(f'#{tc}', *new_arr)
+
+#2. .pop()
+value = arr.pop(0)
+print(value)
+
+#3. .join()
+print(f"#{t} {' '.join(map(str, result))}")
+```
+
 # 수업 필기
 
 ## 선택 정렬 (Selection Sort)
