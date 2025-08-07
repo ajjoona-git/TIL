@@ -55,10 +55,14 @@
 
 코드 저장소 [![GitHub Repository](https://img.shields.io/badge/GitHub-algorithm--inclass-yellow?style=flat&logo=github)](https://github.com/ajjoona-git/algorithm-inclass)
 
-* [버블 정렬](algorithm/bubble-sort.md)
-* [카운팅 정렬](algorithm/counting-sort.md)
+* [정렬](algorithm/sort.md)
+  * [버블 정렬](algorithm/bubble-sort.md)
+  * [카운팅 정렬](algorithm/counting-sort.md)
+  * [선택 정렬](algorithm/selection-sort.md)
 * [2차원 배열](algorithm/2d-array.md)
 * [델타 이동](algorithm/delta.md)
+* [부분 집합](algorithm/power-set.md)
+* [검색](algorithm/search.md)
 
 ### **🚀 관통 프로젝트**
 실제 프로젝트를 통해 학습하고 적용한 내용들을 기록합니다.
