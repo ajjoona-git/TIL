@@ -1,8 +1,69 @@
 # 코드 리뷰
 
+## [1221. GNS]
+
+### 내 코드
+
+```python
+# 1221. GNS
+
+# import sys
+# sys.stdin = open("GNS_test_input.txt")
+
+T = int(input())  # 테스트 케이스의 수
+
+numbers = ["ZRO", "ONE", "TWO", "THR", "FOR", "FIV", "SIX", "SVN", "EGT", "NIN"]
+
+def counting_sort(arr, K):
+    """
+    카운팅 정렬 방식으로 정렬한 배열을 반환하는 함수
+        K: 주어진 배열의 요소 중 최대값
+    """
+    # 카운트 배열 생성
+    count = [0] * (K+1)
+    for num in arr:
+        count[numbers.index(num)] += 1
+
+    # 카운트 배열 누적합
+    for i in range(1, K+1):
+        count[i] += count[i-1]
+
+    # 결과 배열에 저장
+    sorted_arr = [0] * len(arr)
+    for num in reversed(arr):
+        count[numbers.index(num)] -= 1
+        sorted_arr[count[numbers.index(num)]] = num
+
+    return sorted_arr
+
+for _ in range(T):
+    # tc: 테스트 케이스의 번호(# 포함)
+    # len_s: 테스트 케이스의 길이, 즉 단어의 개수
+    tc, len_s = input().split()
+    len_s = int(len_s)
+    # s: 외계행성의 숫자들
+    s = list(input().split())
+
+    sorted_s = counting_sort(s, 9)
+
+    print(tc)
+    print(*sorted_s)
+```
+
+### 코드리뷰 피드백
+
+카운팅 정렬에서 결과 배열에 값을 할당할 때, 해당 문제의 경우 **정렬의 안정성을 보장할 필요가 없기 때문**에 누적합한 카운트 배열의 값(int)을 arr의 값(str)의 `*` 반복으로 활용할 수 있다.
+
+```python
+# 누적합한 카운트 배열에서 바로 결과 출력
+for num in numbers:
+    num_cnt = count[numbers.index(num)]
+    print((num + ' ') * num_cnt, end='')
+```
+
 ## [5432. 쇠막대기 자르기]
 
-## 내 코드
+### 내 코드
 
 1. 쇠막대기의 끝점이 발견될 때마다 해당 쇠막대기의 조각 수를 더해준다.
 - 2중 for문: $O(N^2)$ → 제한 시간 초과
@@ -77,7 +138,7 @@ for tc in range(1, T+1):
 
 ## [5356. 의석이의 세로로 말해요]
 
-## 내 코드
+### 내 코드
 
 ```python
 # 5356. 의석이의 세로로 말해요
