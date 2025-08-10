@@ -34,7 +34,7 @@ arr1 = []
 for _ in range(N):
 		arr.append([0] * M)
 
-**# Don't
+# Don't
 arr2 = [[0] * M] *  N**
 
 arr2[0][0] = 1
@@ -42,13 +42,11 @@ arr2[0][0] = 1
 # 첫 번째 행만 바꿨는데 모든 행이 바뀜
 ```
 
+arr1 예시
 ![arr1 예시](../images/2d-array_1.png)
 
-arr1 예시
-
-![arr 2 예시](../images/2d-array_2.png)
-
 arr 2 예시
+![arr 2 예시](../images/2d-array_2.png)
 
 ### N*M 배열 순회
 
@@ -75,7 +73,7 @@ for r in range(N):
         print(arr[r][c], end=' ')  # 1 2 3 4 5 6 7 8 9 
 ```
 
-1. 열 우선 순회
+2. 열 우선 순회
 
 ```python
 # 열 우선 순회
@@ -84,7 +82,7 @@ for c in range(M):
         print(arr[r][c], end=' ')  # 1 4 7 2 5 8 3 6 9 
 ```
 
-1. 지그재그 순회
+3. 지그재그 순회
 
 ```python
 # 지그재그 순회

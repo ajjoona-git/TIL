@@ -206,11 +206,11 @@ for test_case in range(1, T+1):
 
 2차원 배열의 특정 위치에서 상하좌우 등 인접한 칸을 탐색할 때 유용한 기법
 
-![Snipaste_2025-02-07_01-24-06.png](attachment:f56d854d-31a8-49c2-9a5a-75c3299cef68:Snipaste_2025-02-07_01-24-06.png)
+![delta](../images/delta_1.png)
 
 이동할 각 방향의 행과 열의 변화량을 미리 배열로 정의해두고, 반복문을 통해 인접 칸에 접근하는 방식
 
-- 변화량 배열을 **‘델타(delat)’** 또는 **‘방향 벡터’**라고 부른다.
+- 변화량 배열을 **‘델타(delta)’** 또는 **‘방향 벡터’**라고 부른다.
 1. **4방향 델타 이동**
 
 ```python
@@ -248,7 +248,7 @@ for i in range(4):
     print(arr[nr][nc], end=' ')  # 2 8 4 6 
 ```
 
-1. **8방향 델타 이동**
+2. **8방향 델타 이동**
 
 ```python
 # 8방향 델타: 상, 하, 좌, 우, 좌상, 우상, 좌하, 우하
@@ -265,7 +265,7 @@ dc = [0, 0, -1, 1, -1, 1, -1, 1]
 
 파이썬은 음수 인덱스를 지원하여, `arr[-1]`과 같이 접근하면 오류 대신 리스트의 마지막 요소를 반환한다. 델타 이동 중 계산된 좌표가 `(-1, 0)`이 되었을 때, 오류 없이 마지막 행의 첫 번째 값을 가리키게 되어 논리적 오류를 유발할 수 있다.
 
-1. **범위 안의 좌표만 처리하기**
+2. **범위 안의 좌표만 처리하기**
 
 ```python
 if 0 <= nr < N and 0 <= nc < M:
@@ -273,7 +273,7 @@ if 0 <= nr < N and 0 <= nc < M:
     print(arr[nr][nc])
 ```
 
-1. **범위를 벗어나는 좌표는 건너뛰기**
+3. **범위를 벗어나는 좌표는 건너뛰기**
 
 ```python
 if nr < 0 or nr >= N or nc < 0 or nc >= M:
@@ -287,7 +287,7 @@ print(arr[nr][nc])
 
 NxN 배열에서 각 원소를 중심으로 상하좌우 k칸의 합계 중 최대값 구하기 (`k=2`)
 
-![image.png](attachment:0da247ca-eec8-4b4b-8c68-409bf7dc9b51:image.png)
+![image.png](../images/delta_2.png)
 
 ```python
 max_v = 0
@@ -309,7 +309,7 @@ for i in range(N):
 
 행과 열을 변환한 행렬. `i=j` 선대칭
 
-![image.png](attachment:6276f8ba-bf6b-4e9f-83f7-6a1670d26bc2:image.png)
+![image.png](../images/delta_3.png)
 
 1. **반복문 활용**
 
@@ -322,7 +322,7 @@ for i in range(N):
 				arr[i][j], arr[j][i] = arr[j][i], arr[i][j]
 ```
 
-1. **zip 활용**
+2. **zip 활용**
 
 ```python
 # zip을 이용해 행과 열을 바꾼 뒤, 각 튜플을 다시 리스트로 변환
@@ -335,8 +335,8 @@ transposed_arr = list(map(list, zip(*arr)))
 
 ### 대각선 연산
 
-![image.png](attachment:8924af52-f685-4a07-b70d-33c173d3c1e6:d1523338-f5ac-418b-bd83-9a715e38944d.png)
+![image.png](../images/delta_4.png)
 
-![image.png](attachment:26a906b9-54d5-487c-811a-8b7be04f2b8f:image.png)
+![image.png](../images/delta_5.png)
 
 - 대각선 연산 시 `j`는 `i`와 관련되어 있기 때문에 단일 for문으로 충분히 가능하다.

@@ -128,88 +128,89 @@ for test_case in range(1, T+1):
 ### 접근 방법
 
 **1. 각 정류장에 정차하는 버스의 수를 `num_of_buses` 에 카운팅한다.**
+    
     1. 정류장은 총 5000개이므로 리스트의 길이는 5000+1
     2. 출발점 `Ai` 부터 `Bi`가 인덱스인 값을 +1 한다.
     3. 버스 정류장의 번호 `Ci`를 인덱스로 하는 값을 출력한다.
     
-    ```python
-    # 6485. 삼성시의 버스 노선
-    
-    # import sys
-    # sys.stdin = open("s_input.txt")
-    
-    T = int(input())  # 테스트 케이스의 수
-    
-    # 1. 각 버스 정류장에 정차하는 버스의 수를 카운팅한다.
-    for test_case in range(1, T+1):
-        N = int(input())  # 버스 노선 개수
-    
-        # 정류장에 정차하는 버스의 수.(정류장은 총 5000개)
-        num_of_buses = [0] * 5001
-    
-        # routes = [0] * N  # N개의 버스노선의 출발점과 도착점 리스트
-        for _ in range(N):
-            departure, arrival = map(int, input().split())
-    
-            # 출발점부터 도착점까지의 stops를 +1 한다.
-            for i in range(departure, arrival + 1):
-                num_of_buses[i] += 1
-    
-        P = int(input())  # 궁금한 버스 정류장의 수
-        stations = [int(input()) for _ in range(P)]  # 궁금한 버스 정류장의 번호
-    
-        # 결과를 출력한다.
-        print(f"#{test_case}", end=" ")
-        for station in stations:
-            print(num_of_buses[station], end=" ")
-        print()
-    ```
+```python
+# 6485. 삼성시의 버스 노선
+
+# import sys
+# sys.stdin = open("s_input.txt")
+
+T = int(input())  # 테스트 케이스의 수
+
+# 1. 각 버스 정류장에 정차하는 버스의 수를 카운팅한다.
+for test_case in range(1, T+1):
+    N = int(input())  # 버스 노선 개수
+
+    # 정류장에 정차하는 버스의 수.(정류장은 총 5000개)
+    num_of_buses = [0] * 5001
+
+    # routes = [0] * N  # N개의 버스노선의 출발점과 도착점 리스트
+    for _ in range(N):
+        departure, arrival = map(int, input().split())
+
+        # 출발점부터 도착점까지의 stops를 +1 한다.
+        for i in range(departure, arrival + 1):
+            num_of_buses[i] += 1
+
+    P = int(input())  # 궁금한 버스 정류장의 수
+    stations = [int(input()) for _ in range(P)]  # 궁금한 버스 정류장의 번호
+
+    # 결과를 출력한다.
+    print(f"#{test_case}", end=" ")
+    for station in stations:
+        print(num_of_buses[station], end=" ")
+    print()
+```
     
 **2. Ci를 순회하면서 버스 노선에 포함되는지 계산**
     
-    ```python
-    for i in C_list:
-    	for j in N_list(A, B):
-    		if Aj <= Ci <= Bj:
-    			num_of_buses[i] += 1
-    ```
+```python
+for i in C_list:
+    for j in N_list(A, B):
+        if Aj <= Ci <= Bj:
+            num_of_buses[i] += 1
+```
     
     이렇게 하면 최대 P(500) * N(500) 번 연산 (문제 제한사항은 4초, 가능)
     
-    ```python
-    # 6485. 삼성시의 버스 노선
-    
-    # import sys
-    # sys.stdin = open("s_input.txt")
-    
-    T = int(input())  # 테스트 케이스의 수
-    
-    # 2. Ci를 순회하면서 버스 노선에 포함되는지 계산한다.
-    for test_case in range(1, T+1):
-        N = int(input())  # 버스 노선 개수
-    
-        routes = [0] * N  # N개의 버스노선의 출발점과 도착점 리스트
-        for i in range(N):
-            departure, arrival = map(int, input().split())
-            routes[i] = [departure, arrival]
-    
-        P = int(input())  # 궁금한 버스 정류장의 수
-        stations = [int(input()) for _ in range(P)]  # 궁금한 버스 정류장의 번호
-    
-        num_of_buses = [0] * P  # 정류장에 정차하는 버스의 수
-        # 궁금한 정류장마다 각 버스 노선안에 포함되는지 확인한다.
-        for i in range(P):
-            for route in routes:
-                # 포함되면 num_of_buses를 +1
-                if route[0] <= stations[i] <= route[1]:
-                    num_of_buses[i] += 1
-    
-        # 결과를 출력한다.
-        print(f"#{test_case}", end=" ")
-        for i in range(P):
-            print(num_of_buses[i], end=" ")
-        print()
-    ```
+```python
+# 6485. 삼성시의 버스 노선
+
+# import sys
+# sys.stdin = open("s_input.txt")
+
+T = int(input())  # 테스트 케이스의 수
+
+# 2. Ci를 순회하면서 버스 노선에 포함되는지 계산한다.
+for test_case in range(1, T+1):
+    N = int(input())  # 버스 노선 개수
+
+    routes = [0] * N  # N개의 버스노선의 출발점과 도착점 리스트
+    for i in range(N):
+        departure, arrival = map(int, input().split())
+        routes[i] = [departure, arrival]
+
+    P = int(input())  # 궁금한 버스 정류장의 수
+    stations = [int(input()) for _ in range(P)]  # 궁금한 버스 정류장의 번호
+
+    num_of_buses = [0] * P  # 정류장에 정차하는 버스의 수
+    # 궁금한 정류장마다 각 버스 노선안에 포함되는지 확인한다.
+    for i in range(P):
+        for route in routes:
+            # 포함되면 num_of_buses를 +1
+            if route[0] <= stations[i] <= route[1]:
+                num_of_buses[i] += 1
+
+    # 결과를 출력한다.
+    print(f"#{test_case}", end=" ")
+    for i in range(P):
+        print(num_of_buses[i], end=" ")
+    print()
+```
 
 <br><br>
 
@@ -236,16 +237,17 @@ for test_case in range(1, T+1):
     
     ![CSortUpdatedStepI.gif](../images/counting-sort_1.gif)
     
-4. 누적 합 계산
-카운팅 배열 C를 누적합 형태로 업데이트 `C[i] = C[i] + C[i-1]  # 누적한 원소 값`
-→ 각 원소가 정렬된 배열에서 차지할 최종 위치를 결정하기 위해
-→ 각 값 `i`에 대해, 0부터 `i`까지의 모든 값이 몇 번 등장했는지를 누적해서 계산
+4. 누적 합 계산: 카운팅 배열 C를 누적합 형태로 업데이트 `C[i] = C[i] + C[i-1]  # 누적한 원소 값`
+
+    → 각 원소가 정렬된 배열에서 차지할 최종 위치를 결정하기 위해
+
+    → 각 값 `i`에 대해, 0부터 `i`까지의 모든 값이 몇 번 등장했는지를 누적해서 계산
     
     → 이를 통해 정렬 결과에서 각 원소가 들어갈 위치(인덱스)를 결정할 수 있음
     
     ![Step-II.png](../images/counting-sort_2.png)
     
-1. 결과 배열 생성 및 원소 배치
+5. 결과 배열 생성 및 원소 배치
     1. 입력 배열 A와 동일한 크기의 결과 배열 B를 생성
     2. 생성된 카운트 배열 C의 도움을 받아 입력 배열 `A` 요소를 정렬된 위치에 배치
     즉, 두 번째 단계에서 구성한 것
@@ -301,7 +303,3 @@ print(
     '정렬 결과:', counting_sort(arr, 4)
 )  # 정렬 결과: [0, 1, 1, 1, 2, 3, 4, 4]
 ```
-
-### 정렬 알고리즘 비교
-
-![image.png](../images/counting-sort_4.png)
