@@ -54,6 +54,7 @@
 알고리즘 문제 해결 과정과 주요 개념들을 정리합니다.
 
 코드 저장소 [![GitHub Repository](https://img.shields.io/badge/GitHub-algorithm--inclass-yellow?style=flat&logo=github)](https://github.com/ajjoona-git/algorithm-inclass)
+
 1. 배열 (List)
 * [정렬](algorithm/sort.md)
   * [버블 정렬](algorithm/bubble-sort.md)
@@ -67,7 +68,7 @@
 2. 문자열 (String)
 * [코드 체계](algorithm/incoding.md)
 * [문자열](algorithm/string.md)
-
+* [패턴 매칭](algorithm/brute-force.md)
 
 ### **🚀 관통 프로젝트**
 실제 프로젝트를 통해 학습하고 적용한 내용들을 기록합니다.
