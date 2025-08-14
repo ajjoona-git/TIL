@@ -72,6 +72,7 @@
 
 3. 스택 (Stack)
 * [스택](algorithm/stack.md)
+* [후위 연산](algorithm/postfix.md)
 
 
 
