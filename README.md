@@ -73,6 +73,7 @@
 3. 스택 (Stack)
 * [스택](algorithm/stack.md)
 * [후위 연산](algorithm/postfix.md)
+* [스택 기반 문제 해결 기법](algorithm/stack-application.md)
 
 
 
@@ -81,6 +82,11 @@
 
 * [1회차 도전 과제](project-01/01.md)
 * [2회차 도전 과제](project-01/02.md)
+
+
+### **평가**
+* 일타싸피 [![GitHub Repository](https://img.shields.io/badge/GitHub-pocket--ball-yellow?style=flat&logo=github)](https://github.com/ajjoona-git/pocket-ball)
+* SW 역량 테스트 1회차 [![GitHub Repository](https://img.shields.io/badge/GitHub-sw--test--250819-yellow?style=flat&logo=github)](https://github.com/ajjoona-git/sw-test-250819)
 
 ---
 
