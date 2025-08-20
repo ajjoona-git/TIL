@@ -75,6 +75,10 @@
 * [후위 연산](algorithm/postfix.md)
 * [스택 기반 문제 해결 기법](algorithm/stack-application.md)
 
+4. 큐 (Queue)
+* [선형 큐, 원형 큐](algorithm/queue.md)
+* [데크, 우선순위 큐](algorithm/deque.md)
+
 
 
 ### **🚀 관통 프로젝트**
