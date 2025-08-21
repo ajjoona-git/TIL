@@ -68,7 +68,6 @@
 2. 문자열 (String)
 * [코드 체계](algorithm/incoding.md)
 * [문자열](algorithm/string.md)
-* [패턴 매칭](algorithm/brute-force.md)
 
 3. 스택 (Stack)
 * [스택](algorithm/stack.md)
@@ -79,6 +78,8 @@
 * [선형 큐, 원형 큐](algorithm/queue.md)
 * [데크, 우선순위 큐](algorithm/deque.md)
 
+5. 접근 방법
+* [완전 탐색 (Brute Force)](algorithm/brute-force.md)
 
 
 ### **🚀 관통 프로젝트**
