@@ -78,7 +78,13 @@
 * [선형 큐, 원형 큐](algorithm/queue.md)
 * [데크, 우선순위 큐](algorithm/deque.md)
 
-5. 접근 방법
+5. 연결 리스트 (Linked List)
+* [연결 리스트](algorithm/linked-list.md)
+
+6. 트리 (Tree)
+* [트리](algorithm/tree.md)
+
+7. 접근 방법
 * [완전 탐색 (Brute Force)](algorithm/brute-force.md)
 
 
