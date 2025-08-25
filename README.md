@@ -95,7 +95,8 @@
 ### **🤖 AI 활용**
 AI 도구를 활용하여 학습하고 얻은 통찰을 기록합니다.
 * [Vibe Coding](AI/Vibe-Coding.md)  
-* [AI 코딩 어시스턴트]()
+* [AI 코딩 어시스턴트](AI/ai-coding-assistant.md)
+* [Gemini-CLI](AI/gemini-cli.md)
 
 
 
