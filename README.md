@@ -31,9 +31,8 @@
 ### **🔧 Git & API**
 버전 관리와 웹 서비스 개발의 핵심 도구들에 대한 학습 내용입니다.
 
-* [Git](git.md)
-* [Vibe Coding](Vibe-Coding.md)  
-* [API](API.md)
+* [Git](git-api/git.md)
+* [API](git-api/API.md)
 
 ### **🐍 Python**
 파이썬 프로그래밍 언어의 기초부터 심화 개념까지 단계별로 학습한 내용입니다.
@@ -88,6 +87,18 @@
 * [완전 탐색 (Brute Force)](algorithm/brute-force.md)
 
 
+### **🌐 Web**
+웹 프로그래밍을 학습한 내용입니다.
+* [HTML](web/html.md)
+* [CSS](web/css.md)
+
+### **🤖 AI 활용**
+AI 도구를 활용하여 학습하고 얻은 통찰을 기록합니다.
+* [Vibe Coding](AI/Vibe-Coding.md)  
+* [AI 코딩 어시스턴트]()
+
+
+
 ### **🚀 관통 프로젝트**
 실제 프로젝트를 통해 학습하고 적용한 내용들을 기록합니다.
 
@@ -103,7 +114,7 @@
 
 ## 🏷️ 주요 학습 키워드
 
-`Python` `Git` `API` `알고리즘` `자료구조` `객체지향프로그래밍` `프로젝트`
+`Python` `Git` `API` `알고리즘` `자료구조` `AI` `Web` `객체지향프로그래밍` `프로젝트`
 
 ---
 
