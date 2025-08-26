@@ -52,6 +52,7 @@ color: red;
 
 ⚠️ **가장 흔한 오해**: `p:first-child`는 `<p>` 태그 중에서 첫 번째 것을 고르는 것이 아니라, **어떤 요소든 상관없이 '첫 번째 자식'인데, 마침 그 요소가 `<p>` 태그일 경우**에만 선택된다는 점을 기억하는 것이 중요합니다.
 
+
 <br><br>
 
 # 수업 필기
@@ -169,40 +170,6 @@ h3 {
     - position 관련 요소 `position, top/right/bottom/left, z-index`
     - `inherit` 키워드를 사용하여 명시적으로 상속받게 할 수 있다.
 
-## CSS Box Model
-
-웹 페이지의 모든  HTML 요소를 감싸는 사각형 상자 모델
-
-- 모든 요소는 ‘네모’로 생겼다.
-
-### Box 구성 요소
-
-![box 구성 요소](../images/css_3.png)
-
-![방향](../images/css_4.png)
-
-- Margin: 박스와 다른 요소와의 외부 간격
-- Border: content와 padding을 감싸는 테두리
-- Padding: content와 border 사이의 내부 여백
-- Content: 실제 내용이 위치하는 영역
-    - `width/height`
-- 방향별 속성 값: `top/bottom/right/left`
-    - `auto` 좌우 균등 분배 (반응형, 수평정렬)
-
-### Shorthand (단축) 속성
-
-- `border: 2px solid black;`
-    - border-width, border-style, border-color를 한번에 설정
-    - 작성 순서는 영향을 주지 않는다.
-- `margin: 10px 20px 30px 40px;`, `padding: 10px 20px 30px 40px;`
-    - 속성 개수에 따라 상/우/하/좌, 상/좌우/하, 상하/좌우, 공통
-
-### Box 크기 계산법
-
-- CSS는 기본적으로 content box 크기를 width 값으로 지정한다.
-- 일반적으로 사람이 생각하기에는 width는 border box 크기로 생각한다.
-
-⇒ `* { box-sizing: border-box; }` border box를 기준으로 높이/너비를 계산한다.
 
 ## 참고
 

@@ -91,12 +91,14 @@
 웹 프로그래밍을 학습한 내용입니다.
 * [HTML](web/html.md)
 * [CSS](web/css.md)
+* [CSS 레이아웃 - position, flexbox](web/layout.md)
 
 ### **🤖 AI 활용**
 AI 도구를 활용하여 학습하고 얻은 통찰을 기록합니다.
 * [Vibe Coding](AI/Vibe-Coding.md)  
 * [AI 코딩 어시스턴트](AI/ai-coding-assistant.md)
-* [Gemini-CLI](AI/gemini-cli.md)
+* [PRD](AI/prd.md)
+* [Gemini-CLI 실습](AI/gemini-cli.md)
 
 
 
