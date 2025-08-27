@@ -85,6 +85,7 @@
 
 7. 접근 방법
 * [완전 탐색 (Brute Force)](algorithm/brute-force.md)
+* [탐욕 알고리즘 (Greedy)](algorithm/greedy.md)
 
 
 ### **🌐 Web**
@@ -92,12 +93,14 @@
 * [HTML](web/html.md)
 * [CSS](web/css.md)
 * [CSS 레이아웃 - position, flexbox](web/layout.md)
+* [bootstrap](web/bootstrap.md)
 
 ### **🤖 AI 활용**
 AI 도구를 활용하여 학습하고 얻은 통찰을 기록합니다.
 * [Vibe Coding](AI/Vibe-Coding.md)  
 * [AI 코딩 어시스턴트](AI/ai-coding-assistant.md)
 * [PRD](AI/prd.md)
+* [MCP](AI/mcp.md)
 * [Gemini-CLI 실습](AI/gemini-cli.md)
 
 

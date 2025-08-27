@@ -177,3 +177,16 @@ console.log(response.output_text);
 ### PRD 작성 시 개발자의 역할
 
 AI가 생성한 PRD를 반드시 검수!!!
+
+
+### [참고]AI 코딩 어시스턴트 서비스별 컨텍스트 파일명
+
+- 하기 파일명은 언제든지 바뀔 가능성이 있다.
+
+| 서비스 | 파일명 |
+| --- | --- |
+| Gemini CLI | GEMINI.md |
+| Claude Code | CLAUDE.md |
+| VS Code GitHub Copilot | copilot-instructions.md |
+| Cursor AI | .cursor/rules/memory-bank.mdc |
+- 프로젝트 단위가 커지면 폴더명, 기능별 PRD 작성
