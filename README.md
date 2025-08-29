@@ -63,6 +63,7 @@
 * [델타 이동](algorithm/delta.md)
 * [부분 집합](algorithm/power-set.md)
 * [검색](algorithm/search.md)
+* [연결 리스트 (Linked List)](algorithm/linked-list.md)
 
 2. 문자열 (String)
 * [코드 체계](algorithm/incoding.md)
@@ -77,11 +78,13 @@
 * [선형 큐, 원형 큐](algorithm/queue.md)
 * [데크, 우선순위 큐](algorithm/deque.md)
 
-5. 연결 리스트 (Linked List)
-* [연결 리스트](algorithm/linked-list.md)
-
-6. 트리 (Tree)
+5. 트리 (Tree)
 * [트리](algorithm/tree.md)
+* [힙](algorithm/heap.md)
+
+6. 그래프 탐색
+* [그래프](algorithm/graph.md)
+* [DFS (깊이 우선 탐색, Depth-First Search)](algorithm/dfs.md)
 
 7. 접근 방법
 * [완전 탐색 (Brute Force)](algorithm/brute-force.md)
