@@ -54,6 +54,10 @@
 
 코드 저장소 [![GitHub Repository](https://img.shields.io/badge/GitHub-algorithm--inclass-yellow?style=flat&logo=github)](https://github.com/ajjoona-git/algorithm-inclass)
 
+0. 기초 지식
+* [컴퓨팅 사고력 - 명제, 증명](algorithm/computing-thinking.md)
+
+
 1. 배열 (List)
 * [정렬](algorithm/sort.md)
   * [버블 정렬](algorithm/bubble-sort.md)
@@ -65,26 +69,28 @@
 * [검색](algorithm/search.md)
 * [연결 리스트 (Linked List)](algorithm/linked-list.md)
 
-2. 문자열 (String)
+1. 문자열 (String)
 * [코드 체계](algorithm/incoding.md)
 * [문자열](algorithm/string.md)
 
-3. 스택 (Stack)
+1. 스택 (Stack)
 * [스택](algorithm/stack.md)
 * [후위 연산](algorithm/postfix.md)
 * [스택 기반 문제 해결 기법](algorithm/stack-application.md)
 
-4. 큐 (Queue)
+1. 큐 (Queue)
 * [선형 큐, 원형 큐](algorithm/queue.md)
 * [데크, 우선순위 큐](algorithm/deque.md)
 
-5. 트리 (Tree)
+1. 트리 (Tree)
 * [트리](algorithm/tree.md)
 * [힙](algorithm/heap.md)
 
-6. 그래프 탐색
+1. 그래프 탐색
 * [그래프](algorithm/graph.md)
 * [DFS (깊이 우선 탐색, Depth-First Search)](algorithm/dfs.md)
+* [BFS (너비 우선 탐색, Breadth-First Search)](algorithm/bfs.md)
+
 
 7. 접근 방법
 * [완전 탐색 (Brute Force)](algorithm/brute-force.md)
