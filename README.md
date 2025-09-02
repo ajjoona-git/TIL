@@ -56,7 +56,7 @@
 
 0. 기초 지식
 * [컴퓨팅 사고력 - 명제, 증명](algorithm/computing-thinking.md)
-
+* [진법](algorithm/number-system.md)
 
 1. 배열 (List)
 * [정렬](algorithm/sort.md)
