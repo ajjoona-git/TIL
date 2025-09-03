@@ -90,3 +90,17 @@
 ### 힙을 이용한 우선순위 큐
 
 키 값이 가장 큰 노드나 가장 작은 노드를 찾기에 적합한 자료구조
+
+
+### `heapq` 모듈
+
+`import heapq`
+- 파이썬에서 힙은 리스트(list)로 구현
+
+| 함수 | 설명 | 시간 복잡도 |
+| --- | --- | --- |
+| **`.heappush(heap, item)`** | 힙에 `item`을 삽입 | $O(log n)$ |
+| **`.heappop(heap)`** | 힙에서 **가장 작은 원소**를 삭제 후 반환. 힙이 비어있을 경우 `IndexError` 발생 | $O(log n)$ |
+| **`.heappushpop(heap, item)`** | 한 번에 `item`을 삽입 후, **가장 작은 원소**를 꺼냄 | $O(log n)$ |
+| **`.heapreplace(heap, item)`** | 힙의 가장 작은 원소를 **바로 제거** 후 `item`을 삽입. `heappushpop`와 비교해, 꼭 `item`이 들어간 뒤 제거되는 것은 아니므로 주의 | $O(log n)$ |
+| **`.heapify(x)`** | 기존 리스트 `x`를 **힙 구조**로 변환 | $O(n)$ |
