@@ -61,6 +61,100 @@ while i < len(my_list):  # len(my_list)가 0이므로 조건이 False여서 실�
 print("루프 종료")
 ```
 
+## [가지치기의 중요성]
+### 제한 시간 초과한 코드
+```python
+# 35/100 (제한시간 초과)
+ 
+# import sys
+# sys.stdin = open("input.txt")
+ 
+def get_max_possibility(emp_num, current_p):
+    global result
+ 
+    # 가지치기: 확률이 최대값보다 작다면 종료
+    if current_p < result:
+        return
+ 
+    # 종료조건: 모든 일을 배분했다면 최대값 갱신
+    if emp_num == N:
+        result = max(result, current_p)
+        return
+ 
+    # 남은 일 배분
+    for task in range(N):
+        if not visited[task]:
+            visited[task] = True
+            get_max_possibility(emp_num + 1, current_p * percent[emp_num][task])
+            visited[task] = False
+ 
+ 
+T = int(input())
+for tc in range(1, T + 1):
+    N = int(input())
+    # 직원과 할일의 인덱스는 0부터 N-1까지
+    percent = [list(map(lambda x: int(x)/100, input().split())) for _ in range(N)]
+ 
+    # 해야할 일이 배정되었는지 여부를 나타낸다.
+    visited = [False] * N
+    result = 0
+ 
+    get_max_possibility(0, 1.0)
+ 
+    print(f'#{tc} {result * 100:.6f}')
+```
+
+### 통과한 코드
+```python
+# PASS
+ 
+# import sys
+# sys.stdin = open("input.txt")
+ 
+def get_max_possibility(emp_num, current_p):
+    global result
+ 
+    # 가지치기: 확률이 최대값보다 작거나 같다면 종료
+    if current_p <= result:
+        return
+ 
+    # 종료조건: 모든 일을 배분했다면 최대값 갱신
+    if emp_num == N:
+        result = max(result, current_p)
+        return
+ 
+    # 남은 일 배분
+    for task in range(N):
+        if not visited[task]:
+            visited[task] = True
+            get_max_possibility(emp_num + 1, current_p * percent[emp_num][task])
+            visited[task] = False
+ 
+ 
+T = int(input())
+for tc in range(1, T + 1):
+    N = int(input())
+    # 직원과 할일의 인덱스는 0부터 N-1까지
+    percent = [list(map(lambda x: int(x)/100, input().split())) for _ in range(N)]
+ 
+    # 해야할 일이 배정되었는지 여부를 나타낸다.
+    visited = [False] * N
+    result = 0
+ 
+    get_max_possibility(0, 1.0)
+ 
+    print(f'#{tc} {result * 100:.6f}')
+```
+
+### 코드리뷰 피드백
+
+해당 코드에서 등호 `=` 하나 차이로 답이 갈림. 
+
+현재 확률이 최대값과 같다면, 어떤 확률을 곱해도 최대값보다 커질 수 없다. → **유망하지 않음!**
+
+다음 확률이 모두 1.00 일 경우에도 최대값보다 커질 수는 없다. 이 경우가 굉장히 드물지만 정답에 영향을 주지 않는 경우이므로 가지치기를 통해 중단해야 한다.
+
+
 <br><br>
 
 # 수업 필기
