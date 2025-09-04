@@ -73,13 +73,101 @@ print("루프 종료")
 - 경우의 수가 많은 경우, 계산 시간이 기하급수적으로 늘어날 수 있다. (시간 초과 위험)
     - 완전 탐색으로 정답을 우선 구하고, 성능 개선(DP, 탐욕)으로 최적화하는 경우가 많다.
 
+### 반복과 재귀
+
+**반복(Iteration)**
+
+- 수행하는 작업이 완료될 때까지 계속 반복
+    - 코드를 n번 반복시킬 수 있음
+- 루프 (for, while 구조)
+
+**재귀(Recursion)**
+
+- 주어진 문제의 해를 구하기 위해 동일하면서 더 작은 문제의 해를 이용하는 방법
+- 하나의 큰 문제를 해결할 수 있는(해결하기 쉬운) 더 작은 문제로 쪼개고 결과들을 결합
+- 재귀호출은 n중 반복문과 같은 효과
+
+### 재귀 함수의 특징
+
+- 함수를 호출할 때 객체를 전달하면 **값만 복사**된다.
+
+```python
+def KFC(x):  # x = 4, 함수 내에서 사용하는 객체 x
+	print(x)  # 4
+	x += 1
+	print(x)  # 5
+
+x = 3
+KFC(x + 1)  # KFC(4) 호출
+print(x)  # 3, global 객체 x
+
+# 출력 순서는: 4 5 3
+```
+
+- 함수가 끝나면 main으로 돌아오는 것이 아니라, **해당 함수를 호출했던 곳으로 돌아온다.**
+
+```python
+def BBQ(x):  # x = 9
+	x += 10  # x = 19
+	print(x)  # 19, BBQ함수의 객체 x
+	
+def KFC(x):  # x = 4
+	print(x)  # 4
+	x += 3  # x = 7
+	BBQ(x + 2)  # BBQ(9) 호출
+	print(x)  # 7, KFC함수의 객체 x
+	
+x = 3  
+KFC(x + 1)  # KFC(4) 호출
+print(x)  # 3, global 객체 x
+
+# 출력 순서는: 4 19 7 3
+```
+
+- 무한 재귀호출
+    - 파이썬에서는 약 1,000번 정도 깊이에서 제한이 걸린다.
+
+```python
+def KFC(x):
+    KFC(x + 1)
+
+KFC(0)
+print("끝")  
+
+# RecursionError: **maximum recursion depth** exceeded while calling a Python object
+```
+
+- 대부분 **종료 조건(Base Case)**과 함께 활용되거나, **다음 재귀 호출을 하지 않도록 구성**한다.
+    - 후입선출(LIFO) 구조인 스택과 작동 원리가 같다.
+
+```python
+def KFC(x):  # 파라미터 x: 누적값
+    if x == 4:  # 종료조건: 4
+        return
+
+    print(x)
+    KFC(x + 1)
+    print(x)
+
+KFC(0)  # 시작점: 0
+print("끝")  # 0 1 2 3 3 2 1 0 끝
+```
+
+- 트리 구조로 본 재귀
+    - 재귀 호출의 개수 == 가지(branch)의 개수
+    - 종료 조건에 따라 깊이(level)가 달라진다.
+
+![재귀 호출 코드가 2개 일 경우 (Level 3, Branch 3)](../images/brute-force_2.png)
+재귀 호출 코드가 2개 일 경우 (Level 3, Branch 3)
+
+
 ### 활용 예시
 
 - 조합적 문제
     - 순열, 조합, 부분집합 등
 - 배낭 문제(Knapsack)
 - 여행 경로
-
+ 
 ### 예시: 여행 경로 문제
 
 ![여행 경로 문제 예시](../images/brute-force_1.png)
@@ -268,7 +356,7 @@ print(all_combs)
 [[1, 2, 3], [1, 2, 4], [1, 3, 4], [2, 3, 4]]
 ```
 
-### itertools 모듈
+## itertools 모듈
 
 - 순열: `itertools.permutations(iterable, r=None)`
 
