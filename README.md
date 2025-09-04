@@ -34,6 +34,7 @@
 * [Git](git-api/git.md)
 * [API](git-api/API.md)
 
+
 ### **🐍 Python**
 파이썬 프로그래밍 언어의 기초부터 심화 개념까지 단계별로 학습한 내용입니다.
 
@@ -49,53 +50,59 @@
 * [예외 처리](python/exception.md)
 * (참고) [지연 평가](python/lazy-evaluation.md)
 
-### **📊 알고리즘**
-알고리즘 문제 해결 과정과 주요 개념들을 정리합니다.
 
-코드 저장소 [![GitHub Repository](https://img.shields.io/badge/GitHub-algorithm--inclass-yellow?style=flat&logo=github)](https://github.com/ajjoona-git/algorithm-inclass)
+### **📂 자료구조 (Data Structures)**
+데이터를 효율적으로 저장하고 관리하기 위한 구조들을 학습하고 정리합니다.
 
-0. 기초 지식
+1. **선형 자료구조 (Linear Data Structures)**
+* [배열 (1D & 2D Array)](data-structure/array.md)
+* [연결 리스트 (Linked List)](data-structure/linked-list.md)
+* [문자열 (String)](data-structure/string.md)
+* [스택 (Stack)](data-structure/stack.md)
+* [큐 (Queue, Deque, Priority Queue)](data-structure/queue.md)
+
+2. **비선형 자료구조 (Non-Linear Data Structures)**
+* [트리 (Tree)](data-structure/tree.md)
+* [힙 (Heap)](data-structure/heap.md)
+* [그래프 (Graph)](data-structure/graph.md)
+
+
+### **💡 알고리즘 (Algorithms)**
+문제 해결을 위한 절차와 방법, 주요 개념들을 학습하고 정리합니다.
+
+0. **문제 풀이 코드 저장소**
+
+    [![GitHub Repository](https://img.shields.io/badge/GitHub-algorithm--inclass-yellow?style=flat&logo=github)](https://github.com/ajjoona-git/algorithm-inclass)
+
+
+1. **기초 지식 (Foundations)**
 * [컴퓨팅 사고력 - 명제, 증명](algorithm/computing-thinking.md)
-* [진법](algorithm/number-system.md)
+* [진법 (Number System)](algorithm/number-system.md)
+* [코드 체계 (Character Encoding)](algorithm/incoding.md)
 * [비트 연산](algorithm/bit-operate.md)
 
-1. 배열 (List)
-* [정렬](algorithm/sort.md)
-  * [버블 정렬](algorithm/bubble-sort.md)
-  * [카운팅 정렬](algorithm/counting-sort.md)
-  * [선택 정렬](algorithm/selection-sort.md)
-* [2차원 배열](algorithm/2d-array.md)
-* [델타 이동](algorithm/delta.md)
-* [부분 집합](algorithm/power-set.md)
-* [검색](algorithm/search.md)
-* [연결 리스트 (Linked List)](algorithm/linked-list.md)
-
-1. 문자열 (String)
-* [코드 체계](algorithm/incoding.md)
-* [문자열](algorithm/string.md)
-
-1. 스택 (Stack)
-* [스택](algorithm/stack.md)
-* [후위 연산](algorithm/postfix.md)
-* [스택 기반 문제 해결 기법](algorithm/stack-application.md)
-
-1. 큐 (Queue)
-* [선형 큐, 원형 큐](algorithm/queue.md)
-* [데크, 우선순위 큐](algorithm/deque.md)
-
-1. 트리 (Tree)
-* [트리](algorithm/tree.md)
-* [힙](algorithm/heap.md)
-
-1. 그래프 탐색
-* [그래프](algorithm/graph.md)
-* [DFS (깊이 우선 탐색, Depth-First Search)](algorithm/dfs.md)
-* [BFS (너비 우선 탐색, Breadth-First Search)](algorithm/bfs.md)
-
-
-7. 접근 방법
-* [완전 탐색 (Brute Force)](algorithm/brute-force.md)
-* [탐욕 알고리즘 (Greedy)](algorithm/greedy.md)
+2. **주요 알고리즘 (Core Algorithms)**
+* **정렬 (Sort)**
+    * [정렬 알고리즘 종류](algorithm/sort.md) 
+    * [버블 정렬 (Bubble Sort)](algorithm/bubble-sort.md)
+    * [카운팅 정렬 (Counting Sort)](algorithm/counting-sort.md)
+    * [선택 정렬 (Selection Sort)](algorithm/selection-sort.md)
+* **검색 (Search)**
+    * [순차 검색, 이진 검색](algorithm/search.md)
+* **그래프 탐색 (Graph Traversal)**
+    * [DFS (깊이 우선 탐색)](algorithm/dfs.md)
+    * [BFS (너비 우선 탐색)](algorithm/bfs.md)
+    
+3. **문제 해결 기법 (Problem Solving Techniques)**
+* **배열 활용**
+    * [델타 이동](algorithm/delta.md)
+    * [부분 집합](algorithm/power-set.md)
+* **스택 활용**
+    * [후위 표기법 변환 및 계산](algorithm/postfix.md)
+    * [스택 응용](algorithm/stack-application.md)
+* **알고리즘 패러다임 (Paradigm)**
+    * [완전 탐색 (Brute Force) - 순열, 조합](algorithm/brute-force.md)
+    * [탐욕 알고리즘 (Greedy Algorithm)](algorithm/greedy.md)
 
 
 ### **🌐 Web**
@@ -106,6 +113,7 @@
 * [CSS 레이아웃 - position, flexbox](web/layout.md)
 * [CSS 레이아웃 - grid system](web/grid-system.md)
 
+
 ### **🤖 AI 활용**
 AI 도구를 활용하여 학습하고 얻은 통찰을 기록합니다.
 * [Vibe Coding](AI/Vibe-Coding.md)  
@@ -113,7 +121,6 @@ AI 도구를 활용하여 학습하고 얻은 통찰을 기록합니다.
 * [PRD](AI/prd.md)
 * [MCP](AI/mcp.md)
 * [Gemini-CLI 실습](AI/gemini-cli.md)
-
 
 
 ### **🚀 관통 프로젝트**
