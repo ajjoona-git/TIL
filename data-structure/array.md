@@ -1,3 +1,53 @@
+# 스스로 학습
+## `defaultdict()` 모듈
+### `from collections import defaultdict`
+`[생성할 dict이름] = defaultdict(iterable 자료형)` 존재하지 않는 키의 디폴트 자료형을 지정해준다.
+
+```python
+from collections import defaultdict
+# 데이터 분류
+data = [("fruit", "apple"), ("fruit", "banana"), ("vegetable", "carrot")]
+
+grouped_data = defaultdict(list)
+
+for category, item in data:
+    grouped_data[category].append(item)
+
+print(grouped_data)
+# 출력: {'fruit': ['apple', 'banana'], 'vegetable': ['carrot']}
+```
+
+### `dict.setdefault()`
+딕셔너리에서 키를 조회할 때, 해당 키가 없으면 지정된 기본값을 추가하고 반환하는 메서드. 키가 이미 존재하면 기존 값을 반환한다.
+
+```python
+# 문자 개수 세기
+text = "hello world"
+char_count = {}
+
+for char in text:
+    if char != " ":
+        char_count.setdefault(char, 0)
+        char_count[char] += 1
+
+print(char_count)  
+# 출력: {'h': 1, 'e': 1, 'l': 3, 'o': 2, 'w': 1, 'r': 1, 'd': 1}
+```
+
+### `setdefault()`와 `defaultdict()`의 차이점
+
+| 특성 | `setdefault()` | `defaultdict()` |
+| --- | --- | --- |
+| 동작 방식 | 키가 없을 때 기본값을 추가 | 키가 없을 때 자동으로 기본값 생성 |
+| 기본값 추가 | 메서드 호출 시 지정 | 초기화 시 default_factory로 지정 |
+| 사용 시점 | 키를 조건부로 추가해야 할 때 | 키-값 쌍을 동적으로 관리할 때 |
+
+`setdefault()`: 단일 키에 대한 조건부 초기화가 필요한 경우.
+`defaultdict()`: 동일한 기본값으로 다수의 키를 처리해야 하는 경우.
+
+<br><br>
+
+# 수업 필기
 ## 배열 (Array)
 
 일정한 자료형의 변수들을 하나의 이름으로 열거하여 사용하는 자료구조
