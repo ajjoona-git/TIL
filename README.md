@@ -128,7 +128,7 @@ AI 도구를 활용하여 학습하고 얻은 통찰을 기록합니다.
 
 * [1회차 도전 과제](project-01/01.md)
 * [2회차 도전 과제](project-01/02.md)
-
+* [3회차 도전 과제](project-01/03.md)
 
 ### **평가**
 * 일타싸피 [![GitHub Repository](https://img.shields.io/badge/GitHub-pocket--ball-yellow?style=flat&logo=github)](https://github.com/ajjoona-git/pocket-ball)
