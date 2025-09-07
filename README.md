@@ -131,8 +131,10 @@ AI 도구를 활용하여 학습하고 얻은 통찰을 기록합니다.
 * [3회차 도전 과제](project-01/03.md)
 
 ### **평가**
-* 일타싸피 [![GitHub Repository](https://img.shields.io/badge/GitHub-pocket--ball-yellow?style=flat&logo=github)](https://github.com/ajjoona-git/pocket-ball)
-* SW 역량 테스트 1회차 [![GitHub Repository](https://img.shields.io/badge/GitHub-sw--test--250819-yellow?style=flat&logo=github)](https://github.com/ajjoona-git/sw-test-250819)
+* 일타싸피 | [![GitHub Repository](https://img.shields.io/badge/GitHub-pocket--ball-yellow?style=flat&logo=github)](https://github.com/ajjoona-git/pocket-ball)
+* SW 역량 테스트 1회차(IM/A) | [![GitHub Repository](https://img.shields.io/badge/GitHub-sw--test--250819-yellow?style=flat&logo=github)](https://github.com/ajjoona-git/sw-test-250819)
+* SW 역량 테스트 3회차(B) | [![GitHub Repository](https://img.shields.io/badge/GitHub-sw--test--250906-yellow?style=flat&logo=github)](https://github.com/ajjoona-git/sw-test-250906)
+
 
 ---
 
