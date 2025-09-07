@@ -154,6 +154,15 @@ for tc in range(1, T + 1):
 
 다음 확률이 모두 1.00 일 경우에도 최대값보다 커질 수는 없다. 이 경우가 굉장히 드물지만 정답에 영향을 주지 않는 경우이므로 가지치기를 통해 중단해야 한다.
 
+## 벌꿀 채취 최적화
+### 실행시간 비교
+
+![실행시간 비교](../images/brute-force_3.png)
+
+1. `range(M, 0, -1)`
+2. `range(1, M+1)`
+3. `if sum(workspace) <= C: return profit` + `range(1, M)`
+
 
 <br><br>
 
