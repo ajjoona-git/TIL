@@ -175,6 +175,36 @@ for i in range(1 << n) : 		# 1<<n == 2**n : 부분 집합의 개수
             subset.append(arr[j])
 ```
 
+```python
+arr = ['A', 'B', 'C']
+# 검사하고자 하는 비트를 오른쪽으로 하나씩 shift 하면서 체크하는 코드
+def get_sub(tar):
+    print(f'target = {tar}', end=' / ')
+    for i in range(len(arr)):
+		    # 0x1 로 표기한 이유 (사실 1, 0b1, 0b0001, True 다 된다)
+		    # -> 비트 연산임을 명시하는 권장 방법
+        if tar & 0x1:  # 가장 우측 비트를 체크
+            print(arr[i], end='')
+        tar >>= 1  # 검사한 한 자리를 제거
+				
+for target in range(1 << len(arr)):
+    get_sub(target)
+    print()
+    
+
+# --- 출력 결과 ---
+"""
+target = 0 / 
+target = 1 / A
+target = 2 / B
+target = 3 / AB
+target = 4 / C
+target = 5 / AC
+target = 6 / BC
+target = 7 / ABC
+"""
+```
+
 ### [참고] 비트 연산
 
 | 비트 연산자 | 설명 | 활용 |
