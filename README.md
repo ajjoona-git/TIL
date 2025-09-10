@@ -87,8 +87,11 @@
     * [버블 정렬 (Bubble Sort)](algorithm/bubble-sort.md)
     * [카운팅 정렬 (Counting Sort)](algorithm/counting-sort.md)
     * [선택 정렬 (Selection Sort)](algorithm/selection-sort.md)
+    * [병합 정렬 (Merge Sort)](algorithm/merge-sort.md)
+    * [퀵 정렬 (Quick Sort)](algorithm/quick-sort.md)
 * **검색 (Search)**
-    * [순차 검색, 이진 검색](algorithm/search.md)
+    * [순차 검색](algorithm/search.md)
+    * [이진 검색](algorithm/binary-search.md)
 * **그래프 탐색 (Graph Traversal)**
     * [DFS (깊이 우선 탐색)](algorithm/dfs.md)
     * [BFS (너비 우선 탐색)](algorithm/bfs.md)
@@ -103,6 +106,7 @@
 * **알고리즘 패러다임 (Paradigm)**
     * [완전 탐색 (Brute Force) - 순열, 조합](algorithm/brute-force.md)
     * [탐욕 알고리즘 (Greedy Algorithm)](algorithm/greedy.md)
+    * [분할 정복 (Divide and Conquer)](algorithm/divide-conquer.md)
 
 
 ### **🌐 Web**

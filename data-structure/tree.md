@@ -1,4 +1,83 @@
 # 스스로 학습
+
+## 세그먼트 트리 (segment tree)
+
+특정 범위(segment)에 대한 쿼리(query)를 빠르게 처리하기 위해 사용되는 **이진 트리 기반**의 자료구조
+
+- 전체 데이터 범위를 이등분하여 노드를 나누는 재귀적인 구조
+- 각 노드는 자신의 범위 내 데이터에 대한 정보를 저장한다.
+
+### 활용
+
+주로 배열이나 리스트와 같은 데이터 구조에서 **특정 범위의 합, 최댓값, 최솟값** 등을 효율적으로 계산해야 할 때 사용된다.
+
+### 구조
+
+- **노드**: 배열의 특정 구간을 나타낸다.
+    - **루트 노드**는 전체 배열 범위를 나타낸다.
+    - **자식 노드**는 그 범위를 절반으로 나눈 두 개의 구간을 나타낸다.
+    - **리프 노드**는 배열의 한 원소에 해당한다.
+- **데이터 저장**: 각 노드는 자신이 담당하는 구간의 합, 최댓값, 최솟값 등 문제에 따라 필요한 정보를 저장한다.
+
+### 구현
+
+- top-down 방식
+- 재귀 이용
+
+**구간합을 저장하는 세그먼트 트리 구현 예시**
+
+```python
+def update_tree(tree, start_idx, n):
+    # 트리 초기화
+    index = start_idx
+    for i in range(n):  
+        idx = index + i
+        while idx >= 1:  
+            tree[idx] += arr[i]
+            idx // 2
+    return tree
+
+def get_sub_tree_sum(left, right):
+    sub_sum = 0 
+    while left < right:
+        if left % 2 == 0:
+            left //= 2
+        else:
+            sub_sum += tree[left]
+            left = (left+1)//2
+        if right % 2 != 0:
+            right //= 2
+        else:
+            sub_sum += tree[right]
+            right = (right-1)//2
+        if left == right: sub_sum += tree[left]
+    return sub_sum
+
+N, M = map(int, input().split()) # 배열의 크기, 구간합 쿼리의 갯수
+arr = list(map(int, input().split())) # 배열
+
+# 배열의 첫번째 숫자의 세그먼트 트리 인덱스 찾기
+n = 0
+while 2 ** n < len_arr: n += 1
+start_idx = 1 << n
+
+# 세그먼트 트리 초기화 및 업데이트
+tree = [0] * (N * 4)
+tree = init_tree(tree, start_idx, N)
+
+for _ in range(M):
+    i, j = map(int, input().split()) # i~j번째의 구간합
+    sum = get_sub_tree_sum(i+start_idx, j+start_idx)
+    print(sum)
+```
+
+### 세그먼트 트리와 단순 배열 비교
+
+| 자료구조 | 구간 쿼리 | 단일 원소 업데이트 |
+| --- | --- | --- |
+| **단순 배열** | O(N) | O(1) |
+| **세그먼트 트리** | O(logN) | O(logN) |
+
 ## [1231. 중위순회]
 
 ### 빈 2차원 리스트 생성 시 주의사항
