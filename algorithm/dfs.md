@@ -13,7 +13,7 @@
 - 인접 행렬은 모든 노드를 매번 확인해야 하므로, **`$O(V^2)$`**
 - 인접 리스트는 실제 연결된 노드만 확인하므로,  **`$O(V+E)$`**
 
-1. **인접 행렬 코드 예시**
+**인접 행렬 코드 예시**
 
 ```python
 def dfs_recursive_matrix(current_node, adj_matrix, visited, path):
@@ -48,7 +48,7 @@ dfs_recursive_matrix(1, adj_matrix, visited, result_path)
 print(result_path)  # [1, 2, 4, 6, 5, 7, 3]
 ```
 
-1. **인접 리스트 코드 예시**
+**인접 리스트 코드 예시**
 
 ```python
 def dfs_recursive_list(current_node, adj_list, visited, path):

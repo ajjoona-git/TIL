@@ -63,6 +63,7 @@
 
 2. **비선형 자료구조 (Non-Linear Data Structures)**
 * [트리 (Tree)](data-structure/tree.md)
+* [이진 탐색 트리 (BST)](data-structure/bst.md)
 * [힙 (Heap)](data-structure/heap.md)
 * [그래프 (Graph)](data-structure/graph.md)
 
@@ -107,6 +108,7 @@
     * [완전 탐색 (Brute Force) - 순열, 조합](algorithm/brute-force.md)
     * [탐욕 알고리즘 (Greedy Algorithm)](algorithm/greedy.md)
     * [분할 정복 (Divide and Conquer)](algorithm/divide-conquer.md)
+    * [백트래킹 (Backtracking)](algorithm/backtracking.md)
 
 
 ### **🌐 Web**
