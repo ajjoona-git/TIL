@@ -66,6 +66,7 @@
 * [이진 탐색 트리 (BST)](data-structure/bst.md)
 * [힙 (Heap)](data-structure/heap.md)
 * [그래프 (Graph)](data-structure/graph.md)
+* [서로소 집합 (Disjoint Set / Union-Find)](algorithm/union-find.md)
 
 
 ### **💡 알고리즘 (Algorithms)**
@@ -109,6 +110,7 @@
     * [탐욕 알고리즘 (Greedy Algorithm)](algorithm/greedy.md)
     * [분할 정복 (Divide and Conquer)](algorithm/divide-conquer.md)
     * [백트래킹 (Backtracking)](algorithm/backtracking.md)
+    * [동적 계획법 (Dynamic Programming)](algorithm/dp.md)
 
 
 ### **🌐 Web**
