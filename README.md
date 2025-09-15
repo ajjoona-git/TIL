@@ -84,7 +84,7 @@
 * [이진 탐색 트리 (BST)](data-structure/bst.md)
 * [힙 (Heap)](data-structure/heap.md)
 * [그래프 (Graph)](data-structure/graph.md)
-* [서로소 집합 (Disjoint Set / Union-Find)](algorithm/union-find.md)
+* [서로소 집합 (Disjoint Set / Union-Find)](data-structure/union-find.md)
 
 
 ### **💡 알고리즘 (Algorithms)**
