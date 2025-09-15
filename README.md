@@ -28,6 +28,24 @@
 
 ## 📖 학습 기록
 
+### ** 프로젝트 - 쉽길 **
+스타트캠프의 기획안에서 출발한, 지하철 에스컬레이터 경로 추천 웹 서비스 '쉽길(wisheasy)'입니다.
+
+* [개발 일지](pjt-wisheasy/)
+
+### **🚀 관통 프로젝트**
+실제 프로젝트를 통해 학습하고 적용한 내용들을 기록합니다.
+
+* [1회차 도전 과제](project-01/01.md)
+* [2회차 도전 과제](project-01/02.md)
+* [3회차 도전 과제](project-01/03.md)
+
+### **평가**
+* 일타싸피 | [![GitHub Repository](https://img.shields.io/badge/GitHub-pocket--ball-yellow?style=flat&logo=github)](https://github.com/ajjoona-git/pocket-ball)
+* SW 역량 테스트 1회차(IM/A) | [![GitHub Repository](https://img.shields.io/badge/GitHub-sw--test--250819-yellow?style=flat&logo=github)](https://github.com/ajjoona-git/sw-test-250819)
+* SW 역량 테스트 3회차(B) | [![GitHub Repository](https://img.shields.io/badge/GitHub-sw--test--250906-yellow?style=flat&logo=github)](https://github.com/ajjoona-git/sw-test-250906)
+
+
 ### **🔧 Git & API**
 버전 관리와 웹 서비스 개발의 핵심 도구들에 대한 학습 내용입니다.
 
@@ -129,19 +147,6 @@ AI 도구를 활용하여 학습하고 얻은 통찰을 기록합니다.
 * [PRD](AI/prd.md)
 * [MCP](AI/mcp.md)
 * [Gemini-CLI 실습](AI/gemini-cli.md)
-
-
-### **🚀 관통 프로젝트**
-실제 프로젝트를 통해 학습하고 적용한 내용들을 기록합니다.
-
-* [1회차 도전 과제](project-01/01.md)
-* [2회차 도전 과제](project-01/02.md)
-* [3회차 도전 과제](project-01/03.md)
-
-### **평가**
-* 일타싸피 | [![GitHub Repository](https://img.shields.io/badge/GitHub-pocket--ball-yellow?style=flat&logo=github)](https://github.com/ajjoona-git/pocket-ball)
-* SW 역량 테스트 1회차(IM/A) | [![GitHub Repository](https://img.shields.io/badge/GitHub-sw--test--250819-yellow?style=flat&logo=github)](https://github.com/ajjoona-git/sw-test-250819)
-* SW 역량 테스트 3회차(B) | [![GitHub Repository](https://img.shields.io/badge/GitHub-sw--test--250906-yellow?style=flat&logo=github)](https://github.com/ajjoona-git/sw-test-250906)
 
 
 ---
