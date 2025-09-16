@@ -115,7 +115,16 @@
 * **그래프 탐색 (Graph Traversal)**
     * [DFS (깊이 우선 탐색)](algorithm/dfs.md)
     * [BFS (너비 우선 탐색)](algorithm/bfs.md)
-    
+* **최소 신장 트리 (Minimum Spanning Tree, MST)**
+    * [MST 기본 개념](algorithm/mst.md)
+    * [프림 알고리즘 (Prim's Algorithm)](algorithm/prim.md)
+    * [크루스칼 알고리즘 (Kruskal's Algorithm)](algorithm/kruskal.md)
+* **최단 경로 (Shortest Path)**
+    * [최단 경로 문제 유형](algorithm/shortest-path.md)
+    * [다익스트라 알고리즘 (Dijkstra's Algorithm)](algorithm/dijkstra.md)
+    * [벨만-포드 알고리즘 (Bellman-Ford's Algorithm)](algorithm/bellman-ford.md)
+    * [플로이드-워셜 알고리즘 (Floyd-Warshall's Algorithm)](algorithm/floyd-warshall.md)
+
 3. **문제 해결 기법 (Problem Solving Techniques)**
 * **배열 활용**
     * [델타 이동](algorithm/delta.md)
