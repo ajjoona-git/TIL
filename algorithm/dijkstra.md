@@ -90,3 +90,8 @@ shortest_distances = dijkstra(start, V, adj_list)
 # 1번 노드에서 각 노드까지의 최단 거리
 print(shortest_distances)  # [inf, 0, 1, 7, 4, 8, inf]
 ```
+
+### 시간 복잡도
+간선들이 힙에 들어가는 시간
+
+- E * O(logV) → O(ElogV)

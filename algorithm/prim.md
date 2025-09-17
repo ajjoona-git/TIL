@@ -151,3 +151,14 @@ result_cost = prim_mst(V, adj_list, start=1)
 print(f"Prim MST 총 비용: {result_cost}")  # Prim MST 총 비용: 175
 
 ```
+
+### 시간 복잡도
+힙에 간선 후보를 넣고, 최소값을 계속 뽑는다.
+- O(VlogV + ElogV) → O(ElogV)
+    - VlogV : 정점의 수만큼 우선순위 큐에 삽입/삭제한다.
+    - ElogV : 간선의 수만큼 힙에 추가한다.
+        - 우리가 배운 코드는 정점이 중복되게 삽입된다: O(ElogE)
+          -> decrease key까지만 들어가 있다.
+        - 최적화 기법을 써야한다.
+    - 피보나치 힙을 쓰면 훨씬 빨라진다.
+- 밀집 그래프 간선이 많을수록 유리하다.

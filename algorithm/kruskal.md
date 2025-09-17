@@ -79,3 +79,10 @@ result_cost = kruskal_mst(V, edges_info)
 print(f"Kruskal MST 총 비용: {result_cost}")
 
 ```
+
+### 시간 복잡도
+간선들을 정렬하고, 사이클 검사하면서 간선들을 선택한다.
+
+- O(ElogE) + E * O(1) → O(ElogE)
+    - ElogE : 정렬
+    - E : 간선의 수만큼 union-find
