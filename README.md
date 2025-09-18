@@ -82,6 +82,7 @@
 * [이진 탐색 트리 (BST)](data-structure/bst.md)
 * [힙 (Heap)](data-structure/heap.md)
 * [그래프 (Graph)](data-structure/graph.md)
+* [서로소 집합 (Disjoint Set / Union-Find)](data-structure/union-find.md)
 
 
 ### **💡 알고리즘 (Algorithms)**
@@ -125,6 +126,43 @@
 * [탐욕 알고리즘 (Greedy Algorithm)](algorithm/greedy.md)
 * [분할 정복 (Divide and Conquer)](algorithm/divide-conquer.md)
 * [백트래킹 (Backtracking)](algorithm/backtracking.md)
+2. **주요 알고리즘 (Core Algorithms)**
+* **정렬 (Sort)**
+    * [정렬 알고리즘 종류](algorithm/sort.md) 
+    * [버블 정렬 (Bubble Sort)](algorithm/bubble-sort.md)
+    * [카운팅 정렬 (Counting Sort)](algorithm/counting-sort.md)
+    * [선택 정렬 (Selection Sort)](algorithm/selection-sort.md)
+    * [병합 정렬 (Merge Sort)](algorithm/merge-sort.md)
+    * [퀵 정렬 (Quick Sort)](algorithm/quick-sort.md)
+* **검색 (Search)**
+    * [순차 검색](algorithm/search.md)
+    * [이진 검색](algorithm/binary-search.md)
+* **그래프 탐색 (Graph Traversal)**
+    * [DFS (깊이 우선 탐색)](algorithm/dfs.md)
+    * [BFS (너비 우선 탐색)](algorithm/bfs.md)
+* **최소 신장 트리 (Minimum Spanning Tree, MST)**
+    * [MST 기본 개념](algorithm/mst.md)
+    * [프림 알고리즘 (Prim's Algorithm)](algorithm/prim.md)
+    * [크루스칼 알고리즘 (Kruskal's Algorithm)](algorithm/kruskal.md)
+* **최단 경로 (Shortest Path)**
+    * [최단 경로 문제 유형](algorithm/shortest-path.md)
+    * [다익스트라 알고리즘 (Dijkstra's Algorithm)](algorithm/dijkstra.md)
+    * [벨만-포드 알고리즘 (Bellman-Ford's Algorithm)](algorithm/bellman-ford.md)
+    * [플로이드-워셜 알고리즘 (Floyd-Warshall's Algorithm)](algorithm/floyd-warshall.md)
+
+3. **문제 해결 기법 (Problem Solving Techniques)**
+* **배열 활용**
+    * [델타 이동](algorithm/delta.md)
+    * [부분 집합](algorithm/power-set.md)
+* **스택 활용**
+    * [후위 표기법 변환 및 계산](algorithm/postfix.md)
+    * [스택 응용](algorithm/stack-application.md)
+* **알고리즘 패러다임 (Paradigm)**
+    * [완전 탐색 (Brute Force) - 순열, 조합](algorithm/brute-force.md)
+    * [탐욕 알고리즘 (Greedy Algorithm)](algorithm/greedy.md)
+    * [분할 정복 (Divide and Conquer)](algorithm/divide-conquer.md)
+    * [백트래킹 (Backtracking)](algorithm/backtracking.md)
+    * [동적 계획법 (Dynamic Programming)](algorithm/dp.md)
 
 
 ### **🌐 웹 개발 (Web Development)**
