@@ -157,6 +157,9 @@
 * [MTV 패턴과 프로젝트 구조](django/mtv-pattern.md)
 * [프로젝트와 앱 생성](django/project-app.md)
 * [Django 정적 파일(Static Files) 관리](django/static-tag.md)
+* [DTL (Django Template Language)](django/templates.md)
+* [사용자 입력 데이터 처리](django/request.md)
+* [Django URLs](django/urls.md)
 
 
 ### **🤖 AI 활용**
