@@ -101,7 +101,7 @@
 
 #### 주요 알고리즘 (Core Algorithms)
 1. **정렬 (Sort)**
-* [정렬 알고리즘 종류](algorithm/sort.md) 
+* [정렬 알고리즘 종류](algorithm/sort.md)
 * [버블 정렬 (Bubble Sort)](algorithm/bubble-sort.md)
 * [카운팅 정렬 (Counting Sort)](algorithm/counting-sort.md)
 * [선택 정렬 (Selection Sort)](algorithm/selection-sort.md)
@@ -122,7 +122,7 @@
 * [다익스트라 알고리즘 (Dijkstra's Algorithm)](algorithm/dijkstra.md)
 * [벨만-포드 알고리즘 (Bellman-Ford's Algorithm)](algorithm/bellman-ford.md)
 * [플로이드-워셜 알고리즘 (Floyd-Warshall's Algorithm)](algorithm/floyd-warshall.md)
-    
+
 #### 문제 해결 기법 (Problem Solving Techniques)
 1. **배열 활용**
 * [델타 이동](algorithm/delta.md)
@@ -164,7 +164,7 @@
 
 ### **🤖 AI 활용**
 AI 도구를 활용하여 학습하고 얻은 통찰을 기록합니다.
-* [Vibe Coding](AI/Vibe-Coding.md)  
+* [Vibe Coding](AI/Vibe-Coding.md)
 * [AI 코딩 어시스턴트](AI/ai-coding-assistant.md)
 * [PRD](AI/prd.md)
 * [MCP](AI/mcp.md)
@@ -177,6 +177,7 @@ AI 도구를 활용하여 학습하고 얻은 통찰을 기록합니다.
 | 2025.08.18 | **일타싸피** | 과목 평가 **100점** | [![GitHub](https://img.shields.io/badge/Code-pocket--ball-yellow?style=flat&logo=github)](https://github.com/ajjoona-git/pocket-ball) |
 | 2025.08.19 | **SW 역량 테스트 (IM/A형)** | **A 등급** 취득 성공 | [![GitHub](https://img.shields.io/badge/Code-sw--test--250819-yellow?style=flat&logo=github)](https://github.com/ajjoona-git/sw-test-250819) |
 | 2025.09.06 | **SW 역량 테스트 (B형)** | B등급 문제 유형 분석 및 복기. DFS, 백트래킹 심화 학습의 필요성 확인 | [![GitHub](https://img.shields.io/badge/Code-sw--test--250906-yellow?style=flat&logo=github)](https://github.com/ajjoona-git/sw-test-250906) |
+| 2025.09.22 | **배틀싸피** | **반 대표**로 전국 대회 출전 | [![GitHub](https://img.shields.io/badge/Code-battle-yellow?style=flat&logo=github)](https://github.com/ajjoona-git/battle) |
 
 ---
 
