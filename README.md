@@ -154,6 +154,7 @@
 서버, 데이터베이스, 애플리케이션 로직을 구현하는 기술들을 학습합니다.
 * [RESTful API](django/restful-api.md)
 1. **Django**
+* [Django Secret Key](django/secret-key.md)
 * [MTV 패턴과 프로젝트 구조](django/mtv-pattern.md)
 * [프로젝트와 앱 생성](django/project-app.md)
 * [Django 정적 파일(Static Files) 관리](django/static-tag.md)
@@ -163,6 +164,7 @@
 * [Django Model](django/models.md)
 * [Migrations (마이그레이션)](django/migrate.md)
 * [Admin site (관리자 사이트)](django/admin.md)
+* [ORM(Object Relational Mapping), QuerySet API](django/orm.md)
 
 
 ### **🤖 AI 활용**
