@@ -164,7 +164,9 @@
 * [Django Model](django/models.md)
 * [Migrations (마이그레이션)](django/migrate.md)
 * [Admin site (관리자 사이트)](django/admin.md)
-* [ORM(Object Relational Mapping), QuerySet API](django/orm.md)
+* [ORM(Object Relational Mapping) - QuerySet API](django/orm.md)
+* [ORM(Object Relational Mapping) - view에서 활용](django/orm.md)
+* [HTTP request methods](django/http-request.md)
 
 
 ### **🤖 AI 활용**
