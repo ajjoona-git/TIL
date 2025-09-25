@@ -6,6 +6,23 @@ view 함수에서 QuerySet API 활용
 - 웹 페이지에 보여줄 데이터를 DB에서 가져올 때 사용
 - 사용자가 입력한 새로운 데이터를 DB에 저장할 때 사용
 
+### QuerySet API 정렬
+
+- `order_by()` 메소드에 필드 이름을 전달하여 오름차순으로 정렬할 수 있다.
+- 필드 이름 앞에 하이픈(-)을 붙이면 내림차순으로 정렬된다.
+- 여러 필드로 정렬하고 싶다면 콤마(,)로 구분하여 전달할 수 있다.
+
+```python
+# 'title' 필드를 기준으로 오름차순 정렬
+Post.objects.order_by('title')
+
+# 'id' 필드를 기준으로 내림차순 정렬
+Post.objects.order_by('-id')
+
+# 'id' 필드를 기준으로 오름차순, 'title' 필드를 기준으로 내림차순 정렬
+Post.objects.order_by('id', '-title')
+```
+
 ## Read: 데이터 조회
 
 ### 전체 게시글 조회
@@ -246,6 +263,27 @@ def create(request):
 - 사용자를 보낸다 = 사용자가 GET 요청을 한 번 더 보내도록 해야 한다.
 - 서버가 클라이언트를 직접 다른 페이지로 보내는 것이 아닌,
 **클라이언트가 GET 요청을 한 번 더 보내도록 응답하는 것**
+
+```html
+<!-- articles/new.html -->
+<form action="{% url "articles:create" %}" method="POST">
+	{% csrf_token %}
+  <div>
+    <label for="title">Title: </label>
+    <input type="text" name="title", id="title">
+  </div>
+  <div>
+    <label for="content">Content: </label>
+    <textarea name="content" id="content"></textarea>
+  </div>
+  <input type="submit">
+</form>
+```
+
+- `<form>` 태그의 action은 해당 URL로 요청을 보내는 것이기 때문에, 변경할 필요 없다.
+    - create.html이 필요 없어지는 것일 뿐, `url "articles:create”`은 살아 있다.
+    - `articles/create/` URL로 요청을 보내면 create 뷰 함수가 실행된다.
+    - create 뷰 함수가 실행되면, `articles:detail`로 리다이렉트 요청이 전송된다.
 
 ```python
 # articles/views.py
