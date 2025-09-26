@@ -40,6 +40,7 @@
 * [1회차: 사용자 인증 API 구현](project-01/01.md)
 * [2회차: 주가 데이터 시계열 분석 및 시각화 구현](project-01/02.md)
 * [3회차: 도서 서비스 반응형 UI 프로토타입 구현](project-01/03.md)
+* [4회차: 주식 정보 크롤링 및 게시판 서비스](project-01/04.md)
 
 
 ### **🔧 개발 환경 및 도구 (Dev Environment & Tools)**
@@ -176,6 +177,8 @@ AI 도구를 활용하여 학습하고 얻은 통찰을 기록합니다.
 * [PRD](AI/prd.md)
 * [MCP](AI/mcp.md)
 * [Gemini-CLI 실습](AI/gemini-cli.md)
+* [Design-to-Code](AI/design-to-code.md)
+* [비정형 데이터 구조화](AI/data-parsing.md)
 
 ### 🏆 코딩 테스트 및 주요 성과 (Coding Tests & Achievements)
 
