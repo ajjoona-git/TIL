@@ -168,6 +168,7 @@
 * [ORM(Object Relational Mapping) - QuerySet API](django/orm.md)
 * [ORM(Object Relational Mapping) - view에서 활용](django/orm.md)
 * [HTTP request methods](django/http-request.md)
+* [Django Form](django/form.md)
 
 
 ### **🤖 AI 활용**
