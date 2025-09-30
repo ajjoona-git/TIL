@@ -169,6 +169,8 @@
 * [ORM(Object Relational Mapping) - view에서 활용](django/orm.md)
 * [HTTP request methods](django/http-request.md)
 * [Django Form](django/form.md)
+* [웹 인증의 이해: HTTP, 쿠키와 세션](django/auth-basics.md)
+* [Django Custom User Model](django/custom-user-model.md)
 
 
 ### **🤖 AI 활용**
