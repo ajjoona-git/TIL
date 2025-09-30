@@ -1,3 +1,21 @@
+## admin 등록 시 인자의 순서 주의!
+### 실습
+
+```python
+# accounts/admin.py
+from django.contrib import admin
+from django.contrib.auth.admin import UserAdmin
+from .models import User
+
+# admin.site.register(UserAdmin, User) -> 아래와 같은 오류 발생
+admin.site.register(User, UserAdmin)
+```
+
+![오류 메시지](../images/custom-user-model_6.png)
+
+`admin.site.register()` 함수는 **첫 번째 인자**로 **모델 클래스**(`User`)를 받고, **두 번째 인자**로 해당 모델의 관리자 페이지를 커스터마이징할 **Admin 클래스**(`UserAdmin`)를 받습니다. 현재 코드에서는 이 두 인자의 순서가 바뀌어 있습니다.
+
+
 ## Django Authentication System
 
 ### 인증 (Authentication)
