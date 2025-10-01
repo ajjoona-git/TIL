@@ -171,6 +171,9 @@
 * [Django Form](django/form.md)
 * [웹 인증의 이해: HTTP, 쿠키와 세션](django/auth-basics.md)
 * [Django Custom User Model](django/custom-user-model.md)
+* [Authentication - 로그인/로그아웃](django/auth-1.md)
+* [Authentication - 회원 관리](django/auth-2.md)
+* [비밀번호 암호화](django/hash.md)
 
 
 ### **🤖 AI 활용**
