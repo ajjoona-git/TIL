@@ -266,3 +266,112 @@ def new_update(request, pk):
     }
     return render(request, 'articles/update.html', context)
 ```
+
+
+### MultipleChoiceField
+
+- Form에서 여러 개의 선택지를 동시에 선택할 수 있도록 해주는 필드
+- 사용자가 제출하면 선택된 값들은 파이썬 리스트(list) 형태로 처리한다.
+- 기본적으로 여러 줄 선택가능한 <select multiple> 태그로 렌더링 되지만,
+widget 옵션을 통해 체크박스(Checkbox) 형태로 더 편리하게 바꿀 수 있다.
+
+```python
+# formsapp/models.py
+class Product(models.Model):
+    name = models.CharField(max_length=100)
+    price = models.DecimalField(max_digits=8, decimal_places=2, default=0.00)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    # 이후 category 필드에 정의되어있던 choice를 form 으로 옮긴다.
+    # 화면에 랜더링 되는 형태와, choices 를 form 에서 설정해줘야 함
+    category = models.CharField(
+        max_length=500,
+        help_text='콤마로 구분된 카테고리 코드',
+        blank=True,
+        verbose_name='카테고리',
+    )
+```
+
+```python
+# formsapp/forms.py
+# form2 (ModelForm 예시)
+class ProductForm(forms.ModelForm):
+    CATEGORY_CHOICES = [
+        ('ELEC', 'Electronics'),
+        ('BOOK', 'Books'),
+        ('FASH', 'Fashion'),
+    ]
+    category = forms.MultipleChoiceField(
+        choices=CATEGORY_CHOICES,
+        required=False,
+        help_text='하나 이상의 카테고리를 선택하세요',
+        # widget=forms.CheckboxSelectMultiple,  # 체크박스 형태로 랜더링
+    )
+
+    class Meta:
+        model = Product
+        fields = [
+            'name',
+            'price',
+            'category',
+        ]
+```
+
+![실행 화면](../images/form_7.png)
+
+```bash
+# 서버 로그 확인
+cleaned_data: {'name': '제품1', 'price': Decimal('12'), 'category': ['BOOK', 'FASH']}
+cleaned_data 타입: <class 'dict'>
+```
+
+![`widget=forms.CheckboxSelectMultiple` 설정 후 화면](../images/form_8.png)
+
+`widget=forms.CheckboxSelectMultiple` 설정 후 화면
+
+### changed_data
+
+- django 폼에서 유효성 검사를 성공적으로 통과한 ‘깨끗한’ 데이터를 담고 있는 파이썬 딕셔너리
+- 반드시 form.is_valid()가 True를 반환한 이후에만 접근할 수 있다.
+- 데이터베이스에 저장하기 직전에, 검증된 데이터를 가지고 추가적인 로직 (예: 특정 단어 필터링)을 수행하고 싶을 때 사용할 수 있다.
+
+```python
+# formsapp/views.py
+def form2(request):
+    if request.method == 'POST':
+        form = ProductForm(request.POST)
+        if form.is_valid():
+            product = form.save(commit=False)  # 저장하지 않고 인스턴스 반환
+            print(f'cleaned_data: {form.cleaned_data}')  # cleaned_data 확인
+            print(
+                f'cleaned_data 타입: {type(form.cleaned_data)}'
+            )  # cleaned_data 타입 확인
+            category_values = form.cleaned_data.get('category', [])
+            category_string = ','.join(
+                category_values
+            )  # 카테고리 데이터를 콤마로 구분된 문자열로 변환
+            product.category = category_string
+            product.save()
+            messages.success(
+                request,
+                f"제품 '{product.name}'이(가) 성공적으로 저장되었습니다!",
+            )
+            return redirect('formsapp:form2')
+    else:
+        form = ProductForm()
+
+    # 저장된 제품 목록 가져오기
+    products = Product.objects.all().order_by('-created_at')[:5]
+
+    context = {
+        'form': form,
+        'products': products,
+    }
+
+    return render(request, 'formsapp/form2.html', context)
+```
+
+- `request.POST`: 검증되지 않은 문자열 형태
+- `form.is_valid()`: 유효성 검사 과정
+- `form.cleaned_data`: 검증 완료, 올바른 파이썬 타입으로 변환
+    - IntegerField → int, DateField → datetime.date

@@ -91,7 +91,7 @@ class Article(models.Model):
     - `CharField`의 `max_length` 매개변수는 선택 사항
         - 유효성 검사 및 데이터의 명확성을 위해 명시적으로 설정하는 것을 권장한다.
 
-### Model Field
+## Model Field
 
 - DB 테이블의 필드(열) 정의
 - 데이터 타입 (field types) 및 제약 조건 (field options) 명시
@@ -111,3 +111,98 @@ class Article(models.Model):
     - `null` 데이터베이스에서 NULL값을 허용할지 여부를 결정 (기본값: False)
     - `blank` form에서 빈 값을 허용할지 여부를 결정 (기본값: False)
     - `default` 필드의 기본값을 설정
+
+### Choices 속성
+
+- 모델 필드에 미리 정해진 선택지를 부여하는 속성
+- 데이터베이스에는 실제 값이 저장되지만 사용자에게는 더 이해하기 쉬운 이름(레이블)을 보여주는 Dropdown 메뉴를 손쉽게 만들 수 있다.
+- `(저장될 실제 값, 사용자에게 보여줄 이름)` 형태의 튜플을 담은 리스트 또는 튜플로 정의한다.
+    - `('TODO', '할 일 ')` : 사용자가 ‘할 일’을 선택하고 저장하면 데이터베이스의 status 필드에는 ‘TODO’라는 문자열이 저장된다.
+    - `STATUS_CHOICES` 처럼 변수명을 대문자로 명명하는 것이 django의 관례
+- ModelForm이나 관리자 페이지에서 자동으로 기본 텍스트 입력창 대신 드롭다운(select) 위젯으로 렌더링해준다.
+
+![choices 예시](../images/models_4.png)
+
+- `choices`: 미리 정의된 값들만 선택할 수 있도록 제한
+- `default`: 사용자가 값을 입력하지 않았을 때 자동으로 할당되는 기본값
+- `help_text`: Admin이나 Form 에서 해당 필드 옆에 간단한 안내문으로 표시되는 설명
+- `verbose_name`: Admin이나 Form 에서 필드의 라벨로 표시될 텍스트
+
+### PositiveIntegerField
+
+- 0을 포함한 양의 정수만 저장할 수 있도록 강제하는 Django 모델 필드
+- 데이텁베이스에는 일반 정수 (integer) 타입으로 생성되지만,
+django의 유효성 검사를 통해 음수 값이 저장되려고 하면 오류(`ValidationError`)를 발생시킨다.
+- 음수가 될 수 없는 모든 종류의 숫자 데이터에 사용할 수 있다.
+    - 수량 (재고 수량, 주문 개수)
+    - 수치 (나이, 조회수, 좋아요 수)
+    - 포인트 및 금액 (포인트, 가격, 예산)
+
+```python
+# todos/models.py
+from django.db import models
+
+class Todo(models.Model):
+
+    # 1) CharField + choices
+    STATUS_CHOICES = [
+        ('TODO', '할 일'),
+        ('DOING', '진행 중'),
+        ('DONE', '완료'),
+    ]
+    status = models.CharField(
+        max_length=5,
+        choices=STATUS_CHOICES,
+        default='TODO',
+        help_text='현재 작업 상태를 선택해주세요.',
+        verbose_name='상태',
+    )
+
+    # 2) IntegerField + choices
+    PRIORITY_CHOICES = [
+        (1, '낮음'),
+        (2, '보통'),
+        (3, '높음'),
+    ]
+    priority = models.PositiveIntegerField(
+        choices=PRIORITY_CHOICES,
+        default=2,
+        help_text='우선순위를 선택해주세요 (1=낮음, 2=보통, 3=높음).',
+        verbose_name='우선순위',
+    )
+```
+
+![Admin](../images/models_5.png)
+
+![DB](../images/models_6.png)
+
+
+### null vs blank
+
+| 속성 | 적용 레벨 | 역할 | 주사용 대상 |
+| --- | --- | --- | --- |
+| `blank=True` | Form validation | - Form 레벨에서 해당 필드를 ‘필수 입력이 아님’으로 처리
+- Admin, ModelForm 등에서 빈 값으로 제출 가능 | 문자열 필드 (CharField, TextField) |
+| `null=True` | DB | - DB 레벨에서 NULL 값 허용
+- DB 컬럼이 NULL을 저장할 수 있도록 설정 | 문자열 외 필드 (IntegerField, DateTimeField 등) |
+- Form 에서 빈 값을 허용 (blank=True)은 DB의 NULL과 직접 대응하지 않는다.
+- DB 컬럼을 NULL 허용 (null=True)해도, 폼 입력에서는 여전히 필수 값이 될 수 있다.
+
+`blank=True`
+
+- Form 유효성 검사 차원
+    - 필수 입력이 아니다.
+    - Admin이나 ModelForm 에서 해당 필드를 비워 제출해도 검증 에러가 발생하지 않는다.
+- DB와는 무관
+    - django의 Form이나 Admin에서 ‘비워둘 수 있다’는 의미
+    - DB에는 ‘’(빈 문자열)로 저장될 수 있지만, 실제로 DB가 NULL 상태가 되는 것은 아니다. (기본적으로 null=False일 때)
+
+`null=True`
+
+- DB 스키마 레벨
+    - null=True면 해당 컬럼에 NULL 값을 저장할 수 있다.
+- Form 검증과는 별개
+    - django Form에서 blank=True가 아니면, 여전히 필수 입력으로 간주한다.
+    - DB에서 NULL을 허용하더라도 Form에서 공백 제출을 막을 수 있다.
+- 문자열 필드에 null=Ture를 설정하는 것은 일반적으로 권장하지 않는다.
+    - 데이터베이스에 ‘값이 없음’을 나타내는 상태가 두 가지 (NULL, ‘’)가 되어버리기 때문
