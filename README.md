@@ -169,7 +169,7 @@
 * [ORM(Object Relational Mapping) - QuerySet API](django/orm.md)
 * [ORM(Object Relational Mapping) - view에서 활용](django/orm.md)
 * [HTTP request methods](django/http-request.md)
-* [Django Form](django/form.md)
+* [Django Form](django/forms.md)
 * [웹 인증의 이해: HTTP, 쿠키와 세션](django/auth-basics.md)
 * [Django Custom User Model](django/custom-user-model.md)
 * [Authentication - 로그인/로그아웃](django/auth-1.md)

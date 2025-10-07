@@ -1,3 +1,253 @@
+# 스스로 학습
+## 실습
+
+### widgets
+
+**1. Specifying the widget directly on the form field:**
+
+```python
+from django import forms
+from .models import Memo
+
+class MemoForm(forms.ModelForm):
+    memo = forms.CharField(
+        widget=forms.Textarea(
+            attrs={
+                'placeholder': 'memo',
+                'rows': 50,
+                'cols': 5,
+            }
+        )
+    )
+    summary = forms.CharField(
+        widget=forms.TextInput(
+            attrs={
+                'placeholder': 'summary',
+                'max_length': 20,
+            }
+        )
+    )
+
+    class Meta:
+        model = Memo
+        fields = '__all__'
+
+```
+
+**2. Specifying widgets within the `Meta` class:**
+
+```python
+from django import forms
+from .models import Memo
+
+class MemoForm(forms.ModelForm):
+    class Meta:
+        model = Memo
+        fields = '__all__'
+        widgets = {
+            'memo': forms.Textarea(
+                attrs={
+                    'placeholder': 'memo',
+                    'rows': 50,
+                    'cols': 5,
+                }
+            ),
+            'summary': forms.TextInput(
+                attrs={
+                    'placeholder': 'summary',
+                    'max_length': 20,
+                }
+            )
+        }
+```
+
+### Bootstrap class
+
+- ModelForm widget을 활용하여 bootstrap form 관련 class를 부여한다.
+
+```python
+# menus/models.py
+from django.db import models
+
+# Create your models here.
+class Menu(models.Model):
+    name = models.CharField(max_length=100)
+    price = models.DecimalField(max_digits=8, decimal_places=2)
+    description = models.TextField()
+    is_vegan = models.BooleanField()
+
+    def __str__(self):
+        return self.name
+```
+
+```python
+# menus/forms.py
+from django import forms
+from .models import Menu
+
+class MenuForm(forms.ModelForm):
+    class Meta:
+        model = Menu
+        fields = '__all__'
+        widgets = {
+            'name': forms.TextInput(
+                attrs={
+                    'class': 'form-control',
+                    'placeholder': '메뉴 이름을 작성해 주세요.'
+                    }
+                ),
+            'description': forms.Textarea(
+                attrs={
+                    'class': 'form-control',
+                    'placeholder': '메뉴 설명을 작성해 주세요.'
+                    }
+                ),
+            'is_vegan': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
+            'price': forms.TextInput(attrs={'class': 'form-control'}),
+        }
+```
+
+![widget 작성 전](../images/forms_9.png)
+
+widget 작성 전
+
+![widget 작성 후](../images/forms_10.png)
+
+widget 작성 후
+
+### RadioSelect
+
+```python
+# menus/models.py
+from django.db import models
+
+# Create your models here.
+class Menu(models.Model):
+    CHOICES = [
+        (True, 'YES'),
+        (False, 'NO'),
+    ]
+
+    name = models.CharField(max_length=100)
+    price = models.DecimalField(max_digits=8, decimal_places=2)
+    description = models.TextField()
+    is_vegan = models.BooleanField(choices=CHOICES)
+
+    def __str__(self):
+        return self.name
+```
+
+**체크박스는 '하나의 독립된 요소'로 취급**되는 반면, **라디오 버튼은 '여러 선택지가 모인 그룹'으로 취급**되기 때문에 렌더링 방식에 차이가 생깁니다.
+
+---
+
+**✅ Checkbox가 `{{ form.as_p }}`에서 괜찮았던 이유: 단일(Single) 위젯**
+
+`is_vegan` 필드를 그냥 두면 Django는 기본적으로 `CheckboxInput` 위젯을 사용합니다.
+
+- **HTML 구조:** `CheckboxInput`은 **단 하나의 `<input type="checkbox">` 태그와 하나의 `<label>` 태그**로 구성됩니다. 매우 단순한 구조죠.
+- **렌더링:** `{{ form.as_p }}`는 이 간단한 한 쌍을 `<p>` 태그로 감싸기만 하면 됩니다. Bootstrap의 완벽한 형태(`form-check` div로 감싸는 것)는 아닐지라도, 구조가 워낙 단순해서 화면에 표시될 때 레이아웃이 크게 깨지지 않고 정상적으로 보였던 것입니다.
+
+---
+
+**❌ RadioSelect를 수동으로 수정해야 하는 이유: 다중(Multi-part) 위젯**
+
+`RadioSelect` 위젯은 여러 선택지('YES', 'NO' 등)를 보여줘야 합니다.
+
+- **HTML 구조:** Django는 이 여러 선택지를 구분하기 위해 기본적으로 **`<ul>`(목록)과 `<li>`(목록 아이템) 태그**를 사용하여 그룹으로 묶어버립니다. 즉, 하나의 필드가 여러 개의 HTML 태그 덩어리로 만들어집니다.
+- **Bootstrap과의 충돌:** `{{ form.as_p }}`는 이 `<ul>` 목록 전체를 하나의 `<p>` 태그로 감싸버립니다. 하지만 Bootstrap은 `<ul>` 목록이 아니라, **각각의 라디오 버튼과 라벨 쌍이 개별적인 `<div class="form-check">`로 감싸여야** 제대로 된 스타일을 보여줍니다.
+- **결과:** Django가 만든 `<ul><li>...</li></ul>` 구조와 Bootstrap이 요구하는 `<div class="form-check">...</div>` 구조가 서로 맞지 않아, 마치 스타일이 전혀 적용되지 않은 것처럼 화면이 깨져 보이게 됩니다. 이 때문에 `for` 반복문으로 각 선택지를 하나씩 꺼내어 Bootstrap이 원하는 HTML 구조로 직접 만들어줘야 했던 것입니다.
+
+![widget에서 `'is_vegan': forms.RadioSelect(attrs={'class': 'form-check-input'})` 으로 설정했을 때](../images/forms_11.png)
+
+widget에서 `'is_vegan': forms.RadioSelect(attrs={'class': 'form-check-input'})` 으로 설정했을 때
+
+![widget에서 `'is_vegan': forms.RadioSelect(attrs={'class': 'form-check'})`, models.py에서 is_vegan 필드 `default=None` 으로 설정했을 때](../images/forms_12.png)
+
+widget에서 `'is_vegan': forms.RadioSelect(attrs={'class': 'form-check'})`, models.py에서 is_vegan 필드 `default=None` 으로 설정했을 때
+
+### 필드(Field)와 위젯(Widget)의 역할
+
+Django 폼에서 필드와 위젯은 역할이 나뉘어 있습니다.
+
+- **필드 (`forms.DecimalField`):** 데이터의 유효성 검사 규칙을 담당합니다. (예: "이 값은 숫자여야 한다", "최대 8자리여야 한다" 등)
+- **위젯 (`forms.NumberInput`, `forms.TextInput`):** 필드를 HTML로 어떻게 렌더링할지 담당합니다. (예: `<input type="number">`로 만들고, `class="form-control"` 속성을 추가)
+
+![forms.py](../images/forms_13.png)
+
+현재 코드에서는 유효성 검사를 담당하는 `DecimalField`에 화면 표시를 담당하는 `attrs` 인자를 잘못 전달하여 `TypeError`가 발생한 것입니다.
+
+### error_messages
+
+`ModelForm`이 모델(`models.py`)로부터 `price` 필드의 유효성 검사 규칙(`max_digits`, `decimal_places` 등)을 자동으로 가져오고, 우리가 `Meta` 클래스에 정의한 위젯과 오류 메시지를 그 위에 덧씌워 적용해 줍니다.
+
+```python
+# menus/forms.py
+from django import forms
+from .models import Menu
+
+class MenuForm(forms.ModelForm):
+    class Meta:
+        model = Menu
+        fields = '__all__'
+        widgets = {
+            'name': forms.TextInput(
+                attrs={
+                    'class': 'form-control',
+                    'placeholder': '메뉴 이름을 작성해 주세요.'
+                }
+            ),
+            'description': forms.Textarea(
+                attrs={
+                    'class': 'form-control',
+                    'placeholder': '메뉴 설명을 작성해 주세요.'
+                }
+            ),
+            'is_vegan': forms.RadioSelect(attrs={'class': 'form-check'}),
+            'price': forms.TextInput(attrs={'class': 'form-control'}),
+        }
+
+        error_messages = {
+            'price': {
+                'invalid': '올바른 가격을 입력해 주세요. 예: 12.34',
+                'max_digits': '가격은 최대 8자리여야 합니다.',
+                'max_decimal_places': '가격은 소수점 이하 두 자리여야 합니다.',
+            },
+        }
+
+```
+
+![실행 화면](../images/forms_14.png)
+![실행 화면](../images/forms_15.png)
+![실행 화면](../images/forms_16.png)
+
+### HiddenInput
+
+```python
+# todos/forms.py
+from django import forms
+from .models import Todo
+
+class TodoForm(forms.ModelForm):
+
+    class Meta:
+        model = Todo
+        fields = '__all__'
+        # exclude = ('is_completed', )
+        widgets = {
+            'is_completed': forms.HiddenInput(),
+        }
+```
+
+- exclude를 사용하여 'is_completed'필드를 제거한 경우, 해당 컬럼에 삽입되어야 할 데이터가 누락되어 오류가 발생하였다.
+- widgets을 활용하여, 'is_completed'필드를 csrf_token과 같이 hidden 타입의 input tag로 변경하여, 보이지 않게 수정한다.
+    - 사용자에게 보이지만 않을 뿐, 정상적으로 비어있는 값 (False)가 전송된다.
+    - request.POST를 출력하여 전송받은 데이터를 확인 할 수 있다.
+
+![실행 화면](../images/forms_17.png)
+
+<hr>
+
 ## Django Form
 
 ### 유효성 검사
@@ -49,7 +299,7 @@ def new(request):
 </form>
 ```
 
-![form 실행 결과](../images/form_1.png)
+![form 실행 결과](../images/forms_1.png)
 
 - 코드에는 `{{ form }}`만 작성했는데, 개발자도구를 통해 보면 <div> 태그로 대체됨
 
@@ -65,7 +315,7 @@ class ArticleForm(forms.Form):
     content = forms.CharField(widget=forms.Textarea)
 ```
 
-![widgets 실행 결과](../images/form_2.png)
+![widgets 실행 결과](../images/forms_2.png)
 
 ### Widgets 응용
 
@@ -87,7 +337,7 @@ class ArticleForm(forms.ModelForm):
         fields = '__all__'
 ```
 
-![widgets 응용](../images/form_3.png)
+![widgets 응용](../images/forms_3.png)
 
 
 ### Meta class
@@ -109,7 +359,7 @@ class ArticleForm(forms.ModelForm):
         exclude = ('title', )
 ```
 
-![modelform 실행 결과](../images/form_4.png)
+![modelform 실행 결과](../images/forms_4.png)
 
 
 ## ModelForm
@@ -206,7 +456,7 @@ def update(request, pk):
     - instance 인자를 지정하면, 기존 객체를 수정하는 update(갱신) 로직이 실행된다.
     - instance 키워드는 생략할 수 없음 (9번째에 위치하기 때문)
 
-| ![미입력 시 실행 결과](../images/form_5.png) | ![공백 입력 시 실행 결과](../images/form_6.png) |
+| ![미입력 시 실행 결과](../images/forms_5.png) | ![공백 입력 시 실행 결과](../images/forms_6.png) |
 | -- | -- |
 | django랑 상관없음. html에서 막은 것. 아무것도 입력하지 않아 제출이 안 된 상태. | 공백을 입력한 경우 제출은 됐지만, django의 유효성 검사를 통과하지 못함. 오류 메세지를 포함하여 redirect 된 상태. |
 
@@ -317,7 +567,7 @@ class ProductForm(forms.ModelForm):
         ]
 ```
 
-![실행 화면](../images/form_7.png)
+![실행 화면](../images/forms_7.png)
 
 ```bash
 # 서버 로그 확인
@@ -325,7 +575,7 @@ cleaned_data: {'name': '제품1', 'price': Decimal('12'), 'category': ['BOOK', '
 cleaned_data 타입: <class 'dict'>
 ```
 
-![`widget=forms.CheckboxSelectMultiple` 설정 후 화면](../images/form_8.png)
+![`widget=forms.CheckboxSelectMultiple` 설정 후 화면](../images/forms_8.png)
 
 `widget=forms.CheckboxSelectMultiple` 설정 후 화면
 
