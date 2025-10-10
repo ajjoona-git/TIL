@@ -28,6 +28,15 @@
 
 ## 📖 학습 기록
 
+### 🏆 코딩 테스트 및 주요 성과 (Coding Tests & Achievements)
+
+| 일자 | 활동 | 결과 및 내용 | 코드 |
+| :--- | :--- | :--- | :--- |
+| 2025.08.18 | **일타싸피** | 과목 평가 **100점** | [![GitHub](https://img.shields.io/badge/Code-pocket--ball-yellow?style=flat&logo=github)](https://github.com/ajjoona-git/pocket-ball) |
+| 2025.08.19 | **SW 역량 테스트 (IM/A형)** | **A 등급** 취득 성공 | [![GitHub](https://img.shields.io/badge/Code-sw--test--250819-yellow?style=flat&logo=github)](https://github.com/ajjoona-git/sw-test-250819) |
+| 2025.09.06 | **SW 역량 테스트 (B형)** | B등급 문제 유형 분석 및 복기. DFS, 백트래킹 심화 학습의 필요성 확인 | [![GitHub](https://img.shields.io/badge/Code-sw--test--250906-yellow?style=flat&logo=github)](https://github.com/ajjoona-git/sw-test-250906) |
+| 2025.09.22 | **배틀싸피** | 반대항전 **1등**. **반 대표**로 전국대항전 출전 | [![GitHub](https://img.shields.io/badge/Code-battle-yellow?style=flat&logo=github)](https://github.com/ajjoona-git/battle) |
+
 ### **🚇 프로젝트: 쉽길 (WishEasy)**
 "가장 빠른 길이 아닌, 가장 편한 길을 안내합니다."<br>
  쉽길은 계단 이용이 어려운 분들을 위해 에스컬레이터와 엘리베이터를 중심으로 한 지하철 경로를 찾아주는 웹 서비스입니다.
@@ -159,7 +168,6 @@
 * [Django Secret Key](django/secret-key.md)
 * [MTV 패턴과 프로젝트 구조](django/mtv-pattern.md)
 * [프로젝트와 앱 생성](django/project-app.md)
-* [Django 정적 파일(Static Files) 관리](django/static-tag.md)
 * [DTL (Django Template Language)](django/templates.md)
 * [사용자 입력 데이터 처리](django/request.md)
 * [Django URLs](django/urls.md)
@@ -175,7 +183,8 @@
 * [Authentication - 로그인/로그아웃](django/auth-1.md)
 * [Authentication - 회원 관리](django/auth-2.md)
 * [비밀번호 암호화](django/hash.md)
-
+* [정적 파일(Static Files) 관리](django/static-files.md)
+* [미디어 파일(Media Files) 처리](django/media-files.md)
 
 ### **🤖 AI 활용**
 AI 도구를 활용하여 학습하고 얻은 통찰을 기록합니다.
@@ -186,15 +195,6 @@ AI 도구를 활용하여 학습하고 얻은 통찰을 기록합니다.
 * [Gemini-CLI 실습](AI/gemini-cli.md)
 * [Design-to-Code](AI/design-to-code.md)
 * [비정형 데이터 구조화](AI/data-parsing.md)
-
-### 🏆 코딩 테스트 및 주요 성과 (Coding Tests & Achievements)
-
-| 일자 | 활동 | 결과 및 내용 | 코드 |
-| :--- | :--- | :--- | :--- |
-| 2025.08.18 | **일타싸피** | 과목 평가 **100점** | [![GitHub](https://img.shields.io/badge/Code-pocket--ball-yellow?style=flat&logo=github)](https://github.com/ajjoona-git/pocket-ball) |
-| 2025.08.19 | **SW 역량 테스트 (IM/A형)** | **A 등급** 취득 성공 | [![GitHub](https://img.shields.io/badge/Code-sw--test--250819-yellow?style=flat&logo=github)](https://github.com/ajjoona-git/sw-test-250819) |
-| 2025.09.06 | **SW 역량 테스트 (B형)** | B등급 문제 유형 분석 및 복기. DFS, 백트래킹 심화 학습의 필요성 확인 | [![GitHub](https://img.shields.io/badge/Code-sw--test--250906-yellow?style=flat&logo=github)](https://github.com/ajjoona-git/sw-test-250906) |
-| 2025.09.22 | **배틀싸피** | 반대항전 **1등**. **반 대표**로 전국대항전 출전 | [![GitHub](https://img.shields.io/badge/Code-battle-yellow?style=flat&logo=github)](https://github.com/ajjoona-git/battle) |
 
 ---
 
