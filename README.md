@@ -186,7 +186,8 @@
 * [정적 파일(Static Files) 관리](django/static-files.md)
 * [미디어 파일(Media Files) 처리](django/media-files.md)
 
-### **🤖 AI 활용**
+### **🤖 AI**
+0. **AI 활용**
 AI 도구를 활용하여 학습하고 얻은 통찰을 기록합니다.
 * [Vibe Coding](AI/Vibe-Coding.md)
 * [AI 코딩 어시스턴트](AI/ai-coding-assistant.md)
@@ -195,6 +196,11 @@ AI 도구를 활용하여 학습하고 얻은 통찰을 기록합니다.
 * [Gemini-CLI 실습](AI/gemini-cli.md)
 * [Design-to-Code](AI/design-to-code.md)
 * [비정형 데이터 구조화](AI/data-parsing.md)
+
+1. **AI를 위한 기초**
+* [numpy](AI/numpy.md)
+* [pandas](AI/pandas.md)
+
 
 ---
 
