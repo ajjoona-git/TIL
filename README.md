@@ -201,6 +201,12 @@ AI 도구를 활용하여 학습하고 얻은 통찰을 기록합니다.
 * [numpy](AI/numpy.md)
 * [pandas](AI/pandas.md)
 
+2. **머신러닝 기초 (Machine Learning Fundamentals)**
+머신러닝의 핵심 개념과 대표적인 모델들을 학습합니다.
+* [머신러닝 개요 및 데이터 전처리](ai/ml-intro.md)
+* [지도 학습 ①: 선형 회귀 (Linear Regression)](ai/linear-regression.md)
+* [지도 학습 ②: 로지스틱 회귀 (Logistic Regression)](ai/logistic-regression.md)
+
 
 ---
 
