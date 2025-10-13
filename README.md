@@ -200,13 +200,16 @@ AI 도구를 활용하여 학습하고 얻은 통찰을 기록합니다.
 1. **AI를 위한 기초**
 * [numpy](AI/numpy.md)
 * [pandas](AI/pandas.md)
+* [matplotlib](AI/matplotlib.md)
 
 2. **머신러닝 기초 (Machine Learning Fundamentals)**
 머신러닝의 핵심 개념과 대표적인 모델들을 학습합니다.
 * [머신러닝 개요 및 데이터 전처리](ai/ml-intro.md)
+* [지도 학습과 일반화](ai/supervised-learning.md)
 * [지도 학습 ①: 선형 회귀 (Linear Regression)](ai/linear-regression.md)
 * [지도 학습 ②: 로지스틱 회귀 (Logistic Regression)](ai/logistic-regression.md)
-
+* [모델 검증과 교차검증 (Cross-Validation)](ai/cross-validation.md)
+* [비지도 학습: 클러스터링 (Clustering)](ai/unsupervised-learning.md)
 
 ---
 
