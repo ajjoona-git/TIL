@@ -212,6 +212,9 @@ AI 도구를 활용하여 학습하고 얻은 통찰을 기록합니다.
 * [모델 검증과 교차검증 (Cross-Validation)](ai/cross-validation.md)
 * [비지도 학습: 클러스터링 (Clustering), 차원 축소 (PCA)](ai/unsupervised-learning.md)
 
+3. **딥러닝 기초 (Deep Learning Fundamentals)**
+* [신경망의 구조: Shallow와 Deep Networks](ai/neural-network.md)
+* [신경망 적합 (Fitting): 경사 하강법과 역전파](ai/fitting.md)
 
 ---
 

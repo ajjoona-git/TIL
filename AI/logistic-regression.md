@@ -48,6 +48,38 @@
         - 기울기 소실 문제: 역전파에서 기울기를 전달하는 과정에서 기울기가 없어질 수 있다.
 - 이후 학습은 경사 하강법을 사용하고, 이진 교차 엔트로피(BCE) 비용을 최소화하는 방향으로 w와 b를 계속 업데이트한다.
 
+### 로지스틱 회귀 모형 vs 선형 모형
+
+- 오즈 (Odds): 성공 (y=1) 확률이 실패 (y=0) 확률에 비해 몇 배 더 높은가
+    - $odds = 성공확률 / 실패확률$
+
+    ![오즈](../images/logistic-regression_5.png)
+
+- 로짓 변환 (logit, log odds): 오즈에 log를 취한 함수 형태
+    - $logit(p) = log(odds)$
+
+- 로지스틱 함수는 선형 함수를 내포하고 있다.
+- 로지스틱 모형식은 선형 모형식과 시그모이드 함수의 결합
+    - 로짓 변환 시 선형 회귀 모형식으로 표현 가능
+
+![로짓 변환](../images/logistic-regression_6.png)
+
+### MLE 활용 모수 추정
+
+- 우도 (Likelihood): 확률을 계산하는 함수를 평가하기 위한 지표
+- MLE (Maximum Likelihood Estimation): 우도를 최대화하는 것이 모델의 목표
+
+![우도 최대화](../images/logistic-regression_7.png)
+
+![결과 해석 1](../images/logistic-regression_8.png)
+
+![결과 해석 2](../images/logistic-regression_9.png)
+
+![결과 해석 3](../images/logistic-regression_10.png)
+
+- p-value ≤ 0.05 인 경우 significant한 요인으로 간주한다.
+
+
 ---
 
 ## 다중 분류 (Multi-class Classification)
