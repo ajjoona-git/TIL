@@ -18,7 +18,7 @@
 
 ![지도학습 vs 비지도학습](../images/unsupervised-learning_1.png)
 
-## 클러스터링 (Clustering)
+## 클러스터링 (Clustering, 군집화)
 
 ### 클러스터링
 
@@ -102,3 +102,63 @@
 - 같은 데이터라도 링크 선택에 따라 클러스터링 결과(덴드로그램)가 달라질 수 있다.
 
 ![링크별 덴드로그램](../images/unsupervised-learning_7.png)
+
+
+## 주성분 분석 (Principal Component Analysis, PCA)
+
+- 정보 손실을 최소화하면서 feature들을 가장 잘 설명하는 새로운 핵심 특징 몇 개로 압축하는 **차원 축소** 기법
+- PCA에서 데이터가 가장 길게 늘어선 방향, 즉 **분산이 가장 큰 방향**이 데이터의 정보를 가장 많이 포함하는 ‘제1주성분 (PC1)’
+- 주성분과 직각을 이루는 축이 제2주성분
+
+![PCA](../images/unsupervised-learning_8.png)
+
+- 코드 구현 예시
+```python
+# decomposition: 차원 축소와 관련된 다양한 기능들이 포함되어 있음
+from sklearn.decomposition import PCA
+
+# 1. PCA: 특성을 PCA로 분석해 두 개의 Feature로 축소한 X_pca를 생성
+'''n_components
+- 축소할 차원의 수
+- n_components의 값을 0.95와 같이 실수로 지정하면,
+  분산 설명 비용이 95%가 되도록 하는 최소한의 차원을 선택
+'''
+pca = PCA(n_components=2)    # 2개의 Feature로 축소
+
+# fit_transform: PCA 모델을 데이터에 맞추고, 데이터를 변환
+X_pca = pca.fit_transform(X)
+```
+
+```python
+# 2. K-Means Clustering
+# cluster: 군집화와 관련된 다양한 기능들이 포함되어 있음
+from sklearn.cluster import KMeans
+
+# n_clusters: 군집의 수
+# random_state: 랜덤 시드 고정
+# n_init: K-Means 알고리즘의 초기 중심점을 설정하는 방법
+    # 'auto': 기본값으로, 알고리즘이 자동으로 최적의 초기화 방법을 선택
+    # 정수값: 지정된 횟수만큼 다른 초기 중심점을 사용하여 군집화를 수행하고, 가장 좋은 결과를 선택
+kmeans = KMeans(n_clusters=3, random_state=42, n_init='auto')    # 와인 등급은 0, 1, 2 3개
+
+# fit_predict: K-Means 모델을 데이터에 맞추고, 각 샘플이 속한 군집 레이블을 반환
+clusters = kmeans.fit_predict(X_pca)
+```
+
+```python
+# 3. 시각화
+import matplotlib.pyplot as plt
+
+plt.figure(figsize=(10, 6))
+# ax[0]: PCA결과로부터 K-Means로 추론된 라벨
+sns.scatterplot(x=X_pca[:, 0], y=X_pca[:, 1], hue=clusters, ax=ax[0])
+ax[0].set_title('Labels inferred by K-Means')
+
+# ax[1]: PCA결과에 실제 라벨을 그려놓은 것
+sns.scatterplot(x=X_pca[:, 0], y=X_pca[:, 1], hue=y, ax=ax[1])
+ax[1].set_title('Actual Labels on PCA')
+
+fig.suptitle('KMeans Clustering with PCA')
+fig.tight_layout()
+plt.show()
+```

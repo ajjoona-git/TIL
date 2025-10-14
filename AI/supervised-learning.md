@@ -61,23 +61,52 @@
 
 ![정확도](../images/supervised-learning_4.png)
 
-- 정확도만 볼 경우, 불균형 데이터(양성 1%, 음성 99%)에서는 전부 음성이라 해도 정확도가 99%로 보일 수 있다.
+- 데이터의 클래스(정답) 비율이 불균형할 때, 모델의 성능을 왜곡할 수 있다.
+    - 암 환자 1명, 정상 환자 99명인 경우 - 100명 모두 정상이라고 판단하면 정확도는 99%이지만 암 환자를 찾지 못해 치명적
 - 정확도만 보지 말고, 다른 지표도 함께 봐야 안전하다.
+
+```python
+from sklearn.metrics import accuracy_score
+
+accuracy = accuracy_score(y_test, y_pred)
+```
 
 ### 혼동행렬 (Confusion Matrix)
 
 - 혼동행렬: 예측과 실제 값 사이의 관계를 행렬 형태로 표현
+  - Positive: 우리가 찾아야 하는 데이터
+  - Negative: 그 외의 대상
 
 |  | 실제 양성 | 실제 음성 |
 | --- | --- | --- |
 | 예측 양성 | TP (True Positive) | FP (False Positive, 오탐) |
 | 예측 음성 | FN (False Negative, 누락) | TN (True Negative) |
-- 정밀도 (Percision): 양성이라 판정한 것 중 진짜 양성의 비율
-    - TP / (TP + FP)
-- 재현율 (Sensitivity or Recall): 진짜 양성 가운데 잡아낸 예측 양성 비율
-    - TP / (TP + FN)
-- F1-score: 정밀도와 재현율의 조화평균
-    - F1 = 2 * (정밀도 * 재현율) / * (정밀도 + 재현율)
+
+### 정밀도(Precision)
+
+$TP / (TP + FP)$
+
+- 모델이 positive라고 예측한 것들 중에서 진짜 positive한 것들의 비율
+- FP를 낮추는 것이 중요하다
+- 모델의 예측을 얼마나 신뢰할 수 있는가
+- 모델의 예측을 진짜라고 믿을 수 있어야 할 때 유용
+
+### 재현율(Recall)
+
+$TP / (TP + FN)$
+
+- 실제 positive 중에서 모델이 positive라고 맞춘 비율
+- FN을 낮추는 것이 중요
+- 모델이 찾아야 할 것을 얼마나 빠짐없이 잘 찾아냈는지
+- 모델이 하나라도 놓치면 안 될 때 유용
+
+### 조화 평균(F1-Score)
+
+F1 = 2 * (정밀도 * 재현율) / * (정밀도 + 재현율)
+
+- 정밀도와 재현율 모두를 균형 있게 바라보는 지표
+- 보통 정밀도와 재현율은 trade-off 관계
+    - 한 쪽이 올라가면 다른 쪽이 내려간다.
 
 ![혼동행렬](../images/supervised-learning_5.png)
 

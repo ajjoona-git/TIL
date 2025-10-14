@@ -15,6 +15,41 @@
 - 방법: 검증셋 (hold-out), K겹 교차검증
 - 별도의 테스트 데이터 없이 데이터를 더 효율적으로 사용하여 일반화 오차를 추정할 수 있다.
 
+### 데이터 분할
+
+- 주어진 데이터를 훈련 데이터와 테스트 데이터로 분리
+- 훈련 데이터: 모델을 학습시키는 용도
+- 테스트 데이터: 모델이 얼마나 새로운 데이터를 잘 예측하는지 일반화 성능을 최종 평가하는 용도
+
+![오버피팅, 언더피팅](../images/supervised-learning_8.png)
+
+- `train_test_split()` : 주어진 데이터를 훈련/테스트 데이터로 분리하는 함수
+- `test_size=0.3`: 전체 데이터 중 30%를 테스트용, 나머지 70%를 훈련용으로 나눈다
+- `random_state=42`: 이 숫자를 고정해놓으면, 코드를 다시 시작해도 동일한 랜덤 값이 배정 된다 (아무 값이나 가능)
+- `startify=y`: 원본 데이터의 정답 비율을 분할된 데이터셋에 동일한 비율로 나눠주는 옵션
+    - 분류 문제에서는 필수
+```python
+# 데이터 불러오기 및 전처리
+from sklearn.datasets import load_wine
+# 훈련용 데이터와 테스트 데이터를 분리
+from sklearn.model_selection import train_test_split
+# 선형 회귀 모델 훈련
+from sklearn.linear_model import LinearRegression
+
+# 데이터 불러오기
+# as_frame=True: pandas DataFrame 형태로 반환
+# return_X_y=True: feature와 target을 분리하여 반환
+df, y = load_wine(return_X_y=True, as_frame=True)
+
+# 데이터 분할
+# test_size: 테스트 데이터의 비율 (0.2 = 20%)
+# random_state: 랜덤 시드 설정 (재현성을 위해 고정된 값 사용
+# stratify: 데이터셋에 있는 클래스(여기서는 y의 값)의 비율을 train과 test 데이터셋에 동일하게 맞춰주는 기능
+X_train, X_test, y_train, y_test = train_test_split(
+    df, y, test_size=0.3, random_state=42, stratify=y
+)
+```
+
 ## 검증셋(Validation Set) 접근
 
 ### 검증셋 (hold-out) 방법
