@@ -212,9 +212,14 @@ AI 도구를 활용하여 학습하고 얻은 통찰을 기록합니다.
 * [모델 검증과 교차검증 (Cross-Validation)](ai/cross-validation.md)
 * [비지도 학습: 클러스터링 (Clustering), 차원 축소 (PCA)](ai/unsupervised-learning.md)
 
-3. **딥러닝 기초 (Deep Learning Fundamentals)**
+3. **딥러닝 및 자연어 처리 (Deep Learning & NLP)**
 * [신경망의 구조: Shallow와 Deep Networks](ai/neural-network.md)
 * [신경망 적합 (Fitting): 경사 하강법과 역전파](ai/fitting.md)
+* [딥러닝 기초: MLP와 PyTorch](ai/deep-learning-basics.md)
+* [순차 데이터 처리: 워드 임베딩과 RNN](ai/rnn-and-embedding.md)
+* [Seq2Seq 모델과 어텐션 메커니즘](ai/seq2seq-and-attention.md)
+* [트랜스포머 아키텍처 (Transformer)](ai/transformer.md)
+* [사전학습 언어 모델: BERT, GPT, T5](ai/pretrained-language-models.md)
 
 ---
 
