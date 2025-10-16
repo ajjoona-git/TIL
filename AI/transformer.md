@@ -81,6 +81,13 @@
 - decoder: 인코더의 표현과 지금까지 생성한 단어들을 입력 받아 다음 단어를 예측한다.
     - 언어 모델과 같은 방식으로 동작한다.
 
+![image.png](../images/transformer_6.png)
+
+- **은닉 상태(hidden state)**는 문장의 정보들을 압축적으로 저장합니다.
+    - RNN layer를 통과하면서 문장 전체의 정보를 압축하게 되고 이러한 정보들은 hidden state에 담기게 됩니다. 이러한 hidden state는 문맥 벡터(context vector)로 사용됩니다.
+- **문맥 벡터(context vector)**는 입력 문장의 정보들을 벡터상에 압축하여 저장한 것
+- 번역을 하기 위해서는 last hidden state를 다시 저희의 입력 데이터와 유사한 형태인 텍스트(토큰) id로 변환하는 layer가 필요합니다. 이를 저희는 **Decoder**라고 부릅니다.
+
 ### Multi-Headed Attention
 
 - 문장에서 같은 단어라도 문법적 관계, 의미적 맥락 등으로 다른 단어에 주목할 수 있다.
