@@ -221,6 +221,17 @@ AI 도구를 활용하여 학습하고 얻은 통찰을 기록합니다.
 * [Seq2Seq 모델과 어텐션 메커니즘](ai/seq2seq-and-attention.md)
 * [트랜스포머 아키텍처 (Transformer)](ai/transformer.md)
 * [사전학습 언어 모델: BERT, GPT, T5](ai/pretrained-language-models.md)
+* [활성화 함수 (Activation Functions)](ai/activation-functions.md)
+* [가중치 초기화 (Weight Initialization)](ai/weight-initialization.md)
+* [모델 정규화: 가중치 감소와 드롭아웃](ai/dl-regularization.md)
+* [학습 최적화 전략: 학습률과 조기 종료](ai/learning-optimization.md)
+
+4. **컴퓨터 비전 (Computer Vision)**
+* [CNN의 기본 원리: 합성곱과 풀링](ai/cnn-basics.md)
+* [CNN 기반 주요 모델: AlexNet, ResNet 등](ai/cnn-models.md)
+* [RNN과 어텐션 메커니즘](ai/rnn-and-attention.md)
+* [비전 트랜스포머 (ViT)](ai/vit.md)
+
 
 ---
 
