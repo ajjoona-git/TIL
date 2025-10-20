@@ -1,12 +1,70 @@
 import os
 import re
 import requests
+import sys
+import subprocess  # Git 명령어를 실행하기 위해 추가
 from pathlib import Path
 from urllib.parse import urlparse
 
-# --- 이전과 동일한 헬퍼 함수 ---
+# --- [새 기능 1] 제외할 도메인 목록 ---
+# 여기에 포함된 도메인의 URL은 이미지라도 다운로드하지 않습니다.
+IGNORE_DOMAINS = [
+    'img.shields.io',
+    'github.com',
+    # 필요시 다른 도메인도 추가 (예: 'velog.io')
+]
+
+# --- [새 기능 2] Git에서 변경된 .md 파일 목록 가져오기 ---
+def get_changed_files():
+    """
+    'git status --porcelain' 명령을 실행하여
+    '수정(Modified)'되거나 '추가(Untracked)'된 .md 파일 목록을 반환합니다.
+    """
+    print("Git 상태를 확인하여 변경된 .md 파일을 찾습니다...")
+    changed_files = []
+    try:
+        # Git 상태를 기계가 읽기 쉬운 형태로 출력
+        result = subprocess.run(
+            ['git', 'status', '--porcelain'],
+            capture_output=True,
+            text=True,
+            encoding='utf-8',
+            check=True
+        )
+
+        for line in result.stdout.strip().split('\n'):
+            if not line:
+                continue
+
+            # M, A, ?? (Modified, Added, Untracked) 상태 확인
+            status = line[:2].strip()
+            file_path = line[3:]
+
+            if (status in ('M', 'A', '??')) and file_path.endswith('.md'):
+                # 스크립트 파일 자체는 제외
+                if Path(file_path).name == Path(sys.argv[0]).name:
+                    continue
+                changed_files.append(Path(file_path))
+
+        if changed_files:
+            print(f"✅ {len(changed_files)}개의 변경된 .md 파일을 찾았습니다.")
+            for f in changed_files:
+                print(f"   - {f}")
+        else:
+            print("✅ 변경된 .md 파일이 없습니다.")
+
+        return changed_files
+
+    except FileNotFoundError:
+        print("  ❌ 'git' 명령을 찾을 수 없습니다. Git이 설치되어 있나요?")
+        return []
+    except subprocess.CalledProcessError as e:
+        print(f"  ❌ Git 상태 확인 중 오류 발생: {e.stderr}")
+        print("  ℹ️ 이 스크립트는 Git 저장소 루트 폴더에서 실행해야 합니다.")
+        return []
+
+# --- 헬퍼 함수 (이전과 거의 동일) ---
 def get_file_extension(url, response_headers):
-    """URL이나 HTTP 응답 헤더에서 파일 확장자를 추측합니다."""
     parsed_url = urlparse(url)
     ext = Path(parsed_url.path).suffix
     if ext:
@@ -17,20 +75,21 @@ def get_file_extension(url, response_headers):
         for mime, extension in mime_to_ext.items():
             if mime in content_type:
                 return extension
-    return '.png' # 기본값
+    return '.png'
 
+# --- [수정됨] 파일 처리 함수 ---
 def process_single_markdown_file(md_file_path):
-    """하나의 마크다운 파일을 처리하는 함수"""
     print(f"\n📄 '{md_file_path}' 파일 처리 시작...")
 
-    # 1. 'images' 폴더 생성 (해당 마크다운 파일과 같은 위치에)
+    # 1. 파일이 실제로 존재하는지 확인 (git add만 하고 삭제한 경우)
+    if not md_file_path.exists():
+        print(f"  ❌ 파일이 존재하지 않습니다. 건너뜁니다: {md_file_path}")
+        return
+
     image_dir = md_file_path.parent / "images"
     image_dir.mkdir(exist_ok=True)
-
-    # 2. 파일명 기반으로 이미지 이름 생성 준비
     base_file_name = md_file_path.stem
 
-    # 3. 마크다운 파일 읽기
     try:
         with open(md_file_path, 'r', encoding='utf-8') as f:
             content = f.read()
@@ -38,8 +97,8 @@ def process_single_markdown_file(md_file_path):
         print(f"  ❌ 파일 읽기 오류: {e}")
         return
 
-    # 4. 외부 이미지 URL 찾기 (http 또는 https로 시작)
-    image_pattern = re.compile(r'!\[(.*?)\]\((https?://.*?)\)')
+    # 2. 이미지 태그 정규식 (이전과 동일: ![]() 형태만)
+    image_pattern = re.compile(r'!\[([^\]]*)\]\((https?://[^\)]*)\)')
     matches = list(image_pattern.finditer(content))
 
     if not matches:
@@ -49,75 +108,87 @@ def process_single_markdown_file(md_file_path):
     print(f"  - 총 {len(matches)}개의 외부 이미지를 발견했습니다.")
     image_counter = 1
     new_content = content
+    processed_count = 0
 
-    # 5. 각 이미지를 순회하며 처리
-    for match in matches:
+    for match in reversed(matches):
         alt_text = match.group(1)
         original_url = match.group(2).strip()
 
         try:
-            # 6. 이미지 다운로드
+            # --- [새 기능 1] 도메인 제외 로직 ---
+            domain = urlparse(original_url).netloc
+            if domain in IGNORE_DOMAINS:
+                print(f"    ⚠️ 제외 목록 도메인입니다. 건너뜁니다: {domain}")
+                continue
+
+            # ------------------------------------
+
+            if original_url.startswith("images/"):
+                print(f"    ⚠️ 이미 로컬 경로입니다. 건너뜁니다: {original_url}")
+                continue
+
             headers = {'User-Agent': 'Mozilla/5.0'}
             response = requests.get(original_url, headers=headers, stream=True, timeout=15)
             response.raise_for_status()
 
-            # 7. 새 이미지 파일명 및 경로 설정
             file_ext = get_file_extension(original_url, response.headers)
-            new_image_name = f"{base_file_name}_{image_counter}{file_ext}"
-            
-            # [수정됨] 마크다운 파일 기준의 상대 경로를 올바르게 계산
-            # 예: md파일이 'AI/ml-intro.md'라면 -> 'images/ml-intro_1.png'
+
+            # 파일명 순서가 뒤섞이지 않도록 수정
+            current_image_index = (len(matches) - image_counter) + 1
+            new_image_name = f"{base_file_name}_{current_image_index}{file_ext}"
+
             relative_image_path = Path("images") / new_image_name
             absolute_image_path = md_file_path.parent / relative_image_path
 
-            # 8. 이미지 파일 저장
             with open(absolute_image_path, 'wb') as f:
                 for chunk in response.iter_content(chunk_size=8192):
                     f.write(chunk)
 
-            # 9. 마크다운 본문의 URL 교체
             original_markdown_tag = match.group(0)
-            new_markdown_tag = f"![{alt_text}]({relative_image_path.as_posix()})" # Posix-style 경로로 변경
-            
-            new_content = new_content.replace(original_markdown_tag, new_markdown_tag, 1)
+            new_markdown_tag = f"![{alt_text}]({relative_image_path.as_posix()})"
+
+            start, end = match.span()
+            new_content = new_content[:start] + new_markdown_tag + new_content[end:]
 
             print(f"    ✅ '{new_image_name}' 저장 및 교체 완료.")
+            processed_count += 1
             image_counter += 1
 
         except requests.exceptions.RequestException as e:
             print(f"    ❌ URL 다운로드 실패: {original_url[:50]}... ({e})")
         except Exception as e:
             print(f"    ❌ 알 수 없는 오류 발생: {e}")
-    
-    # 10. 변경된 내용으로 원본 마크다운 파일 덮어쓰기
-    try:
-        with open(md_file_path, 'w', encoding='utf-8') as f:
-            f.write(new_content)
-        print(f"  ✨ '{md_file_path.name}' 파일 업데이트 완료!")
-    except Exception as e:
-        print(f"  ❌ 파일 쓰기 오류: {e}")
+
+    if processed_count > 0:
+        try:
+            with open(md_file_path, 'w', encoding='utf-8') as f:
+                f.write(new_content)
+            print(f"  ✨ '{md_file_path.name}' 파일 업데이트 완료! (총 {processed_count}개 이미지 처리)")
+        except Exception as e:
+            print(f"  ❌ 파일 쓰기 오류: {e}")
+    else:
+        print("  - 실제로 처리된 이미지가 없습니다.")
 
 
-# --- 메인 실행 로직 ---
+# --- [수정됨] 메인 실행 로직 ---
 if __name__ == "__main__":
-    # 현재 스크립트가 실행되는 위치를 기준으로 모든 .md 파일을 찾습니다.
-    # 이 스크립트를 'til' 폴더 최상단에 두면 됩니다.
-    root_directory = Path(".")
-    
-    print(f"'{root_directory.resolve()}' 폴더 및 모든 하위 폴더에서 마크다운 파일을 찾습니다.")
-    
-    # pathlib의 rglob를 사용해 모든 하위 폴더를 포함하여 .md 파일을 찾음
-    markdown_files = list(root_directory.glob("**/*.md"))
+    # 0. Git 저장소의 루트 폴더인지 확인
+    if not Path(".git").is_dir():
+        print("❌ 이 스크립트는 Git 저장소의 루트 폴더에서 실행해야 합니다.")
+        print("   (예: 'ajjoona-git/til/' 폴더)")
+        sys.exit(1)
+
+    # 1. Git에서 변경된 .md 파일 목록을 가져옴
+    markdown_files = get_changed_files()
 
     if not markdown_files:
-        print("처리할 마크다운 파일이 없습니다.")
+        print("\n처리할 마크다운 파일이 없습니다. (모든 파일이 최신 상태입니다)")
     else:
-        print(f"총 {len(markdown_files)}개의 마크다운 파일을 발견했습니다.")
         for md_file in markdown_files:
-            # README.md 같은 최상위 설명 파일은 건너뛸 수 있습니다 (선택사항).
+            # README.md는 건너뛰기
             if md_file.name.lower() == 'readme.md':
-                print(f"\n📄 '{md_file}' 파일은 건너뜁니다.")
+                print(f"\n📄 '{md_file}' 파일은 건너뜁니다 (README).")
                 continue
             process_single_markdown_file(md_file)
-        
+
         print("\n🎉 모든 작업이 완료되었습니다!")
