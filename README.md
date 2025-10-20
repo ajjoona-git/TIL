@@ -232,6 +232,7 @@ AI 도구를 활용하여 학습하고 얻은 통찰을 기록합니다.
 * [비전 트랜스포머 (ViT)](ai/vit.md)
 
 5. **파운데이션 모델과 응용 (Foundation Models & Applications)**
+* [대규모 언어 모델 (LLM)의 이해](ai/llm.md)
 * [파운데이션 모델과 CLIP](ai/foundation-models-clip.md)
 * [멀티모달 AI: Vision-Language Models (VLM)](ai/vlm.md)
 * [생성형 AI와 이미지/비디오 모델 동향](ai/generative-vm.md)
