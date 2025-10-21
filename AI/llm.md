@@ -72,12 +72,24 @@ GPT-3에서 관측된 창발성
 
 ## LLM의 학습 (Training)
 
+### Pre-training (사전 학습)
+
+- 방대한 인터넷 텍스트 데이터를 이용한 Self-supervised Learning을 통해 언어와 지식을 배우는 단계
+- 목표: **다음 단어 예측 (Next Token Prediction)**
+- 다음 단어를 예측하는 데에 강점을 보이지만, 질문에 대한 대답을 하지는 않는다. 즉, 유저의 의도와 일치하지 않는다.
+
 ### 다음 토큰 예측 (Next Token Prediction)
 
 - GPT-3: 거대 언어 모델의 시초
     - 1750억 개의 매개변수 → 이전 언어 모델 대비 최소 10배 이상 큰 모델
     - 학습 데이터: 3,000 억 토큰 (4TB 텍스트 데이터)
 - 한계: 사람의 지시에 대해 올바르지 않은 응답을 생성하거나, 유해한 응답을 생성할 수도 있다.
+
+### Post-training (사후 학습)
+
+- 사람이 원하는 방식으로 대화하고, 안전하고, 유용하게 만드는 단계
+- 목표: **유저의 의도**를 파악하고 응답
+- 대표 기법: Instruction-tuning, RLHF (Reinforcement Learning from Human Feedback), DPO (Direct Preference Optimization), RLVR (Reinforcement Learning with Verifiable Reward)
 
 ### 정렬 (Alignment) 학습
 
@@ -105,7 +117,7 @@ GPT-3에서 관측된 창발성
     - 정답이 정해져 있는 객관적 테스크 (예: 수학)에서는 자연스럽다.
     - 정답이 정해져 있지 않은 개방형 테스크 (예: 번역)에서는 한계가 있다.
 
-### 지시 학습의 핵심 요소
+#### 지시 학습의 핵심 요소
 
 - 학습 테스크의 개수
     - 다양한 종류의 지시를 학습할수록 보지 못한 지시에 대한 일반화 성능이 좋아진다.
@@ -118,6 +130,13 @@ GPT-3에서 관측된 창발성
 ![지시 학습 검증 실험 결과](../images/llm_3.png)
 
 지시 학습 검증 실험 결과
+
+#### Instruction-Tuning의 한계
+
+- 개방형/창의적 생성과 같은 태스크에는 정답이 존재하지 않는다.
+- 언어 모델링은 모든 토큰 레벨의 오류를 동일하게 취급하지만, 어떤 오류는 다른 오류보다 심하게 작용한다.
+- 사람이 만든 답변 (정답 레이블)이 최적이 아닐 수 있다.
+- 여전히 인간의 선호 (Human Preference)를 만족시키지 못한다.
 
 ### 선호 학습 (Preference Learning)
 
@@ -132,6 +151,47 @@ GPT-3에서 관측된 창발성
 ![InstructGPT의 학습 과정 개요도](../images/llm_2.png)
 
 InstructGPT의 학습 과정 개요도
+
+#### RLHF (Reinforcement Learning from Human Feedback)
+
+![Human-in-the-loop ML](../images/llm_12.png)
+Human-in-the-loop ML
+
+- 인간의 선호를 반영한 최적화 (Optimizing for human preferences)
+    - *어떻게 모델링 할 것인가?* 응답을 비교한 결과를 리워드 모델의 학습 데이터로 활용
+- 목표: 언어 모델의 응답 중 기대 보상 (expected reward) 최대화
+- 파이프라인:
+    - Instruction-tuning
+    - 보상 모델 (Reward model) 학습
+    - 강화학습 (Proximal Policy Optimization, PPO)으로 최적화
+
+![RLHF 파이프라인](../images/llm_13.png)
+RLHF 파이프라인
+
+- RLHF는 pre-training과 instruction-tuning보다 더 나은 성능 향상을 제공한다.
+
+![학습 방법 별 성능 향상 효과 비교](../images/llm_14.png)
+학습 방법 별 성능 향상 효과 비교
+
+#### 리워드 모델링의 한계
+
+- 인간의 선호도는 일관성이 부족하다.
+    - 인간의 선호도를 학습한 리워드 모델은 더 일관성이 부족하다.
+- 리워드 해킹 (Reward hacking): AI 모델이 인간의 의도를 따르지 않고, 단지 리워드 모델(Reward Model)로부터 높은 점수를 받는 방법만을 학습하는 현상
+    - 길이 편향 (Length Bias), 아첨 편향 (Sycophancy), 자신감 편향, 키워드 스터핑 (Keyword Stuffing) 등
+- 환각 (Hallucination) 문제: 챗봇들은 정답의 여부와 관계없이 생산적이고 도움이 되어 보이는 정답을 생성한다.
+
+#### DPO (Direct Preference Optimization)
+
+- RLHF에서 RL을 제거하자
+
+![RLHF vs DPO](../images/llm_15.png)
+RLHF vs DPO
+
+#### RLVR (Reinforcement Learning with Verifiable Reward)
+
+- RLHF에서 수학 문제와 같이 답이 분명한 문제들은 정답 여부로 리워드를 주자
+- DeepSeek-R1
 
 ## LLM의 추론 (Inference)
 
