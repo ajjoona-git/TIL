@@ -237,7 +237,8 @@ AI 도구를 활용하여 학습하고 얻은 통찰을 기록합니다.
 * [멀티모달 AI: Vision-Language Models (VLM)](ai/vlm.md)
 * [생성형 AI와 이미지/비디오 모델 동향](ai/generative-vm.md)
 * [파운데이션 모델의 적응 학습 (Fine-tuning & PEFT)](ai/fine-tuning-peft.md)
-* [LLM의 확장: RAG와 에이전트](ai/agi.md)
+* [LLM의 확장: 검색증강생성 (RAG)](ai/rag.md)
+* [LLM의 확장: 에이전트 (Agent)](ai/llm-agent.md)
 * [LLM 활용: 프롬프트 엔지니어링과 데이터 생성](AI/llm-utilization.md)
 
 ---

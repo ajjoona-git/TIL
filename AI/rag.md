@@ -1,24 +1,13 @@
-## AGI (Artificial General Intelligence, 범용 인공지능)
+## Information Retrieval (정보 검색)
 
-- 인간처럼 다양한 지적 작업을 이해하고 학습하며 해결할 수 있는 인공지능
-- 현재의 특화된 인공지능(ANI)이 특정 작업에만 능한 것과 달리,
-AGI는 스스로 사고하고 새로운 문제를 해결하는 등 인간 수준의 인지 능력을 목표로 한다.
-
-### 언어 모델 (LLM) + 검색증강생성 (RAG)
-
-- RAG ( Retrieval Augmented Generation; 검색 증강 생성)
-- 유연성: 추가 학습 없이 최신 정보 제공
-- 개인화: 검색과 언어 모델의 합성으로 개인 맞춤형 답변 가능
-- 정확성: Verification을 통한 환각 (Hallucination) 현상 감소
-
-### Information Retrieval (정보 검색)
+### IR (정보 검색)
 
 - 목표: 검색 질의 (Query)와 가장 관련성 높은 정보를 제공하는 것
 - 정보 검색 (IR): 사용자의 질의 (Query)에 맞는 정보를 대규모 데이터에서 찾아 제공하는 과정
     - 사용자가 질문하면, IR이 관련 문서를 찾아 제공한다.
 - Retrieval (검색): datastore에 있는 수 많은 정보 중에서, 주어진 쿼리와 가장 관련성이 높은 정보를 찾아내는 과정
 
-![IR (정보 검색)](image.png)
+![IR (정보 검색)](../images/agi_2.png)
 
 IR (정보 검색)
 
@@ -33,7 +22,7 @@ IR (정보 검색)
     - 사용자의 질문에 답하기 위해 datastore에서 관련 정보를 검색(Retrieval)해와서, 이를 언어모델이 생성 (Generation) 단계에 활용하는 방법
     - 검색된 문서를 활용하여 더 정확하고 최신의 답변을 생성한다.
 
-![RAG (검색 증강 생성)](image%201.png)
+![RAG (검색 증강 생성)](../images/agi_3.png)
 
 RAG (검색 증강 생성)
 
@@ -77,7 +66,7 @@ RAG (검색 증강 생성)
 
 - 구성 요소: Datastore, Query, Index, Language Model
 
-![Retrieval-augmented LM의 구성](image%202.png)
+![Retrieval-augmented LM의 구성](../images/agi_4.png)
 
 Retrieval-augmented LM의 구성
 
@@ -114,7 +103,7 @@ Retrieval-augmented LM의 구성
         - Noise Robustness: 노이즈가 포함되어 있어도 올바른 답을 찾아내는 능력
         - Negative Rejection: 없는 정보에 대해서 답변을 거부하는 능력
 
-![Training with Noises 예시](image%203.png)
+![Training with Noises 예시](../images/agi_5.png)
 
 Training with Noises 예시
 
@@ -131,6 +120,8 @@ Training with Noises 예시
     - 텍스트를 기반으로 컴퓨터를 사람처럼 사용할 수 있는 서비스
     - 컴퓨터가 수행하길 바라는 지시사항을 텍스트로 입력하면 자동으로 명령 수행
 
-### Multi-Agent 시스템으로의 확장
+
+## Multi-Agent 시스템으로의 확장
 
 ![agent laboratory](../images/agi_1.png)
+
