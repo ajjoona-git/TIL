@@ -59,7 +59,7 @@
 * [Git](git-api/git.md)
 * [API](git-api/API.md)
 * [가상환경 (Virtual Environment)](git-api/virtual-env.md)
-
+* [API 키 관리](togit-api/api-key.md)
 
 
 ### **🐍 Python**
@@ -238,7 +238,7 @@ AI 도구를 활용하여 학습하고 얻은 통찰을 기록합니다.
 * [생성형 AI와 이미지/비디오 모델 동향](ai/generative-vm.md)
 * [파운데이션 모델의 적응 학습 (Fine-tuning & PEFT)](ai/fine-tuning-peft.md)
 * [LLM의 확장: RAG와 에이전트](ai/agi.md)
-
+* [LLM 활용: 프롬프트 엔지니어링과 데이터 생성](AI/llm-utilization.md)
 
 ---
 
