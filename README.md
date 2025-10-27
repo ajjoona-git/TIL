@@ -239,6 +239,7 @@ AI 도구를 활용하여 학습하고 얻은 통찰을 기록합니다.
 * [파운데이션 모델의 적응 학습 (Fine-tuning & PEFT)](AI/fine-tuning-peft.md)
 * [LLM의 확장: 검색증강생성 (RAG)](AI/rag.md)
 * [LLM의 확장: 에이전트 (Agent)](AI/llm-agent.md)
+* [LLM의 확장: 다중 에이전트 시스템 (Multi-Agent System)](AI/multi-agent.md)
 * [LLM 활용: 프롬프트 엔지니어링과 데이터 생성](AI/llm-utilization.md)
 
 ---
