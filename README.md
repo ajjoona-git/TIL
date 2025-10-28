@@ -241,6 +241,7 @@ AI 도구를 활용하여 학습하고 얻은 통찰을 기록합니다.
 * [LLM의 확장: 에이전트 (Agent)](AI/llm-agent.md)
 * [LLM의 확장: 다중 에이전트 시스템 (Multi-Agent System)](AI/multi-agent.md)
 * [LLM 활용: 프롬프트 엔지니어링과 데이터 생성](AI/llm-utilization.md)
+* [고급 AI 시스템: 양자화, TTA, 적응형 센싱](AI/advanced-ai-systems.md)
 
 ---
 
