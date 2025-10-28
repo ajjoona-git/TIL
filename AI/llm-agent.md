@@ -379,3 +379,194 @@ final_result = final_chain.invoke(
 pprint(final_result)
 ```
 
+
+## Agent 실습
+
+### Custom Tool
+
+- docstring과 이름을 잘 작성해야 한다.
+
+**도구 1: 정책 검색 (RAG) 도구**
+
+- retriever를 Agent가 사용할 수 있는 Tool 객체로 포장
+
+```python
+from langchain_classic.tools.retriever import create_retriever_tool
+
+# create_retriever_tool: Retriever 객체를 Agent용 Tool로 변환하는 헬퍼 함수
+retriever_tool = create_retriever_tool(
+    retriever, # 1. 사용할 검색기(Retriever)
+    "Policy_Search", # 2. Agent가 부를 도구 이름 (공백X, 영어 권장)
+    # 3. Agent가 이 도구의 용도를 파악할 수 있는 상세한 설명 (가장 중요!)
+    """배송 정책, 보상 정책, 환불 정책 등 AI 온라인 서점의
+    다양한 정책 문서에서 고객 질문과 관련된 정보를 검색합니다.
+    (예: "배송 지연 시 보상 정책이 어떻게 되나요?")
+    """,
+)
+```
+
+**도구 2: 주문 상태 조회 (DB 검색) 도구**
+
+- `orders.db`에서 특정 주문 ID의 상태를 조회
+
+```python
+from langchain.tools import tool
+
+# @tool: 이 데코레이터가 붙은 함수를 LangChain Tool로 자동 변환
+@tool
+def get_order_status_from_db(order_id: str) -> str:
+    """(DB 조회)
+        주문 ID를 받아 현재 '배송 상태' 문자열을 반환합니다.
+        단, DB 연결 오류 시 "DB Error: {오류 메시지}" 반환하고,
+        주문 ID가 없을 시 "Order Not Found"를 반환합니다.
+    """
+    # 디버깅용 (Agent가 이 함수를 호출할 때마다 콘솔에 출력됨)
+    print(f"--- get_order_status_from_db 호출됨: {order_id} ---")
+    try:
+        # 0-3에서 만든 DB 파일에 연결
+        conn = sqlite3.connect(base_path + 'orders.db')
+        c = conn.cursor()
+        # SQL 쿼리 실행: orders 테이블에서 order_id가 일치하는 row의 'status' 열을 선택
+        c.execute("SELECT status FROM orders WHERE order_id = ?", (order_id,))
+        # 결과 중 첫 번째 줄을 가져옴 (예: ('Delivered',))
+        result = c.fetchone()
+        conn.close()
+
+        if result:
+            return result[0] # 튜플이 아닌 문자열 값(예: 'Delivered')을 반환
+        else:
+            return "Order Not Found"
+    except Exception as e:
+        return f"DB Error: {str(e)}"
+```
+
+**도구 3: 배송 지연 쿠폰 발급 도구**
+
+- "Shipping Delayed"일 때만 쿠폰 발급
+- "도구가 다른 도구를 호출"하는 복합적인 도구
+
+```python
+# 3. 배송 지연 쿠폰 발급 도구 함수
+@tool
+def issue_complaint_coupon(order_id: str) -> str:
+    """(DB 조회 기반 쿠폰 발급)
+        주문 ID를 받아, 배송 상태가 'Shipping Delayed'일 때만 쿠폰을 발급합니다.
+        (실제 쿠폰 생성 로직은 하드코딩으로 대체하고, 발급 메시지만 반환합니다.)
+    """
+    # 디버깅용
+    print(f"--- issue_complaint_coupon 호출됨: {order_id} ---")
+
+    # (중요!) 도구가 다른 도구를 호출할 때는 .invoke() 사용
+    order_status = get_order_status_from_db.invoke(order_id)
+
+    # 비즈니스 로직: 배송 지연 상태가 맞는지 확인
+    if order_status == "Shipping Delayed":
+        # (원래라면 이곳에 쿠폰 DB INSERT 로직 등이 들어감)
+        return f"주문 ID {order_id}에 대해 5,000원 할인 쿠폰이 발급되었습니다."
+    else:
+        return f"주문 ID {order_id}는 쿠폰 발급 대상이 아닙니다. 현재 상태: {order_status}"
+```
+
+### **ReAct Agent (Reasoning + Acting)**
+
+- LLM이 **추론(Reasoning)** 과 **행동(Acting)** 을 반복하며 복잡한 문제를 해결하는 프레임워크
+- `Thought(생각) -> Action(행동) -> Observation(관찰)` 사이클을 반복
+
+**시스템 프롬프트 설계** (Agent의 규칙)
+
+```python
+system_prompt = """
+당신은 AI 온라인 서점의 고객 서비스 AI 에이전트입니다.
+당신은 사용자의 요청을 해결하기 위해 '도구(tool)'를 사용해야 합니다.
+
+[작업 수행 가이드라인]
+1.  사용자의 요청을 받으면, 먼저 '생각(Thought)'을 합니다.
+2.  요청을 해결하는 데 필요한 정보가 무엇인지 분석합니다.
+3.  필요한 정보를 수집하기 위해 어떤 '도구'를 사용해야 할지 결정합니다.
+4.  도구를 사용한 후, '관찰(Observation)' 결과를 봅니다.
+5.  모든 정보가 모일 때까지 1-4 단계를 반복합니다.
+6.  모든 정보가 수집되면, 이를 바탕으로 사용자에게 최종 답변을 생성합니다.
+
+[!!절대적 규칙!!]
+- 'issue_complaint_coupon' 도구는 고객이 요청하더라도, 'get_order_status_from_db' 도구의 결과가 'Shipping Delayed'일 때만 사용해야 합니다.
+- 주문 상태가 불명확하면, 쿠폰을 발급하기 전에 반드시 'get_order_status_from_db'를 먼저 사용해야 합니다.
+- 절대 추측하지 말고, 항상 도구의 실행 결과를 바탕으로만 답변하세요.
+- 정책에 대한 질문은 'Policy_Search' 도구를 사용하세요.
+"""
+```
+
+**Agent 생성 및 실행**
+
+```python
+from langchain.agents import create_agent
+from langchain_upstage import ChatUpstage
+
+# 1. Agent가 사용할 도구들을 리스트로 묶기
+agent_tools = [retriever_tool, get_order_status_from_db, issue_complaint_coupon]
+
+# 2. Agent의 '두뇌'가 될 LLM 정의
+llm = ChatUpstage()
+
+# 3. ReAct Agent 생성
+# create_agent가 내부적으로 ReAct 프롬프트 템플릿과 LLM, Tools를 결합
+agent = create_agent(
+    model=llm,          # 사용할 LLM (두뇌)
+    tools=agent_tools,  # 사용할 도구 리스트 (손발)
+    system_prompt=system_prompt # 시스템 프롬프트 (규칙)
+)
+print("ReAct Agent 생성 완료")
+```
+
+### **Short-term Memory (대화 기억)**
+
+- `LangGraph`의 **Checkpointer**를 사용하여 대화 기록을 DB에 저장
+
+**Checkpointer 정의**
+
+- `SqliteSaver`: 대화 기록(Checkpoint)을 SQLite DB 파일(`database.db`)에 저장하는 객체
+- `AgentState`: Agent가 기억해야 할 대화 상태의 '구조(Schema)' 정의 (기본적으로 messages 포함)
+
+```python
+from langchain.agents import create_agent, AgentState
+from langgraph.checkpoint.sqlite import SqliteSaver
+import sqlite3
+
+# 1. 대화 기록을 저장할 DB(database.db)와 연결하는 Checkpointer 생성
+# (check_same_thread=False는 sqlite가 여러 스레드에서 접근 가능하도록 허용하는 설정)
+checkpointer = SqliteSaver(
+    sqlite3.connect(base_path + "database.db", check_same_thread=False)
+)
+
+# 2. (선택) Agent가 'messages' 외에 추가로 기억할 상태 정의
+# class CustomAgentState(AgentState):
+#     user_id: str # 예: 사용자 ID
+#     preferences: dict # 예: 사용자 선호도
+
+# 3. Agent를 다시 생성하되, 'checkpointer' 옵션을 추가
+agent_with_memory = create_agent(
+    model=llm,
+    tools=agent_tools,
+    system_prompt=system_prompt,
+    # state_schema=CustomAgentState, # (만약 CustomAgentState를 쓴다면)
+    checkpointer=checkpointer # (중요!) Agent에 메모리 시스템 장착
+)
+print("메모리가 적용된 Agent 생성 완료")
+```
+
+**RunnableConfig 설정 (대화 ID 지정)**
+
+- 지금 대화가 저장될 Thread 지정
+
+```python
+from langchain_core.runnables import RunnableConfig
+
+# '1번 고객'과의 대화방을 설정 (이 ID를 바꾸면 다른 대화방이 됨)
+config: RunnableConfig = {"configurable": {"thread_id": "1"}}
+
+# (참고) 'thread_id' = '1'에 저장된 전체 대화 기록 확인
+# checkpointer에 저장된 모든 대화 내용을 볼 수 있습니다.
+print("\n--- 'thread_id=1'의 전체 대화 기록 ---")
+history = checkpointer.get(config)
+for message in history['channel_values']['messages']:
+    message.pretty_print()
+```
