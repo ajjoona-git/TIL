@@ -77,6 +77,14 @@
 * [예외 처리](python/exception.md)
 * (참고) [지연 평가](python/lazy-evaluation.md)
 
+### **☕ Java**
+Java 프로그래밍 언어의 기초부터 객체지향 프로그래밍(OOP)까지 학습한 내용입니다.
+
+* [Java 기본 문법과 데이터 타입](java/java-basics.md)
+* [연산자 (Operator)](java/operator.md)
+* [제어문 (조건문과 반복문)](java/control-flow.md)
+* [1차원 배열 (1D Array)](java/1d-array.md)
+* [다차원 배열 (Multidimensional Array)](java/multidimensional-array.md)
 
 ### **📂 자료구조 (Data Structures)**
 데이터를 효율적으로 저장하고 관리하기 위한 구조들을 학습하고 정리합니다.
