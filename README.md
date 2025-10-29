@@ -195,6 +195,8 @@ Java 프로그래밍 언어의 기초부터 객체지향 프로그래밍(OOP)까
 * [미디어 파일(Media Files) 처리](django/media-files.md)
 
 ### **🤖 AI**
+* [Wrap Up Report (AI 학습 과정과 AI 챌린지에 대한 회고록)](AI/wrap-up.md)
+
 0. **AI 활용**
 AI 도구를 활용하여 학습하고 얻은 통찰을 기록합니다.
 * [Vibe Coding](AI/Vibe-Coding.md)
