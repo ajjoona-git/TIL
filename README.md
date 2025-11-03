@@ -194,6 +194,11 @@ Java 프로그래밍 언어의 기초부터 객체지향 프로그래밍(OOP)까
 * [정적 파일(Static Files) 관리](django/static-files.md)
 * [미디어 파일(Media Files) 처리](django/media-files.md)
 
+### **💾 Database**
+* [DB 기초](database/db-basics.md)
+* [SQL Statements ①: DQL (Data Query Language) - SELECT](database/sql-select.md)
+
+
 ### **🤖 AI**
 * [Wrap Up Report (AI 학습 과정과 AI 챌린지에 대한 회고록)](AI/wrap-up.md)
 
@@ -247,9 +252,9 @@ AI 도구를 활용하여 학습하고 얻은 통찰을 기록합니다.
 * [멀티모달 AI: Vision-Language Models (VLM)](AI/vlm.md)
 * [생성형 AI와 이미지/비디오 모델 동향](AI/generative-vm.md)
 * [파운데이션 모델의 적응 학습 (Fine-tuning & PEFT)](AI/fine-tuning-peft.md)
-* [LLM의 확장: 검색증강생성 (RAG)](AI/rag.md)
-* [LLM의 확장: 에이전트 (Agent)](AI/llm-agent.md)
-* [LLM의 확장: 다중 에이전트 시스템 (Multi-Agent System)](AI/multi-agent.md)
+* [LLM의 확장 ①: 검색증강생성 (RAG)](AI/rag.md)
+* [LLM의 확장 ②: 에이전트 (Agent)](AI/llm-agent.md)
+* [LLM의 확장 ③: 다중 에이전트 시스템 (Multi-Agent System)](AI/multi-agent.md)
 * [LLM 활용: 프롬프트 엔지니어링과 데이터 생성](AI/llm-utilization.md)
 * [고급 AI 시스템: 양자화, TTA, 적응형 센싱](AI/advanced-ai-systems.md)
 
