@@ -17,9 +17,7 @@
 - 분류 문제(특히 이진 분류)에서 ‘이 클래스일 확률’로 활용 가능
     - 합격/불합격, 참/거짓 등
 
-$$
-a(x) = \frac {1}{1 + e^{-x}}
-$$
+$$a(x) = \frac {1}{1 + e^{-x}}$$
 
 - 기울기 소실 문제
     - 입력이 매우 크거나 매우 작으면 출력이 거의 0이나 1에 고정되어 더이상 역전파를 전달할 수 없다.
@@ -32,18 +30,14 @@ $$
 - 데이터가 중심(0)을 기준으로 대칭이다.
     - 학습 안정성이 높다.
 
-$$
-tan(x) = \frac {e^x - e^{-x}} {e^x+e^{-x}}
-$$
+$$tan(x) = \frac {e^x - e^{-x}} {e^x+e^{-x}}$$
 
 - 기울기 소실 문제
 - 계산식에 지수 함수 (exp)가 포함되어, 계산 비용이 크다.
 
 ### ReLU (Rectified Linear Unit)
 
-$$
-f(x) = max(0, x)
-$$
+$$f(x) = max(0, x)$$
 
 - 양의 영역에서 포화되지 않아 기울기 소실 문제를 해결
     - 입력이 음수면 0, 양수면 그대로 출력함
@@ -55,9 +49,7 @@ $$
 
 ### Leaky ReLU
 
-$$
-f(x) = max(0.01x, x)
-$$
+$$f(x) = max(0.01x, x)$$
 
 - ReLU의 확장판
 - 죽지 않는 뉴런
@@ -69,8 +61,7 @@ $$
 
 ### ELU (Exponential Linear Unit)
 
-$$
-f(x) = \begin{cases} x & \text{if } x > 0 \\ \alpha(\exp(x) - 1) & \text{if } x \le 0 \end{cases}
+$$f(x) = \begin{cases} x & \text{if } x > 0 \\ \alpha(\exp(x) - 1) & \text{if } x \le 0 \end{cases}
 $$
 
 - ReLU의 모든 장점 수용

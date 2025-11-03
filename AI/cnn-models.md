@@ -14,9 +14,7 @@
 
 - 출력 사이즈 계산법
 
-    $$
-    W' = \frac {W-K+2P}{S} + 1
-    $$
+    $$W' = \frac {W-K+2P}{S} + 1$$
 
 
 ![alexnet](../images/cnn-models_3.png)

@@ -42,7 +42,7 @@
 
 | 구분 | MLP (다층 퍼셉트론) | CNN (합성곱 신경망) |
 | --- | --- | --- |
-| 데이터 처리 방식 | 각 층의 모든 뉴런이 다음 층의 모든 뉴런과 연결되는 [완전 연결](https://www.google.com/search?sca_esv=dd9115a17757454c&cs=1&q=%EC%99%84%EC%A0%84+%EC%97%B0%EA%B2%B0&sa=X&ved=2ahUKEwjdjJ2ZwKWQAxV0sVYBHQXHJVgQxccNegQIDxAB&mstk=AUtExfAhhIL-w5wK_DoHVgdJbPggOlLKSP7TshJ2PMbpRQORBB-atsJYfC4ZlTaEPb_AJIFxDKZ9xIm7rkplA19RXmEY7ebMU25MTWpUxRRukFW6KjJK8zApLX3W358OybSz2unVkOo6HluWfyW2IRi6x1PvsTuNPbPFOSFS8PP4LWEhIoumSC_bmE-3rgL-6hXD3nnF&csui=3) 방식 | [합성곱](https://www.google.com/search?sca_esv=dd9115a17757454c&cs=1&q=%ED%95%A9%EC%84%B1%EA%B3%B1&sa=X&ved=2ahUKEwjdjJ2ZwKWQAxV0sVYBHQXHJVgQxccNegQIHhAB&mstk=AUtExfAhhIL-w5wK_DoHVgdJbPggOlLKSP7TshJ2PMbpRQORBB-atsJYfC4ZlTaEPb_AJIFxDKZ9xIm7rkplA19RXmEY7ebMU25MTWpUxRRukFW6KjJK8zApLX3W358OybSz2unVkOo6HluWfyW2IRi6x1PvsTuNPbPFOSFS8PP4LWEhIoumSC_bmE-3rgL-6hXD3nnF&csui=3) 연산을 통해 입력 데이터의 지역적인 특징을 추출 |
+| 데이터 처리 방식 | 각 층의 모든 뉴런이 다음 층의 모든 뉴런과 연결되는 완전 연결 방식 | 합성곱 연산을 통해 입력 데이터의 지역적인 특징을 추출 |
 | 구조적 특징 | 입력이 일렬로 늘어선 벡터 구조로 처리됨 | 이미지와 같이 행렬 구조나 3차원 이상의 텐서 구조를 활용 |
 | 활용 분야 | 구조화된 데이터나 비교적 간단한 문제에 적합 | 이미지, 비디오 등 시각적 데이터 처리에 매우 효과적 |
 | 핵심 아이디어 | 입력 데이터의 전체적인 관계를 학습 | 입력 데이터 내의 공간적/지역적 특징을 감지하는 필터를 적용 |
@@ -81,7 +81,7 @@
     - **역할**: 손실 함수(Loss Function)의 한 종류로, **평균 제곱 오차(Mean Squared Error)**를 계산합니다.
     - **설명**: 예측값과 실제값의 차이를 제곱하여 평균을 낸 값입니다. 회귀 문제에서 가장 널리 사용되는 손실 함수 중 하나입니다. 수식은 다음과 같습니다.
 
-    $L = \frac{1}{N}\sum(y_{pred} - y_{true})^2$
+    $$L = \frac{1}{N}\sum(y_{pred} - y_{true})^2$$
 
 
 ---
