@@ -13,6 +13,20 @@ VALUES (v1, v2, ...);
 - VALUES 키워드 다음 괄호 안에 해당 필드에 삽입할 값 목록 작성
 - `DATE()` 현재 날짜를 자동으로 입력해주는 함수
 
+### DATE 타입에서 연도 추출
+
+- `strftime('%Y', ...)`
+
+```sql
+-- "InvoiceDate"를 연도별로 그룹화하고, 각 연도별 총판매액을 계산하여 조회
+SELECT
+  strftime('%Y', InvoiceDate) AS Year,
+  SUM(Total) AS TotalSales
+FROM
+  invoices
+GROUP BY Year;
+```
+
 ### UPDATE
 
 ```sql

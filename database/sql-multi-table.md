@@ -19,6 +19,26 @@ WHERE id IN (
 );
 ```
 
+### Foreign Key 설정
+
+- `FOREIGN KEY (departmentId) REFERENCES departments(id)`: 테이블을 처음 만들 때 `FOREIGN KEY` 제약 조건 추가
+
+```sql
+CREATE TABLE users (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  name VARCHAR(50) NOT NULL
+);
+
+CREATE TABLE articles (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  title VARCHAR(50) NOT NULL,
+  content VARCHAR(100) NOT NULL,
+  userId INTEGER NOT NULL,
+  FOREIGN KEY (userId) 
+    REFERENCES users(id)
+);
+```
+
 ### JOIN
 
 - 테이블 분리 → 중복을 줄이고 수정, 삭제가 쉬워진다.
@@ -82,4 +102,37 @@ LEFT JOIN articles
   ON articles.userId = users.id
 WHERE
   articles.userId IS NULL;
+```
+
+### CASE WHEN
+
+```sql
+CASE
+  WHEN [조건문 1] THEN [반환할 값 1]
+  WHEN [조건문 2] THEN [반환할 값 2]
+  ...
+  ELSE [위의 모든 조건이 아닐 때 반환할 기본값]
+END
+```
+
+- 조건에 따른 값 반환
+- 파생 컬럼 (Derived Column, 계산 컬럼): 테이블에 원래 저장된 값이 아닌 새로운 값을 계산하거나 가공해서 만들어내는 컬럼
+- `age_group`: `employees` 테이블에 물리적으로 존재하는 컬럼이 아니라, 쿼리를 실행하는 시점에 실시간으로 계산되어 결과에만 포함되는 **가상의 컬럼**
+
+```sql
+-- 부서별로 연령대 별 직원 수를 조회한다.
+-- 30세 이하, 30-40세 사이, 40세 이상으로 구분한다.
+SELECT
+  departments.name AS department,
+  CASE 
+    WHEN age <= 30 THEN 'Under 30'
+    WHEN age >= 40 THEN 'Over 40' 
+    ELSE 'Between 30-40'
+  END AS age_group,
+  COUNT(*) AS num_employees
+FROM
+  employees
+LEFT JOIN departments
+	ON departments.id = employees.departmentId
+GROUP BY department, age_group;
 ```
