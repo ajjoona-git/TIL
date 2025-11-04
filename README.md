@@ -197,6 +197,9 @@ Java 프로그래밍 언어의 기초부터 객체지향 프로그래밍(OOP)까
 ### **💾 Database**
 * [DB 기초](database/db-basics.md)
 * [SQL Statements ①: DQL (Data Query Language) - SELECT](database/sql-select.md)
+* [SQL Statements ②: DDL (Data Definition Language) - CREATE, ALTER, DROP](database/sql-ddl.md)
+* [SQL Statements ③: DML (Data Manipulation Language) - INSERT, UPDATE, DELETE](database/sql-dml.md)
+* [SQL Multi-table Queries - SubQuery, JOIN](database/sql-multi-table.md)
 
 
 ### **🤖 AI**
