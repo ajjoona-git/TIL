@@ -172,29 +172,31 @@ Java 프로그래밍 언어의 기초부터 객체지향 프로그래밍(OOP)까
 #### **백엔드 (Backend)**
 서버, 데이터베이스, 애플리케이션 로직을 구현하는 기술들을 학습합니다.
 * [RESTful API](django/restful-api.md)
+
 1. **Django**
-* [Django Secret Key](django/secret-key.md)
 * [MTV 패턴과 프로젝트 구조](django/mtv-pattern.md)
 * [프로젝트와 앱 생성](django/project-app.md)
+* [Django URLs](django/urls.md)
 * [DTL (Django Template Language)](django/templates.md)
 * [사용자 입력 데이터 처리](django/request.md)
-* [Django URLs](django/urls.md)
-* [Django Model](django/models.md)
+* [HTTP request methods](django/http-request.md)
+* [Django Model (Model)](django/models.md)
 * [Migrations (마이그레이션)](django/migrate.md)
 * [Admin site (관리자 사이트)](django/admin.md)
-* [ORM(Object Relational Mapping) - QuerySet API](django/orm.md)
-* [ORM(Object Relational Mapping) - view에서 활용](django/orm.md)
-* [HTTP request methods](django/http-request.md)
-* [Django Form](django/forms.md)
+* [ORM - QuerySet API](django/orm.md)
+* [ORM - view에서 활용](django/orm-view.md)
+* [Model Relationships - 1:N (ForeignKey)](django/relationships-1-n.md)
+* [Django Form (ModelForm)](django/forms.md)
 * [웹 인증의 이해: HTTP, 쿠키와 세션](django/auth-basics.md)
+* [비밀번호 암호화 (Hash)](django/hash.md)
 * [Django Custom User Model](django/custom-user-model.md)
 * [Authentication - 로그인/로그아웃](django/auth-1.md)
 * [Authentication - 회원 관리](django/auth-2.md)
-* [비밀번호 암호화](django/hash.md)
 * [정적 파일(Static Files) 관리](django/static-files.md)
 * [미디어 파일(Media Files) 처리](django/media-files.md)
+* [Django Secret Key](django/secret-key.md)
 
-### **💾 Database**
+2. **Database**
 * [DB 기초](database/db-basics.md)
 * [SQL Statements ①: DQL (Data Query Language) - SELECT](database/sql-select.md)
 * [SQL Statements ②: DDL (Data Definition Language) - CREATE, ALTER, DROP](database/sql-ddl.md)
