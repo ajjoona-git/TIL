@@ -192,6 +192,8 @@ Java 프로그래밍 언어의 기초부터 객체지향 프로그래밍(OOP)까
 * [Django Custom User Model](django/custom-user-model.md)
 * [Authentication - 로그인/로그아웃](django/auth-1.md)
 * [Authentication - 회원 관리](django/auth-2.md)
+* [User Model 참조](django/relationships-user-model.md)
+* [View Decorators](django/view-decorators.md)
 * [정적 파일(Static Files) 관리](django/static-files.md)
 * [미디어 파일(Media Files) 처리](django/media-files.md)
 * [Django Secret Key](django/secret-key.md)
