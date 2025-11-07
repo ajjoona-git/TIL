@@ -57,6 +57,7 @@
 버전 관리와 웹 서비스 개발의 핵심 도구들에 대한 학습 내용입니다.
 
 * [Git](git-api/git.md)
+* [Git Branch & Workflow](git-api/git-branch.md)
 * [API](git-api/API.md)
 * [가상환경 (Virtual Environment)](git-api/virtual-env.md)
 * [API 키 관리](togit-api/api-key.md)
