@@ -90,6 +90,8 @@ Java 프로그래밍 언어의 기초부터 객체지향 프로그래밍(OOP)까
 ### **📂 자료구조 (Data Structures)**
 데이터를 효율적으로 저장하고 관리하기 위한 구조들을 학습하고 정리합니다.
 
+* [메모리와 시간 복잡도](data-structure/memory.md)
+
 #### 선형 자료구조 (Linear Data Structures)
 * [배열 (1D & 2D Array)](data-structure/array.md)
 * [연결 리스트 (Linked List)](data-structure/linked-list.md)
