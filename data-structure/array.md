@@ -1,5 +1,5 @@
-# 스스로 학습
 ## `defaultdict()` 모듈
+
 ### `from collections import defaultdict`
 `[생성할 dict이름] = defaultdict(iterable 자료형)` 존재하지 않는 키의 디폴트 자료형을 지정해준다.
 
@@ -47,7 +47,6 @@ print(char_count)
 
 <br><br>
 
-# 수업 필기
 ## 배열 (Array)
 
 일정한 자료형의 변수들을 하나의 이름으로 열거하여 사용하는 자료구조
