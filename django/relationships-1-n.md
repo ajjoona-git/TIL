@@ -51,6 +51,26 @@
 - 데이터베이스에 저장된 데이터 값의 정확성을 보장하는 것
 - 데이터의 신뢰성 확보, 시스템 안정성, 보안 강화
 
+### Model name 설정
+
+- `ModelForm`은 `ForeignKey` 필드를 HTML `<select>` 태그(드롭다운 메뉴)로 만든다.
+- 이 드롭다운의 각 `<option>`에 표시될 텍스트를 결정하기 위해, Django는 `Category`의 각 객체(데이터베이스의 각 row)에 대해 `__str__()` 메서드를 실행한다.
+
+![실행 화면](../images/relationships-1-n_8.png)
+
+```python
+# restaurants/models.py
+
+class Category(models.Model):
+    name = models.CharField(max_length=20)
+    
+    def __str__(self):
+        # 이 객체를 문자열로 표현할 때 name 필드 값을 반환하도록 지정
+        return self.name
+```
+
+![`__str__()`메서드 실행 후 적용된 화면](../images/relationships-1-n_9.png)
+
 ## 참조와 역참조
  
 ### 참조 (Forward Reference)
