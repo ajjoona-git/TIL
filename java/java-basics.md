@@ -43,6 +43,20 @@ public class java01_hello {
 
 ![image.png](../images/java-basics_2.png)
 
+## 객체지향 프로그래밍 (OOP, Object Oriented Programming)
+
+### 객체 지향 프로그래밍
+
+- 객체(Object): 데이터와 관련된 알고리즘(메서드)을 하나의 단위로 묶어 놓은 것
+- 객체 모델링: 현실세계의 객체를 SW 객체로 설계하는 것
+
+### OOP의 특징
+
+- Abstraction 추상화
+- Polymorphism 다형성
+- Inheritance 상속
+- Encapsulation 캡슐화
+- 모듈화된 프로그래밍 → 재사용성이 높다
 
 ## 변수와 자료형
 

@@ -269,3 +269,209 @@ def likes(request, article_pk):
 
 ![image.png](../images/relationships-m-n_5.png)
 
+## 팔로우 기능 구현
+
+### 프로필 페이지
+
+- 사용자가 작성한 게시글/댓글, 좋아요를 누른 게시글 목록
+- 로그인한 유저뿐만 아니라 다른 사람의 프로필 페이지 방문도 가능해야 한다.
+- 사용자의 username (`unique=True`)을 variable routing을 활용하여 정보 전달
+    - django는 url을 판단할 때 위에서부터 순차적으로 읽어온다.
+    - 따라서 문자열(예: ‘<username>/’)로 시작하는 variable routing이 가장 위에 있다면, 모든 경로를 문자열 variable routing 경로로 연결하게 되는 동시에, 해당 경로의 하단 모든 경우가 무시된다.
+    - 그래서 `profile/`을 variable routing 앞에 작성한 것!
+
+```python
+# accounts/urls.py
+
+app_name = 'accounts'
+urlpatterns = [
+    ...
+    # path('profile/<str:username>/')
+    path('profile/<username>/', views.profile, name='profile'),
+]
+```
+
+ 
+
+```python
+# accounts/views.py
+from django.contrib.auth import get_user_model
+
+# 프로필 페이지를 제공
+def profile(request, username):
+    # 해당 프로필 페이지의 유저를 조회
+    User = get_user_model()
+    # user 변수명은 request.user와 겹치기 때문에 권장하지 않음
+    # user = User.objects.get(username=username)
+    person = User.objects.get(username=username)
+    context = {
+        'person': person,
+    }
+    return render(request, 'accounts/profile.html', context)
+```
+
+```html
+<!-- acconts/profile.html -->
+  <h1>{{ person.username }}님의 프로필</h1>
+  <hr>
+
+  {% comment %} 게시글 {% endcomment %}
+  <h2>{{ person.username }}님이 작성한 게시글</h2>
+  {% for article in person.article_set.all %}
+    <div>{{ article.title }}</div>
+  {% endfor %}
+  <hr>
+
+  {% comment %} 댓글 {% endcomment %}
+  <h2>{{ person.username }}님이 작성한 댓글</h2>
+  {% for comment in person.comment_set.all %}
+    <div>{{ comment.content }}</div>
+  {% endfor %}
+  <hr>
+
+  {% comment %} 좋아요 한 게시글 {% endcomment %}
+  <h2>{{ person.username }}님이 좋아요 한 게시글</h2>
+  {% for article in person.like_articles.all %}
+    <div>{{ article.title }}</div>
+  {% endfor %}
+  <hr>
+```
+
+```html
+<!-- articles/index.html -->
+{% if request.user.is_authenticated  %}
+  <a href="{% url "accounts:profile" user.username %}">내 프로필</a>
+  <form action="{% url "accounts:logout" %}" method="POST">
+    {% csrf_token %}
+    <input type="submit" value="Logout">
+  </form>
+  <a href="{% url "accounts:update" %}">회원정보수정</a>
+  <form action="{% url "accounts:delete" %}" method="POST">
+    {% csrf_token %}
+    <input type="submit" value="회원탈퇴">
+  </form>
+  <a href="{% url "articles:create" %}">CREATE</a>
+{% else %}
+  <a href="{% url "accounts:login" %}">Login</a>
+  <a href="{% url "accounts:signup" %}">회원가입</a>
+{% endif %}
+
+...
+<p>
+  작성자 : 
+  <a href="{% url "accounts:profile" article.user.username %}">{{ article.user }}</a>
+</p>
+```
+
+![image.png](../images/relationships-m-n_6.png)
+
+### 모델 관계 설정
+
+**User (M) - User (N)**
+
+- ‘팔로우’는 유저와 유저와의 관계를 나타낸다.
+    - 회원은 여러 명의 회원을 팔로우할 수 있고, 한 명도 하지 않을 수도 있다. (0개 이상)
+    - 회원은 여러 명의 팔로워를 가질 수 있고, 한 명도 가지지 않을 수도 있다. (0개 이상)
+- **단방향 관계**이기 때문에 `symmetrical=False`
+- 참조 필드: followings 필드로, “내가 팔로우하는 사람들”을 의미한다.
+    - from_user_id → to_user_id
+- 역참조 필드: user_set을 사용해도 되지만, 명확한 설정을 위해 `related_name='followers'`로 변경
+    - to_user_id → from_user_id
+
+```python
+# accounts/models.py
+from django.db import models
+from django.contrib.auth.models import AbstractUser
+
+class User(AbstractUser):
+    followings = models.ManyToManyField('self', symmetrical=False, related_name='followers')
+```
+
+![중개 테이블 생성 확인](../images/relationships-m-n_7.png)
+
+중개 테이블 생성 확인
+
+### 기능 구현
+
+```python
+# accounts/urls.py
+app_name = 'accounts'
+urlpatterns = [
+    ...
+    path('profile/<username>/', views.profile, name='profile'),
+    # 상대방의 user_pk 정보를 variable routing으로 전달
+    path('<int:user_pk>/follow/', views.follow, name='follow'),
+]
+```
+
+```python
+# accounts/views.py
+def follow(request, user_pk):
+    User = get_user_model()
+    # 상대방 (프로필 유저) 조회
+    you = User.objects.get(pk=user_pk)
+    me = request.user
+    
+    # 나자신을 팔로우하면 안되기 때문에 상대방이 다른 사람인 경우에만 진행
+    if me != you:
+        # 팔로우 해야하는지 / 언팔로우를 해야하는지
+        # 내가 상대방의 팔로워 목록에 있으면 => 언팔로우
+        if me in you.followers.all():
+            you.followers.remove(me)
+            # me.followings.remove(you)
+            
+        # 내가 상대방의 팔로워 목록에 없으면 => 팔로우
+        else:
+            you.followers.add(me)
+            # me.followings.add(you)
+    
+    return redirect('accounts:profile', you.username)
+```
+
+- 프로필 페이지의 유저(person)와 로그인한 사용자(request.user)가 다른 경우에만 팔로우 버튼 생성
+
+```html
+  <!-- accounts/profile.html -->
+  <h1>{{ person.username }}님의 프로필</h1>
+  {% if request.user != person %}
+    <form action="{% url "accounts:follow" person.pk %}" method="POST">
+      {% csrf_token %}
+      {% if request.user in person.followers.all %}
+        <input type="submit" value="언팔로우">
+      {% else %}
+        <input type="submit" value="팔로우">
+      {% endif %}
+    </form>
+  {% endif %}
+  <div>
+    <div>
+      팔로잉: {{ person.followings.all|length }}
+      팔로워: {{ person.followers.all|length }}
+    </div>
+  </div>
+```
+
+![user2 로그인하고 user1을 팔로우 한 상태](../images/relationships-m-n_8.png)
+
+user2 로그인하고 user1을 팔로우 한 상태
+
+![user2의 본인 프로필 페이지 - 팔로우 버튼 없음](../images/relationships-m-n_9.png)
+
+user2의 본인 프로필 페이지 - 팔로우 버튼 없음
+
+![image.png](../images/relationships-m-n_10.png)
+
+### ‘exists’ method
+
+- `.exits()`: QuerySet에 결과가 하나 이상 존재하는지 여부를 확인하는 메서드
+    - 결과가 포함되어 있으면 True, 아니면 False
+- 전체 QuerySet을 평가하지 않고 결과의 존재 여부만 확인
+    - 해당 데이터를 불러오지 않고, 데이터베이스 수준에서 빠르게 판단 가능
+    - 대량의 QuerySet에 있는 특정 객체 검색에 유용
+
+```python
+# if request.user in persons.followers.all():
+if person.followers.filter(pk=request.user.pk).exists():
+```
+
+

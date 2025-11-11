@@ -86,6 +86,10 @@ Java 프로그래밍 언어의 기초부터 객체지향 프로그래밍(OOP)까
 * [제어문 (조건문과 반복문)](java/control-flow.md)
 * [1차원 배열 (1D Array)](java/1d-array.md)
 * [다차원 배열 (Multidimensional Array)](java/multidimensional-array.md)
+* [클래스](java/class.md)
+* [생성자](java/constructor.md)
+
+
 
 ### **📂 자료구조 (Data Structures)**
 데이터를 효율적으로 저장하고 관리하기 위한 구조들을 학습하고 정리합니다.
@@ -188,6 +192,7 @@ Java 프로그래밍 언어의 기초부터 객체지향 프로그래밍(OOP)까
 * [Admin site (관리자 사이트)](django/admin.md)
 * [ORM - QuerySet API](django/orm.md)
 * [ORM - view에서 활용](django/orm-view.md)
+* [ORM - 쿼리 최적화](django/orm-optimization.md)
 * [Django Form (ModelForm)](django/forms.md)
 * [웹 인증의 이해: HTTP, 쿠키와 세션](django/auth-basics.md)
 * [비밀번호 암호화 (Hash)](django/hash.md)
@@ -200,6 +205,7 @@ Java 프로그래밍 언어의 기초부터 객체지향 프로그래밍(OOP)까
 * [View Decorators](django/view-decorators.md)
 * [정적 파일(Static Files) 관리](django/static-files.md)
 * [미디어 파일(Media Files) 처리](django/media-files.md)
+* [Fixtures - dumpdata, loaddata](django/fixtures.md)
 * [Django Secret Key](django/secret-key.md)
 
 2. **Database**
