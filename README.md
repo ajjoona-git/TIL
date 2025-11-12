@@ -86,8 +86,8 @@ Java 프로그래밍 언어의 기초부터 객체지향 프로그래밍(OOP)까
 * [제어문 (조건문과 반복문)](java/control-flow.md)
 * [1차원 배열 (1D Array)](java/1d-array.md)
 * [다차원 배열 (Multidimensional Array)](java/multidimensional-array.md)
-* [클래스](java/class.md)
-* [생성자](java/constructor.md)
+* [클래스 (Class)](java/class.md)
+* [생성자 (Constructor)](java/constructor.md)
 
 
 
@@ -178,7 +178,6 @@ Java 프로그래밍 언어의 기초부터 객체지향 프로그래밍(OOP)까
 
 #### **백엔드 (Backend)**
 서버, 데이터베이스, 애플리케이션 로직을 구현하는 기술들을 학습합니다.
-* [RESTful API](django/restful-api.md)
 
 1. **Django**
 * [MTV 패턴과 프로젝트 구조](django/mtv-pattern.md)
@@ -207,6 +206,8 @@ Java 프로그래밍 언어의 기초부터 객체지향 프로그래밍(OOP)까
 * [미디어 파일(Media Files) 처리](django/media-files.md)
 * [Fixtures - dumpdata, loaddata](django/fixtures.md)
 * [Django Secret Key](django/secret-key.md)
+* [RESTful API](django/restful-api.md)
+* [DRF - ModelSerializer](django/drf-modelserializer.md)
 
 2. **Database**
 * [DB 기초](database/db-basics.md)
