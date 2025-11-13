@@ -205,9 +205,11 @@ Java 프로그래밍 언어의 기초부터 객체지향 프로그래밍(OOP)까
 * [정적 파일(Static Files) 관리](django/static-files.md)
 * [미디어 파일(Media Files) 처리](django/media-files.md)
 * [Fixtures - dumpdata, loaddata](django/fixtures.md)
-* [Django Secret Key](django/secret-key.md)
 * [RESTful API](django/restful-api.md)
 * [DRF - ModelSerializer](django/drf-modelserializer.md)
+* [DRF - N:1 관계 데이터 처리 및 재구성](django/drf-n-1-serialization.md)
+* [DRF - API 문서화 (drf-spectacular)](django/drf-api-docs.md)
+* [Django Secret Key](django/secret-key.md)
 
 2. **Database**
 * [DB 기초](database/db-basics.md)
