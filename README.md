@@ -180,6 +180,8 @@ Java 프로그래밍 언어의 기초부터 객체지향 프로그래밍(OOP)까
 * [JavaScript - 연산자](web/js-operators.md)
 * [JavaScript - 조건문과 반복문](web/js-control-flow.md)
 * [JavaScript - 함수](web/js-functions.md)
+* [JavaScript - 객체 (Object)](web/js-objects.md)
+* [JavaScript - 배열 (Array)](web/js-array.md)
 
 #### **백엔드 (Backend)**
 서버, 데이터베이스, 애플리케이션 로직을 구현하는 기술들을 학습합니다.
