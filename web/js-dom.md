@@ -282,9 +282,7 @@ phoneParagraph.after(p)
 | Element Node | HTML 요소를 나타내는 노드 |
 | Text Node | HTML 텍스트 (Element Node 내의 텍스트 컨텐츠를 나타냄) |
 | Attribute Node | HTML 요소의 속성을 나타내는 노드 |
-| NodeList | DOM 메서드를 사용해 선택한 Node의 목록
-- querySelectorAll()로 반환되는 NodeList는 DOM의 변경사항을 실시간으로 반영하지 않는다. |
-| Element | DOM 트리에서 HTML 요소를 나타내는 특별한 유형의 Node
-- Node의 하위 유형 |
+| NodeList | DOM 메서드를 사용해 선택한 Node의 목록. querySelectorAll()로 반환되는 NodeList는 DOM의 변경사항을 실시간으로 반영하지 않는다. |
+| Element | DOM 트리에서 HTML 요소를 나타내는 특별한 유형의 Node. Node의 하위 유형 |
 | Parsing | 브라우저가 문자열을 해석하여 DOM Tree로 만드는 과정 (구문 분석, 해석) |
 
