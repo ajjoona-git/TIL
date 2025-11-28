@@ -245,6 +245,7 @@ AI 도구를 활용하여 학습하고 얻은 통찰을 기록합니다.
 * [Gemini-CLI 실습](AI/gemini-cli.md)
 * [Design-to-Code](AI/design-to-code.md)
 * [비정형 데이터 구조화](AI/data-parsing.md)
+* [문서 유사도](AI/document-similarity.md)
 
 1. **AI를 위한 기초**
 * [numpy](AI/numpy.md)
