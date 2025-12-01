@@ -273,3 +273,431 @@ async function promiseAllOrder() {
 
 promiseAllOrder();
 ```
+
+---
+
+## 비동기 팔로우 구현
+
+### axios CDN 작성
+
+- form 요소에 id 속성 지정 및 이벤트 핸들러 할당, actions과 method 속성은 axios로 대체
+
+```html
+<!-- accounts/profile.html -->
+<h1>{{ person.username }}님의 프로필</h1>
+<div>
+  팔로워 : {{ person.followers.all|length }} / 팔로우 : {{ person.followings.all|length }}
+</div>
+
+{% if request.user != person %}
+  <form id="follow-form"> 
+    {% csrf_token %}
+    {% if request.user in person.followers.all %}
+      <input type="submit" value='UnFollow'>
+    {% else %}
+      <input type="submit" value='Follow'>
+    {% endif %}
+  </form>
+{% endif %}
+<hr>
+...
+
+<!-- axios CDN -->
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script>
+  // JavaScript 코드를 작성할 영역
+  const formTag = document.querySelector('#follow-form')
+  console.log(formTag)
+
+  formTag.addEventListener('submit', function(event){
+    event.preventDefault()
+
+    axios({
+      method: 'post',
+      url: `/accounts/${}/follow/`
+    })
+  })
+</script>
+```
+
+### `data-*` 속성
+
+- 사용자 지정 데이터 속성을 만들어, HTML과 DOM 사이에서 임의의 데이터를 교환하는 방법
+- 모든 사용자 지정 데이터는 JavaScript에서 **dataset 속성**을 통해 접근한다.
+- 주의사항
+    - 대소문자 여부에 상관없이 ‘xml’ 문자로 시작 불가
+    - 세미콜론 포함 불가
+    - 대문자 포함 불가
+    - 파스칼 케이스로 자동 전환되어 호출된다.
+
+```html
+<div data-my-id="my-data"></div>
+
+<script>
+    const myId = event.target.dataset.myId
+</script>
+```
+
+```html
+<!-- accounts/profile.html -->
+
+<form id="follow-form" data-user-id="{{ person.pk }}"> 
+  ...
+</form>
+
+<script>
+// JavaScript 코드를 작성할 영역
+const formTag = document.querySelector('#follow-form')
+console.log(formTag)
+
+formTag.addEventListener('submit', function(event){
+  event.preventDefault()
+  // 방법1. 이벤트 객체에서 가져오기 (이걸로 써야 한다!)
+  const userId = event.currentTarget.dataset.userId
+
+  // 방법2. this에서 가져오기
+  //        (화살표 함수로 작성할 때 문제 발생)
+  // const userId2 = this.dataset.userId
+
+  // 방법3. formTag에서 직접적으로 가져오기
+  //        (변수한테 너무 의존적임)
+  // const userId3 = formTag.dataset.userId
+
+  axios({
+    method: 'post',
+    url: `/accounts/${userId}/follow/`
+  })
+})
+</script>
+```
+
+![403 Forbidden Error : CSRF 토큰](../images/js-ajax_10.png)
+
+403 Forbidden Error : CSRF 토큰
+
+### CSRF token
+
+![CSRF token이 input hidden 타입으로 작성되어 있다.](../images/js-ajax_11.png)
+
+CSRF token이 input hidden 타입으로 작성되어 있다.
+
+- input hidden 타입으로 존재하는 CSRF token 데이터를 axios로 전송해야 한다.
+- request JSON의 header에 csft token 데이터를 포함한다.
+
+```jsx
+// accounts/profile.html
+
+const csrf_token = document.querySelector('[name=csrfmiddlewaretoken]').value
+
+axios({
+  method: 'post',
+  url: `/accounts/${userId}/follow/`,
+  headers: {'X-CSRFToken': csrf_token}
+})
+...
+```
+
+### 팔로우 버튼 토글
+
+- 팔로우 버튼을 토글하기 위해서는 현재 팔로우 상태인지, 언팔로우 상태인지에 대한 확인이 필요하다.
+- Django의 view 함수에서 팔로우 여부를 나타내는 변수 (is_followed)를 추가하여 JSON 형식으로 응답
+
+```python
+# accounts/views.py
+
+from django.http import JsonResponse
+
+@login_required
+def follow(request, user_pk):
+    User = get_user_model()
+    person = User.objects.get(pk=user_pk)
+    
+    if person != request.user:
+        if person.followers.filter(pk=request.user.pk).exists():
+            person.followers.remove(request.user)
+            is_followed = False
+        else:
+            person.followers.add(request.user)
+            is_followed = True
+        context = {
+            'is_followed': is_followed,
+        }
+        return JsonResponse(context)
+    return redirect('accounts:profile', person.username)
+```
+
+```jsx
+// accounts/profile.html
+
+  axios({
+    method: 'post',
+    url: `/accounts/${userId}/follow/`,
+    headers: {'X-CSRFToken': csrf_token}
+  }).then((response) => {
+    const isFollowed = response.data.is_followed
+    const followBtn = document.querySelector('input[type=submit]')
+
+    if (isFollowed === true) {
+      followBtn.value = "Unfollow"
+    } else {
+      followBtn.value = "Follow"
+    }
+  })
+```
+
+![is_followed 응답 확인](../images/js-ajax_12.png)
+
+is_followed 응답 확인
+
+### 팔로잉 수와 팔로워 수
+
+- Django view 함수에서 팔로워, 팔로잉 인원 수 연산을 진행하여 결과를 응답 데이터로 전달한다.
+- 해당 요소를 선택할 수 있도록 span 태그와 id 속성을 작성한다.
+
+```python
+# accounts/views.py
+
+@login_required
+def follow(request, user_pk):
+    User = get_user_model()
+    person = User.objects.get(pk=user_pk)
+    
+    if person != request.user:
+        if person.followers.filter(pk=request.user.pk).exists():
+            person.followers.remove(request.user)
+            is_followed = False
+        else:
+            person.followers.add(request.user)
+            is_followed = True
+        context = {
+            'is_followed': is_followed,
+            'followings_count': person.followings.count(),
+            'followers_count': person.followers.count(),
+        }
+        return JsonResponse(context)
+    return redirect('accounts:profile', person.username)
+```
+
+```jsx
+// accounts/profile.html
+
+<div>
+  팔로워 : <span id="followers-count">{{ person.followers.all|length }}</span>
+  / 팔로우 : <span id="followings-count">{{ person.followings.all|length }}</span>
+</div>
+...
+<script>
+axios({
+    method: 'post',
+    url: `/accounts/${userId}/follow/`,
+    headers: {'X-CSRFToken': csrf_token}
+  }).then((response) => {
+    const isFollowed = response.data.is_followed
+    const followBtn = document.querySelector('input[type=submit]')
+    const followingsCountTag = document.querySelector('#followings-count')
+    const followersCountTag = document.querySelector('#followers-count')
+
+    followersCountTag.textContent = response.data.followers_count
+    followingsCountTag.textContent = response.data.followings_count
+
+    if (isFollowed === true) {
+      followBtn.value = "Unfollow"
+    } else {
+      followBtn.value = "Follow"
+    }
+  })
+```
+
+## 비동기 좋아요 구현
+
+### 버블링(Bubbling) 활용
+
+- ‘좋아요’ 버튼은 한 페이지에 여러 개가 존재할 수 있다.
+- 모든 좋아요 버튼에 각각 이벤트 리스너를 등록해야 하나? NO!
+- 버블링 (Bubbling) → 요소의 공통 조상에 이벤트 핸들러를 단 하나만 할당한다!
+
+```html
+<!-- articles/index.html -->
+
+<article class="article-container">
+  {% for article in articles %}
+    ...
+  {% endfor %}
+</article>
+```
+
+```jsx
+const articleContainer = document.querySelector('.article-container')
+
+articleContainer.addEventListener('submit', (event) => {
+  event.preventDefault()  // submit해도 새로고침 되지 않도록
+})
+```
+
+### currentTarget vs. target
+
+- `event.currentTarget`
+    - ‘현재’ 요소
+    - 항상 이벤트 핸들러가 연결된 요소만을 참조하는 속성
+    - ‘this’와 같다.
+- `event.target`
+    - **실제 이벤트가 시작된 요소**
+    - 이벤트가 발생한 가장 안쪽의 요소(target)를 참조하는 속성
+    - 버블링이 진행되어도 변하지 않는다.
+
+```html
+<!-- articles/index.html -->
+
+<form data-article-id="{{ article.pk }}"> 
+  {% csrf_token %}
+  {% if request.user in article.like_users.all %}
+    <input type="submit" value="좋아요 취소">
+  {% else %}
+    <input type="submit" value="좋아요">
+  {% endif %}
+</form>
+...
+
+<script>
+  const articleContainer = document.querySelector('.article-container')
+  const csrf_token = document.querySelector('[name=csrfmiddlewaretoken]').value
+
+  articleContainer.addEventListener('submit', (event) => {
+    event.preventDefault()  // submit해도 새로고침 되지 않도록
+    const articleId = event.target.dataset.articleId
+
+    axios({
+        method: 'post',
+        url: `/articles/${articleId}/likes/`,
+        headers: {'X-CSRFToken': csrf_token}
+      })
+  })
+</script>
+```
+
+### 좋아요 상태
+
+- Django의 view함수에서 좋아요 여부를 파악할 수 있는 변수 추가 생성
+- JSON 타입으로 응답
+
+```python
+# articles/views.py
+
+from django.http import JsonResponse
+
+@login_required
+def likes(request, article_pk):
+    article = Article.objects.get(pk=article_pk)
+
+    # 이미 좋아요가 된 상태라면, 좋아요 해제
+    if request.user in article.like_users.all():
+        article.like_users.remove(request.user)
+        is_liked = False
+    # 좋아요가 아닌 상태라면, 좋아요!
+    else:
+        article.like_users.add(request.user)
+        is_liked = True
+    context = {
+        'is_liked': is_liked
+    }
+    return JsonResponse(context)
+```
+
+```jsx
+// articles/index.html
+
+articleContainer.addEventListener('submit', (event) => {
+  event.preventDefault()  // submit해도 새로고침 되지 않도록
+  const articleId = event.target.dataset.articleId
+
+  axios({
+    method: 'post',
+    url: `/articles/${articleId}/likes/`,
+    headers: {'X-CSRFToken': csrf_token}
+  }).then((response) => {
+    const isLiked = response.data.is_liked
+  }).catch((error) => {
+    console.log(error)
+  })
+})
+```
+
+![좋아요 버튼 눌렀을 때 응답 확인](../images/js-ajax_13.png)
+
+좋아요 버튼 눌렀을 때 응답 확인
+
+### 좋아요 버튼 토글
+
+- 어떤 게시글의 좋아요 버튼을 선택했는지 구별하기 위해, id 속성에 article.pk값을 포함한다.
+
+```html
+<!-- articles/index.html -->
+<form data-article-id="{{ article.pk }}"> 
+  {% csrf_token %}
+  {% if request.user in article.like_users.all %}
+    <input type="submit" value="좋아요 취소" id="like-{{ article.pk }}">
+  {% else %}
+    <input type="submit" value="좋아요" id="like-{{ article.pk }}">
+  {% endif %}
+</form>
+```
+
+```jsx
+// articles/index.html
+
+articleContainer.addEventListener('submit', (event) => {
+  event.preventDefault()  // submit해도 새로고침 되지 않도록
+  const articleId = event.target.dataset.articleId
+  const likeBtn = document.querySelector(`#like-${articleId}`)
+
+  axios({
+    method: 'post',
+    url: `/articles/${articleId}/likes/`,
+    headers: {'X-CSRFToken': csrf_token}
+  }).then((response) => {
+    const isLiked = response.data.is_liked
+
+    if (isLiked === true) {
+      likeBtn.value = "좋아요 취소"
+    } else {
+      likeBtn.value = "좋아요"
+    }
+  }).catch((error) => {
+    console.log(error)
+  })
+})
+```
+
+### 비동기로 구현한다면,
+
+- `await` 선언한 바로 상위 함수에 `async`를 작성한다.
+- try ~ catch 구문으로 에러 처리
+
+```jsx
+// articles/index.html
+
+articleContainer.addEventListener('submit', async (event) => {
+  event.preventDefault()
+  const articleId = event.target.dataset.articleId
+  const likeBtn = document.querySelector(`#like-${articleId}`)
+
+    try {
+      const response = await axios({
+        method: 'post',
+        url: `/articles/${articleId}/likes/`,
+        headers: {'X-CSRFToken': csrf_token}
+      })
+      const isLiked = response.data.is_liked
+      
+        likeBtn.value = isLiked ? "좋아요 취소" : "좋아요"
+        
+    } catch {
+        console.log("데이터를 제대로 받지 못했습니다!")
+    }
+})
+```
+
+![1번 게시글 좋아요 누른 결과](../images/js-ajax_14.png)
+
+1번 게시글 좋아요 누른 결과
+
