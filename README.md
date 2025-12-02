@@ -32,10 +32,19 @@
 
 | 일자 | 활동 | 결과 및 내용 | 코드 |
 | :--- | :--- | :--- | :--- |
-| 2025.08.18 | **일타싸피** | 과목 평가 **100점** | [![GitHub](https://img.shields.io/badge/Code-pocket--ball-yellow?style=flat&logo=github)](https://github.com/ajjoona-git/pocket-ball) |
-| 2025.08.19 | **SW 역량 테스트 (IM/A형)** | **A 등급** 취득 성공 | [![GitHub](https://img.shields.io/badge/Code-sw--test--250819-yellow?style=flat&logo=github)](https://github.com/ajjoona-git/sw-test-250819) |
-| 2025.09.06 | **SW 역량 테스트 (B형)** | B등급 문제 유형 분석 및 복기. DFS, 백트래킹 심화 학습의 필요성 확인 | [![GitHub](https://img.shields.io/badge/Code-sw--test--250906-yellow?style=flat&logo=github)](https://github.com/ajjoona-git/sw-test-250906) |
+| 2025.11.27 | **AI NoCode MCP Hackathon** | **대상 (한국지능정보사회진흥원 원장상)** | [![GitHub](https://img.shields.io/badge/Doongzi-yellow?style=flat&logo=github)](https://github.com/najung-h/Doongzifrontend) |
 | 2025.09.22 | **배틀싸피** | 반대항전 **1등**. **반 대표**로 전국대항전 출전 | [![GitHub](https://img.shields.io/badge/Code-battle-yellow?style=flat&logo=github)](https://github.com/ajjoona-git/battle) |
+| 2025.09.06 | **SW 역량 테스트 (B형)** | B등급 문제 유형 분석 및 복기. DFS, 백트래킹 심화 학습의 필요성 확인 | [![GitHub](https://img.shields.io/badge/Code-sw--test--250906-yellow?style=flat&logo=github)](https://github.com/ajjoona-git/sw-test-250906) |
+| 2025.08.19 | **SW 역량 테스트 (IM/A형)** | **A 등급** 취득 성공 | [![GitHub](https://img.shields.io/badge/Code-sw--test--250819-yellow?style=flat&logo=github)](https://github.com/ajjoona-git/sw-test-250819) |
+| 2025.08.18 | **일타싸피** | 과목 평가 **100점** | [![GitHub](https://img.shields.io/badge/Code-pocket--ball-yellow?style=flat&logo=github)](https://github.com/ajjoona-git/pocket-ball) |
+
+### **해커톤: 둥지 (Doongzi) - 집 찾는 아기새**
+"부동산 임대차 계약 안전 도우미" <br>
+**둥지**는 부동산 계약 경험이 부족한 사회초년생('아기새')이 안전하게 계약을 마칠 수 있도록 돕는 웹 서비스입니다.  
+복잡한 등기부등본 분석부터 계약서 독소조항 탐지, 단계별 체크리스트까지 전 과정을 **'어미새'**처럼 가이드합니다.
+
+* [GitHub 보러가기](https://github.com/najung-h/Doongzifrontend)
+* ['둥지' 개발 일지와 회고](https://ajjoona-git.github.io/categories/%EB%91%A5%EC%A7%80/)
 
 ### **🚇 프로젝트: 쉽길 (WishEasy)**
 "가장 빠른 길이 아닌, 가장 편한 길을 안내합니다."<br>
@@ -46,16 +55,7 @@
 ### **🚀 관통 프로젝트**
 실제 프로젝트를 통해 학습하고 적용한 내용들을 기록합니다.
 
-* [1회차: 사용자 인증 API 구현](project-01/01.md)
-* [2회차: 주가 데이터 시계열 분석 및 시각화 구현](project-01/02.md)
-* [3회차: 도서 서비스 반응형 UI 프로토타입 구현](project-01/03.md)
-* [4회차: 주식 정보 크롤링 및 게시판 서비스](project-01/04.md)
-* [5회차: 회원별 주식 정보 크롤링 및 게시판 서비스](project-01/05.md)
-* [6회차: AI 기반 금융 커뮤니티 서비스](project-01/06.md)
-* [7회차: 영화, 배우, 리뷰 정보를 관리하는 API 서버](project-01/07.md)
-* [8회차: 반응형 도서 관리 서비스](project-01/08.md)
-* [9회차: 장르별 영화 목록 구현](project-01/09.md)
-
+* [관통 프로젝트 일지](project-01/README.md)
 
 ### **🔧 개발 환경 및 도구 (Dev Environment & Tools)**
 버전 관리와 웹 서비스 개발의 핵심 도구들에 대한 학습 내용입니다.
