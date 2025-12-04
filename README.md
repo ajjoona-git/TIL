@@ -193,7 +193,9 @@ Java 프로그래밍 언어의 기초부터 객체지향 프로그래밍(OOP)까
 **Vue.js**
 * [Vue.js 개요 및 기초 문법 (Introduction to Vue)](vue/vue-intro.md)
 * [Vue.js 기본 문법 (Template Syntax, Binding, Event)](vue/basic-syntax.md)
-* [Vue.js 반응형 로직과 생명주기 (Computed, Watch, Lifecycle)](vue/computed-lifecycle.md)
+* [Vue.js 반응형 로직 (Computed, Watch)](vue/computed-watch.md)
+* [Vue.js 반응형 로직 (Computed, Watch) 활용](vue/computed-watch-practice.md)
+* [Vue.js 생명주기 (Lifecycle)](vue/lifecycle.md)
 
 #### **백엔드 (Backend)**
 서버, 데이터베이스, 애플리케이션 로직을 구현하는 기술들을 학습합니다.

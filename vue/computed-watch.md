@@ -1,12 +1,15 @@
-# [Vue.js] 반응형 로직과 생명주기
+# [Vue.js] 반응형 로직 (Computed, Watch)
 
 ## Computed Property
 
 ### Computed() 함수와 특징
 
 - **계산된 속성**을 정의하는 함수
-- 미리 계산된 속성을 만들어 템플릿의 표현식을 단순하게 하고, 불필요한 연산을 줄여준다.
-- 한 번 계산된 값은 캐싱(임시 저장)되어, 의존하는 데이터가 바뀌기 전까지는 다시 계산하지 않는다.
+  - 미리 계산된 속성을 만들어 템플릿의 표현식을 단순하게 하고, 불필요한 연산을 줄여준다.
+- **캐싱 (Caching)**: 의존하는 반응형 데이터가 변경될 때만 재평가한다.
+  - 한 번 계산된 값은 캐싱(임시 저장)되어, 의존하는 데이터가 바뀌기 전까지는 다시 계산하지 않는다.
+- **읽기 전용 (Read-only)**: 반환 값을 직접 변경하려고 하면 안 된다.
+  - computed 내부에서 `reverse()`나 `sort()`처럼 원본 배열을 변형(mutate)하는 메서드를 사용할 때는 `[...array].reverse()`와 같이 복사본을 만든 후 처리해야 한다.
 
 ```html
 <div id="app">
@@ -54,6 +57,12 @@
 - computed 값에 직접 값을 할당하면, 기본적으로 경고가 발생하며 값이 변경되지 않는다.
 
 ### Computed vs Methods
+
+| 구분 | computed | methods |
+| --- | --- | --- |
+| 재계산 시점 | 의존하는 데이터가 변경될 때만 재계산 (캐싱 O) | 렌더링이 일어날 때마다 항상 실행 (캐싱 X) |
+| 사용 목적 | 데이터에 의존하는 새로운 값을 생성할 때 | 특정 동작(함수)을 수행하거나 인자를 받아 처리할 때 |
+| 호출 방식 | 변수처럼 사용 (괄호 `()` 없음) | 함수처럼 호출 (괄호 `()` 있음) |
 
 ```jsx
 // computed 예시
@@ -157,6 +166,15 @@ const getRestOfTodos = function () {
 - 조건이 false이면, 해당 요소는 CSS의 `display: none;` 으로 설정되어 화면에서만 보이지 않게 숨긴다.
     - 조건과 관계없이 항상 DOM에 렌더링된다.
 - 초기 렌더링 비용이 높기 때문에, 콘텐츠를 자주 전환해야 하는 경우에 적합
+
+### v-if vs v-show
+
+| 구분 | v-if | v-show |
+| --- | --- | --- |
+| 동작 원리 | 조건이 false이면 DOM에서 요소를 완전히 제거 | 항상 렌더링하되 CSS `display: none`으로 숨김 |
+| 초기 렌더링 비용 | 낮음 (조건이 false면 렌더링 안 함) | 높음 (무조건 렌더링 함) |
+| 토글(전환) 비용 | 높음 (DOM 생성/삭제 반복) | 낮음 (CSS 속성만 변경) |
+| 권장 상황 | 실행 중 조건이 잘 바뀌지 않을 때 | 요소를 매우 자주 껐다 켰다 할 때 |
 
 ---
 
@@ -309,6 +327,7 @@ return {
     - 콜백의 인자(newValue, oldValue)도 같은 순서의 배열로 전달된다.
     - 배열 속 ref(객체)의 내부까지 감시하려면 `{deep: true}`옵션을 추가로 설정해야 한다.
 - 데이터가 바뀔 때 특정 행동(side effect)을 수행하기 위해 사용한다.
+    - DOM 조작, 비동기 API 호출 등
 
 ```jsx
 watch(source, (newValue, oldValue) => {
@@ -357,145 +376,22 @@ watch(source, (newValue, oldValue) => {
 
 - computed와 watch 모두 의존(감시)하는 원본 데이터를 직접 변경하지 않는다.
 
-![image.png](../images/computed-lifecycle_5.png)
+| 구분 | computed | watch |
+| --- | --- | --- |
+| 목적 | 데이터를 가공하여 새로운 값을 계산/반환 | 데이터 변경 시 작업 (API 호출, DOM 변경 등) 수행 |
+| 반환 값 | 필수 (계산된 결과) | 없음 |
+| 특징 | 선언형 프로그래밍, 동기적 처리, 캐싱 지원 | 명령형 프로그래밍, 비동기 처리 가능, 캐싱 없음 |
+| 활용 예시 | 리스트 필터링, 합계 계산, Form 유효성 검사 | 검색어 입력 시 API 호출, 알림 표시, 라우터 변경 감지 |
 
----
 
-## Lifecycle Hooks
+### Deep Watch
 
-### Lifecycle Hooks
+Vue의 `reactive`객체를 감시할 때는 기본적으로 깊은 감시 (Deep Watch)가 적용되지만, `ref`로 선언된 객체 내부의 속성 변경을 감지하려면 `{ deep: true }` 옵션이 필요할 수 있다.
 
-![image.png](../images/computed-lifecycle_6.png)
+```jsx
+const obj = ref({ count: 0 })
 
-- Vue  컴포넌트가 생성되고, DOM에 마운트되고, 업데이트되고, 소멸되는 각 생애주기 단계에서 실행되도록 제공되는 함수
-- 개발자는 컴포넌트의 특정 시점에 원하는 로직을 실행할 수 있다.
-
-### 주요 훅: onMounted, onUpdated
-
-- `onMounted`: Vue 컴포넌트 인스턴스가 초기 렌더링 및 DOM 요소 생성이 완료된 후 특정 로직을 수행하기
-- `onUpdated`: 반응형 데이터의 변경으로 인해 컴포넌트의 DOM이 업데이트된 후 특정 로직을 수행하기
-
-```html
-<!-- Lifecycle hooks를 활용한 Cat 애플리케이션 -->
-<!-- mounted 시점에 api 요청하면서 애플리케이션 시작하기 -->
-<div id="app">
-  <button @click="getCatImage">냥냥펀치</button>
-</div>
-
-<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
-<script>
-  const { createApp, ref, onMounted } = Vue
-  
-  const app = createApp({
-    setup() {
-      const getCatImage = function () {
-      const URL = 'https://api.thecatapi.com/v1/images/search'
-      
-        axios({
-          method: 'get',
-          url: URL,
-        })
-          .then((response) => {
-            imgUrl = response.data[0].url
-            return imgUrl
-          })
-          .then((imgData) => {
-            imgElem = document.createElement('img')
-            imgElem.setAttribute('src', imgData)
-            document.body.appendChild(imgElem)
-          })
-          .catch((error) => {
-            console.log('실패했다옹')
-          })
-      }
-
-      // mounted 시점에 api 요청하기
-      onMounted(() => {
-        getCatImage()
-      })
-
-      return { getCatImage }
-    }
-  })
-
-  app.mount('#app')
-</script>
+watch(obj, (newValue) => {
+	console.log('변경 감지!')
+}, { deep: true }) // 객체 내부 깊숙한 변경까지 감지
 ```
-
-![image.png](../images/computed-lifecycle_7.png)
-
-### Lifecycle Hooks 주의사항
-
-- Lifecycle Hooks는 반드시 동기적으로 작성해야 한다.
-    - Vue는 컴포넌트가 초기화될 때 모든 Hooks를 한 번에 스캔하고 준비하기 때문
-- 비동기(예: setTimeout)로 훅을 등록하려고 하면, 이미 Lifecycle 단계가 지나간 후에 hooks를 설정하는 상황이 생긴다.
-    - Vue는 해당 훅을 인식하지 못하며 원래 의도한 타이밍에 실행되지 않게 된다.
-
----
-
-## 실습: Todo 애플리케이션 구현
-
-- v-model, v-on, v-bind, v-for 활용
-
-```html
-<body>
-  <!-- v-model, v-on, v-bind, v-for를 활용한 todo 애플리케이션 구현 -->
-  <div id="app">
-    <form @submit.prevent="addTodo">
-      <input v-model="newTodo">
-      <button>Add Todo</button>
-    </form>
-    <ul>
-      <li v-for="todo in todos" :key="todo.id">
-        {{ todo.text }}
-        <button @click="removeTodo(todo)">X</button>
-      </li>
-    </ul>
-  </div>
-
-  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
-  <script>
-    const { createApp, ref } = Vue
-
-    const app = createApp({
-      setup() {
-        let id = 0
-
-        const newTodo = ref(null)
-        const todos = ref([
-          { id: id++, text: 'Learn HTML' },
-          { id: id++, text: 'Learn JS' },
-          { id: id++, text: 'Learn Vue' }
-        ])
-
-        // 새로운 Todo 항목을 추가하는 함수
-        const addTodo = function () {
-          // todos 배열에 새로운 Todo 객체 추가
-          todos.value.push({ id: id++, text: newTodo.value })
-          // 입력 필드 초기화
-          newTodo.value = null
-        }
-
-        // 선택한 Todo 항목을 삭제하는 함수
-        const removeTodo = function (selectedTodo) {
-          // filter를 사용하여 선택한 Todo를 제외한 새로운 배열 생성
-          todos.value = todos.value.filter((todo) => todo !== selectedTodo)
-        }
-
-        return {
-          newTodo,
-          todos,
-          addTodo,
-          removeTodo
-        }
-      }
-    })
-
-    app.mount('#app')
-  </script>
-</body>
-```
-
-![image.png](../images/computed-lifecycle_8.png)
-
