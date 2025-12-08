@@ -196,6 +196,8 @@ Java 프로그래밍 언어의 기초부터 객체지향 프로그래밍(OOP)까
 * [Vue.js 반응형 로직 (Computed, Watch)](vue/computed-watch.md)
 * [Vue.js 반응형 로직 (Computed, Watch) 활용](vue/computed-watch-practice.md)
 * [Vue.js 생명주기 (Lifecycle)](vue/lifecycle.md)
+* [Single File Components (SFC) 구조와 Vue 프로젝트](vue/single-file-components.md)
+* [Virtual DOM과 내부 렌더링 과정](vue/virtual-dom.md)
 
 #### **백엔드 (Backend)**
 서버, 데이터베이스, 애플리케이션 로직을 구현하는 기술들을 학습합니다.
