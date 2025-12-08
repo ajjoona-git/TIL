@@ -199,6 +199,7 @@ Java 프로그래밍 언어의 기초부터 객체지향 프로그래밍(OOP)까
 * [Single File Components (SFC) 구조와 Vue 프로젝트](vue/single-file-components.md)
 * [Virtual DOM과 내부 렌더링 과정](vue/virtual-dom.md)
 * [Component State Flow (Props & Emit)](vue/component-state-flow.md)
+* [Vue Router (SPA 라우팅 시스템)](vue/vue-router.md)
 
 #### **백엔드 (Backend)**
 서버, 데이터베이스, 애플리케이션 로직을 구현하는 기술들을 학습합니다.
