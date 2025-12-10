@@ -201,6 +201,9 @@ Java 프로그래밍 언어의 기초부터 객체지향 프로그래밍(OOP)까
 * [Component State Flow (Props & Emit)](vue/component-state-flow.md)
 * [Vue Router (SPA 라우팅 시스템)](vue/vue-router.md)
 * [State Management와 Pinia (전역 상태 관리)](vue/state-management.md)
+* [Vue with DRF (CORS 및 Axios 통신)](vue/vue-with-drf.md)
+* [Authentication with DRF (인증과 권한)](vue/vue-drf-auth-1.md)
+* [Authentication with Vue (인증과 권한)](vue/vue-drf-auth-2.md)
 
 #### **백엔드 (Backend)**
 서버, 데이터베이스, 애플리케이션 로직을 구현하는 기술들을 학습합니다.
