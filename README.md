@@ -32,31 +32,30 @@
 
 | 일자 | 활동 | 결과 및 내용 | 코드 |
 | :--- | :--- | :--- | :--- |
-| 2025.12.26 | **1학기 관통 프로젝트** | **최우수상 (1등)** | [![GitHub](https://img.shields.io/badge/Moathon-yellow?style=flat&logo=github)](https://github.com/ajjoona-git/moathon) |
+| 2025.12.26 | **1학기 관통 프로젝트** | **최우수상 (1등)** | [![GitHub](https://img.shields.io/badge/GitHub-Moathon-yellow?style=flat&logo=github)](https://github.com/ajjoona-git/moathon) |
 | 2025.12.26 | **1학기 성적우수상** | 1학기 코딩 집중과정 종합성적 **2등** | - |
-| 2025.11.27 | **AI NoCode MCP Hackathon** | **대상 (한국지능정보사회진흥원 원장상)** | [![GitHub](https://img.shields.io/badge/Doongzi-yellow?style=flat&logo=github)](https://github.com/najung-h/Doongzifrontend) |
-| 2025.09.22 | **배틀싸피** | 반대항전 **1등**. **반 대표**로 전국대항전 출전 | [![GitHub](https://img.shields.io/badge/Code-battle-yellow?style=flat&logo=github)](https://github.com/ajjoona-git/battle) |
-| 2025.09.06 | **SW 역량 테스트 (B형)** | B등급 문제 유형 분석 및 복기. DFS, 백트래킹 심화 학습의 필요성 확인 | [![GitHub](https://img.shields.io/badge/Code-sw--test--250906-yellow?style=flat&logo=github)](https://github.com/ajjoona-git/sw-test-250906) |
-| 2025.08.19 | **SW 역량 테스트 (IM/A형)** | **A 등급** 취득 성공 | [![GitHub](https://img.shields.io/badge/Code-sw--test--250819-yellow?style=flat&logo=github)](https://github.com/ajjoona-git/sw-test-250819) |
-| 2025.08.18 | **일타싸피** | 과목 평가 **100점** | [![GitHub](https://img.shields.io/badge/Code-pocket--ball-yellow?style=flat&logo=github)](https://github.com/ajjoona-git/pocket-ball) |
+| 2025.11.27 | **AI NoCode MCP Hackathon** | **대상 (한국지능정보사회진흥원 원장상)** | [![GitHub](https://img.shields.io/badge/GitHub-Doongzi-yellow?style=flat&logo=github)](https://github.com/najung-h/Doongzifrontend) |
+| 2025.09.22 | **배틀싸피** | 반대항전 **1등**. **반 대표**로 전국대항전 출전 | [![GitHub](https://img.shields.io/badge/GitHub-battle-yellow?style=flat&logo=github)](https://github.com/ajjoona-git/battle) |
+| 2025.09.06 | **SW 역량 테스트 (B형)** | B등급 문제 유형 분석 및 복기. DFS, 백트래킹 심화 학습의 필요성 확인 | [![GitHub](https://img.shields.io/badge/GitHub-sw--test--250906-yellow?style=flat&logo=github)](https://github.com/ajjoona-git/sw-test-250906) |
+| 2025.08.19 | **SW 역량 테스트 (IM/A형)** | **A 등급** 취득 성공 | [![GitHub](https://img.shields.io/badge/GitHub-sw--test--250819-yellow?style=flat&logo=github)](https://github.com/ajjoona-git/sw-test-250819) |
+| 2025.08.18 | **일타싸피** | 과목 평가 **100점** | [![GitHub](https://img.shields.io/badge/GitHub-pocket--ball-yellow?style=flat&logo=github)](https://github.com/ajjoona-git/pocket-ball) |
 
-### **해커톤: 둥지 (Doongzi) - 집 찾는 아기새**
+### **🪺 해커톤: 둥지 (Doongzi) - 집 찾는 아기새**
 "부동산 임대차 계약 안전 도우미" <br>
 **둥지**는 부동산 계약 경험이 부족한 사회초년생('아기새')이 안전하게 계약을 마칠 수 있도록 돕는 웹 서비스입니다.  
-복잡한 등기부등본 분석부터 계약서 독소조항 탐지, 단계별 체크리스트까지 전 과정을 **'어미새'**처럼 가이드합니다.
+복잡한 등기부등본 분석부터 계약서 독소조항 탐지, 단계별 체크리스트까지 전 과정을 **어미새**처럼 가이드합니다.
 
 * [GitHub 보러가기](https://github.com/najung-h/Doongzifrontend)
 * ['둥지' 개발 일지와 회고](https://ajjoona-git.github.io/categories/%EB%91%A5%EC%A7%80/)
 
 ### **🚇 프로젝트: 쉽길 (WishEasy)**
 "가장 빠른 길이 아닌, 가장 편한 길을 안내합니다."<br>
- 쉽길은 계단 이용이 어려운 분들을 위해 에스컬레이터와 엘리베이터를 중심으로 한 지하철 경로를 찾아주는 웹 서비스입니다.
+**쉽길**은 계단 이용이 어려운 분들을 위해 에스컬레이터와 엘리베이터를 중심으로 한 지하철 경로를 찾아주는 웹 서비스입니다.
 
 * [좌충우돌 '쉽길' 개발 일지](pjt-wisheasy/journals/)
 
-### **🚀 관통 프로젝트**
-실제 프로젝트를 통해 학습하고 적용한 내용들을 기록합니다.
-
+### **🚀 프로젝트: 모아톤 (Moathon)**
+"함께 완주하는 저축 마라톤"<br>
 **모아톤 (Moathon)**은 개인 맞춤형 예·적금 상품을 AI로 추천하고, 마라톤처럼 목표 달성까지 커뮤니티와 리워드를 통해 완주를 돕는 금융 루틴 서비스입니다. 
 단순히 상품을 가입하는 것을 넘어, 사용자가 설정한 저축 목표를 끝까지 달성할 수 있도록 돕는 페이스메이커 역할을 합니다.
 
@@ -321,13 +320,35 @@ AI 도구를 활용하여 학습하고 얻은 통찰을 기록합니다.
 
 ## 🏷️ 주요 학습 키워드
 
-![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white)
-![Django](https://img.shields.io/badge/Django-092E20?style=for-the-badge&logo=django&logoColor=white)
+### **Languages & Tools**
+![Python](https://img.shields.io/badge/python-3776AB?style=for-the-badge&logo=python&logoColor=white)
+![Java](https://img.shields.io/badge/java-%23ED8B00.svg?style=for-the-badge&logo=openjdk&logoColor=white)
+![JavaScript](https://img.shields.io/badge/javascript-%23F7DF1E.svg?style=for-the-badge&logo=javascript&logoColor=black)
+![PyTorch](https://img.shields.io/badge/PyTorch-%23EE4C2C.svg?style=for-the-badge&logo=PyTorch&logoColor=white)
+![Git](https://img.shields.io/badge/git-%23F05033.svg?style=for-the-badge&logo=git&logoColor=white)
+
+### **Web Development**
+![Django](https://img.shields.io/badge/django-%23092E20.svg?style=for-the-badge&logo=django&logoColor=white)
+![Vue.js](https://img.shields.io/badge/vuejs-%2335495e.svg?style=for-the-badge&logo=vuedotjs&logoColor=%234FC08D)
+![Bootstrap](https://img.shields.io/badge/bootstrap-%238511FA.svg?style=for-the-badge&logo=bootstrap&logoColor=white)
+![HTML5](https://img.shields.io/badge/html5-%23E34F26.svg?style=for-the-badge&logo=html5&logoColor=white)
+![CSS3](https://img.shields.io/badge/css3-%231572B6.svg?style=for-the-badge&logo=css3&logoColor=white)
+
+### **Computer Science**
 ![Algorithms](https://img.shields.io/badge/Algorithms-E95420?style=for-the-badge&logo=hackerrank&logoColor=white)
 ![Data Structures](https://img.shields.io/badge/Data_Structures-61DAFB?style=for-the-badge&logo=react&logoColor=black)
-![Git](https://img.shields.io/badge/Git-F05032?style=for-the-badge&logo=git&logoColor=white)
-![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white)
-![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white)
+
+### **Artificial Intelligence**
+![Machine Learning](https://img.shields.io/badge/Machine%20Learning-F8991D?style=for-the-badge)
+![Deep Learning](https://img.shields.io/badge/Deep%20Learning-181717?style=for-the-badge)
+![Computer Vision](https://img.shields.io/badge/Computer%20Vision-5C3EE8?style=for-the-badge)
+![NLP](https://img.shields.io/badge/NLP-FF6F61?style=for-the-badge)
+
+### **Advanced AI Concepts**
+![LLM](https://img.shields.io/badge/LLM-blue?style=flat-square)
+![Transformer](https://img.shields.io/badge/Transformer-green?style=flat-square)
+![RAG](https://img.shields.io/badge/RAG-red?style=flat-square)
+![Prompt Engineering](https://img.shields.io/badge/Prompt%20Engineering-lightblue?style=flat-square)
 
 ---
 
