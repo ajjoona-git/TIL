@@ -32,6 +32,8 @@
 
 | 일자 | 활동 | 결과 및 내용 | 코드 |
 | :--- | :--- | :--- | :--- |
+| 2025.12.26 | **1학기 관통 프로젝트** | **최우수상 (1등)** | [![GitHub](https://img.shields.io/badge/Moathon-yellow?style=flat&logo=github)](https://github.com/ajjoona-git/moathon) |
+| 2025.12.26 | **1학기 성적우수상** | 1학기 코딩 집중과정 종합성적 **2등** | - |
 | 2025.11.27 | **AI NoCode MCP Hackathon** | **대상 (한국지능정보사회진흥원 원장상)** | [![GitHub](https://img.shields.io/badge/Doongzi-yellow?style=flat&logo=github)](https://github.com/najung-h/Doongzifrontend) |
 | 2025.09.22 | **배틀싸피** | 반대항전 **1등**. **반 대표**로 전국대항전 출전 | [![GitHub](https://img.shields.io/badge/Code-battle-yellow?style=flat&logo=github)](https://github.com/ajjoona-git/battle) |
 | 2025.09.06 | **SW 역량 테스트 (B형)** | B등급 문제 유형 분석 및 복기. DFS, 백트래킹 심화 학습의 필요성 확인 | [![GitHub](https://img.shields.io/badge/Code-sw--test--250906-yellow?style=flat&logo=github)](https://github.com/ajjoona-git/sw-test-250906) |
@@ -55,6 +57,10 @@
 ### **🚀 관통 프로젝트**
 실제 프로젝트를 통해 학습하고 적용한 내용들을 기록합니다.
 
+**모아톤 (Moathon)**은 개인 맞춤형 예·적금 상품을 AI로 추천하고, 마라톤처럼 목표 달성까지 커뮤니티와 리워드를 통해 완주를 돕는 금융 루틴 서비스입니다. 
+단순히 상품을 가입하는 것을 넘어, 사용자가 설정한 저축 목표를 끝까지 달성할 수 있도록 돕는 페이스메이커 역할을 합니다.
+
+* ['모아톤' GitHub 보러가기](https://github.com/ajjoona-git/moathon)
 * [관통 프로젝트 일지](project-01/README.md)
 
 ### **🔧 개발 환경 및 도구 (Dev Environment & Tools)**
@@ -263,6 +269,7 @@ AI 도구를 활용하여 학습하고 얻은 통찰을 기록합니다.
 * [Design-to-Code](AI/design-to-code.md)
 * [비정형 데이터 구조화](AI/data-parsing.md)
 * [문서 유사도](AI/document-similarity.md)
+* [도메인 별 AI](AI/ai-domains-and-workflows.md)
 
 1. **AI를 위한 기초**
 * [numpy](AI/numpy.md)
