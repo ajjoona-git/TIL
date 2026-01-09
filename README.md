@@ -259,6 +259,7 @@ Java 프로그래밍 언어의 기초부터 객체지향 프로그래밍(OOP)까
 * [의존성 주입(DI)의 원리](spring/DI-loose-coupling.md)
 * [스프링 컨테이너와 Bean](spring/spring-container-bean-scope.md)
 * [DI 설정 및 구현 방법](spring/spring-configuration.md)
+* [MVC 패턴과 요청 처리 흐름](spring/spring-mvc-flow.md)
 
 
 ### **🤖 AI**
@@ -269,7 +270,6 @@ AI 도구를 활용하여 학습하고 얻은 통찰을 기록합니다.
 * [Vibe Coding](AI/Vibe-Coding.md)
 * [AI 코딩 어시스턴트](AI/ai-coding-assistant.md)
 * [PRD](AI/prd.md)
-* [MCP](AI/mcp.md)
 * [Gemini-CLI 실습](AI/gemini-cli.md)
 * [Design-to-Code](AI/design-to-code.md)
 * [비정형 데이터 구조화](AI/data-parsing.md)
@@ -321,6 +321,11 @@ AI 도구를 활용하여 학습하고 얻은 통찰을 기록합니다.
 * [LLM의 확장 ③: 다중 에이전트 시스템 (Multi-Agent System)](AI/multi-agent.md)
 * [LLM 활용: 프롬프트 엔지니어링과 데이터 생성](AI/llm-utilization.md)
 * [고급 AI 시스템: 양자화, TTA, 적응형 센싱](AI/advanced-ai-systems.md)
+
+6. **AI 엔지니어링 및 MLOps (AI Engineering & MLOps)**
+* [MLOps: 모델 생애주기 관리와 자동화](ai/mlops-lifecycle.md)
+* [AI 서비스 배포: 인프라 구성과 모니터링](ai/ai-service-operations.md)
+* [MCP](AI/mcp.md)
 
 ---
 
