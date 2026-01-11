@@ -176,6 +176,7 @@ Java 프로그래밍 언어의 기초부터 객체지향 프로그래밍(OOP)까
 ### **🌐 웹 개발 (Web Development)**
 
 * [웹 동작의 이해: 클라이언트와 서버](django/intro.md)
+* [서블릿(Servlet) 기초와 웹 애플리케이션 구조](web/web-application-servlet.md)
 
 #### **프론트엔드 (Frontend)**
 사용자 인터페이스(UI)와 사용자 경험(UX)을 구현하는 기술들을 학습합니다.
