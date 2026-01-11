@@ -1,6 +1,6 @@
 # Spring MVC 아키텍처와 요청 흐름
 
-### Django와 Spring 프로젝트의 파일 구조 비교
+## Django vs Spring MVC 구조 비교
 
 | **역할** | **Django (DRF)** | **Spring Boot** |
 | --- | --- | --- |
@@ -10,7 +10,7 @@
 | **API 로직 처리** | `views.py` (ViewSet) | **Controller** Class |
 | **URL 연결** | `urls.py` | `@RequestMapping` (Controller 내부) |
 
-## MVC 패턴
+## MVC 패턴의 구성 요소와 역할
 
 ### 요청과 응답의 흐름
 
@@ -69,7 +69,7 @@
 - 사용자에게 데이터를 가져오고 수정하고 제공한다.
 - 사용자의 요청(URL)을 가장 먼저 받는 곳
 
-## Spring Web MVC
+## Spring Web MVC 요청 처리 흐름
 
 ### Spring Web MVC
 
@@ -78,7 +78,7 @@
 - DispatcherServlet(Front-Controller)를 중심으로 디자인되었으며,
 - View Resolver, Handler Mapping, Controller 와 같은 객체와 함께 요청을 처리하도록 구성됨
 
-### 구성요소
+### 주요 구성 요소
 
 - DispatcherServlet: 클라이언트 요청 처리 (요청 및 처리 결과 전달)
 - HandlerMapping: 요청을 어떤 Controller가 처리할 지 결정
@@ -106,10 +106,23 @@
 
 컨테이너 구성
 
-### RequestMapping
+## Controller 구현 및 파라미터 처리
+
+### `@Controller`
+
+- client의 요청을 처리한다.
+- method 단위의 mapping 가능
+- DefaultAnnotaionHandlerMapping과 AnnotationHandlerAdapter 사용
+		- Spring 기본 설정이므로 별도의 추가 없이 동작
+- Component Scan으로 annotation을 인식하므로 프로젝트의 하위 package로 생성하는 것이 일반적
+
+![image.png](../images/spring-mvc-flow_8.png)
+
+### `@RequestMapping`
 
 - URL을 클래스 또는 특정 핸들러(메서드)에 매핑
-- 메서드 Annotation은 요청 방식 (GET, POST) 등으로 범위를 좁혀 준다.
+- HTTP Method (GET, POST 등)에 따라 다른 Method로 설정할 수 있다.
+- 여러 개의 요청을 하나의 controller에서 처리할 때 전체의 경로를 지정할 수 있다.
 
 ```java
 @RequestMapping(value="home", method=RequestMethod.GET)
@@ -134,15 +147,15 @@ public ModelAndView homeHandle2() {
 }
 ```
 
-![MyController.java](../images/spring-mvc-flow_5.png)
+![MyController.java](../images/spring-mvc-flow_9.png)
 
 MyController.java
 
-![index.jsp](../images/spring-mvc-flow_6.png)
+![index.jsp](../images/spring-mvc-flow_10.png)
 
 index.jsp
 
-![/home POST 요청 결과](../images/spring-mvc-flow_7.png)
+![/home POST 요청 결과](../images/spring-mvc-flow_11.png)
 
 /home POST 요청 결과
 
@@ -174,6 +187,8 @@ OutputStream, Writer` | 요청으로부터 직접 데이터를 읽어보거나, 
 | `ModelAndView` | 사용할 view와 속성을 포함하는 객체 |
 | `void` | method에 ServletResponse, HttpServletResponse 인자가 있는 경우, 모든 요청이 처리된 것으로 간주, 그렇지 않으면 요청 URI를 view name으로 처리 |
 
+### `@GetMapping`
+
 ```java
 @GetMapping("/test1")
 public String test1() {
@@ -197,6 +212,48 @@ public String test2_2(Map<String, Object> map) {
 }
 ```
 
+### `@RequestParam`
+
+```java
+
+@Controller
+@RequestMapping("/mvc")
+public class HomeController {
+	private static final Logger log = LoggerFactory.getLogger(HomeController.class);
+	
+	// http://localhost:8080/mvc/hello?name=hong&age=20
+	@GetMapping("/hello")
+	public String home(Model model, String name, int age) {
+		log.debug("name: {}, age: {}", name, age);
+		
+		model.addAttribute("msg", "안녕하세요.");
+		model.addAttribute("name", name);
+		model.addAttribute("age", age);
+		
+		return "home";
+	}
+}
+
+```
+
+![image.png](../images/spring-mvc-flow_12.png)
+
+### `@PathVariable`
+
+```java
+	// http://localhost:8080/user/1
+	@GetMapping("/user/{id}")
+	public String user(Model model, @PathVariable String id) {
+		log.debug("id: {}", id);
+		model.addAttribute("id", id);
+		return "user";
+	}
+```
+
+![image.png](../images/spring-mvc-flow_13.png)
+
+### HttpServletRequest
+
 ```java
 // 파라미터 처리
 @GetMapping("/test3-1")
@@ -215,6 +272,8 @@ public String test3_2(Model model, @RequestParam("myid") String id,
 
 ```
 
+### `@PostMapping`
+
 ```java
 // @PostMapping("/regist")
 // public String regist(@RequestParam("id") String id, @RequestParam("pw") String pw) {
@@ -227,3 +286,66 @@ public String regist(@ModelAttrribute User user) {
 	return "result";
 }
 ```
+
+### 데이터 바인딩 (Command 객체)
+
+```java
+@GetMapping("/hello2")
+	public String home(Model model, UserDto dto) {
+		
+		log.debug("name: {}, age: {}", dto.getName(), dto.getAge());
+		
+		model.addAttribute("msg", "안녕하세요.");
+		model.addAttribute("dto", dto);
+		
+		return "home2";
+	}
+```
+
+```html
+<h1>home2.jsp</h1>
+<p>${msg}</p>
+<p>${dto.name}</p>
+<p>${dto.age}</p>
+```
+
+![image.png](../images/spring-mvc-flow_14.png)
+
+
+
+- Command 객체 (DTO, controller mapping 되어서 입력된 객체)는 model에 자동으로 추가된다.
+- DTO 클래스의 첫글자를 소문자로 변환한 이름으로 추가된다.
+- `@ModelAttribute`를 사용하면 임의의 이름을 정할 수 있다.
+
+```java
+package com.ssafy.hellospringboot.controller;
+
+public class UserDto {
+	private String name;
+	private int age;
+	
+	
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public int getAge() {
+		return age;
+	}
+	public void setAge(int age) {
+		this.age = age;
+	}
+}
+```
+
+
+## View 결과 반환 및 리다이렉트
+
+### view 지정
+
+- ModelAndView와 String 리턴 타입
+- view 이름에 `redirect:` 접두어를 붙이면, 지정한 페이지로 redirect 된다.
+
+![image.png](../images/spring-mvc-flow_15.png)
